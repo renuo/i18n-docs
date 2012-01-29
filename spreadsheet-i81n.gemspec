@@ -11,5 +11,6 @@ Gem::Specification.new do |s|
 
   # dependencies
   s.add_dependency(%q<bundler>)
+  s.add_dependency(%q<rake>)
   # s.add_dependency(%q<capistrano>, [">= 2.9.0"])
 end
