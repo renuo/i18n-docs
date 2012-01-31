@@ -1,6 +1,3 @@
-require 'awesome_print'
-require 'yaml'
-
 module LocalchI18n
   
   class CsvToYaml

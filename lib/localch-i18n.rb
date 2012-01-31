@@ -3,6 +3,7 @@
 # load rake tasks in case GEM is included within rails project
 
 require 'csv'
+require 'yaml'
 require 'localch_i18n/missing_keys_finder'
 require 'localch_i18n/csv_to_yaml'
 require 'localch_i18n/translations'
@@ -15,6 +16,4 @@ if defined?(Rails)
     end
   end
 end
-
-
 
