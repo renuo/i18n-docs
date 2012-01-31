@@ -4,7 +4,8 @@
 
 require 'csv'
 require 'spreadsheet_i18n/missing_keys_finder'
-require 'spreadsheet_i18n/locale_builder'
+require 'spreadsheet_i18n/csv_to_yaml'
+require 'spreadsheet_i18n/translations'
 
 
 if defined?(Rails)

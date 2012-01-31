@@ -1,0 +1,5 @@
+# files:
+#   first.yml: http://www.google.com/spreadsheet/first.csv
+#   second.yml: http://www.google.com/spreadsheet/second.csv
+files:
+  first.yml: /Users/georg/local.ch/gems/spreadsheet-i18n/test/fixtures/tmp_test.csv
