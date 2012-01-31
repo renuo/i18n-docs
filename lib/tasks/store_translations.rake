@@ -1,31 +1,27 @@
 
 namespace :i18n do
   
-  desc "Download all locales from Google Spreadsheet"
-  task :download do
-    puts "downloading from Google Spreadsheet"
+  desc "Find and list translation keys that do not exist in all locales"
+  task :missing_keys => :environment do
+    finder = LocalchI18n::MissingKeysFinder.new(I18n.backend)
+    finder.find_missing_keys
   end
   
-  task :store_locales do
+  desc "Download translations from Google Spreadsheet and save them to YAML files."
+  task :update_translations => :environment do
+    raise "'Rails' not found! Tasks can only run within a Rails application!" if !defined?(Rails)
     
-    locales = {'en' => {}, 
-               'de' => {},
-               'fr' => {},
-               'it' => {}}
+    config_file = Rails.root.join('config', 'translations.yml')
+    raise "No config file 'config/translations.yml' found." if !File.exists?(config_file)
     
+    tmp_dir     = Rails.root.join('tmp')
     
-    CSV.foreach("test.csv", headers: true) do |row|
-      require 'pp'
-      # pp row
-      
-      
-      key = row['KEY'].split('.')
-      
-      
-    end
+    translations = LocalchI18n::Translations.new(config_file, tmp_dir)
+    translations.download_files
+    translations.store_translations
+    translations.clean_up
+    
   end
-  
-  
   
   desc "Export all translations of all languages to one CSV file"
   task :export_to_csv => :environment do

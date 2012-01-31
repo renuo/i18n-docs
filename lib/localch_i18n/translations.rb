@@ -1,14 +1,15 @@
-require 'open-uri'
-
-
+#
+# Order of method calls
+#  download_files
+#  store_translations
+#  clean_up
+#
 module LocalchI18n
   class Translations
     
     attr_accessor :locales, :tmp_folder, :config_file, :csv_files
     
     def initialize(config_file = nil, tmp_folder = nil)
-      # @config_file = defined?(Rails) ? Rails.root.join('config', 'translations.yml') : config_file
-      # @tmp_folder = defined?(Rails) ? Rails.root.join('tmp') : nil
       @config_file = config_file 
       @tmp_folder  = tmp_folder
       
@@ -28,12 +29,6 @@ module LocalchI18n
       @settings = YAML.load_file(config_file) if File.exists?(config_file)
     end
     
-    def update_translations
-      download_files
-      store_translations
-      clean_up
-    end
-    
     def download_files
       files = @settings['files']
       files.each do |target_file, url|
@@ -51,6 +46,8 @@ module LocalchI18n
         converter.process
         converter.write_files
       end
+      
+      @csv_files
     end
     
     def clean_up
@@ -61,6 +58,7 @@ module LocalchI18n
     end
     
     def download(url, destination_file)
+      puts "Download '#{url}' to '#{destination_file}'"
       File.open(destination_file, 'w') do |dst|
         dst.write(open(url).read)
       end

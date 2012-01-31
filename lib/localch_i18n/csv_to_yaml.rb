@@ -7,7 +7,7 @@ module LocalchI18n
     def initialize(input_file, output_file, locales = [])
       @input_file = input_file
       @output_file = File.basename(output_file)
-      @locales = locales
+      @locales = locales.map(&:to_s)
       
       # init translation hash
       @translations = {}
@@ -37,7 +37,7 @@ module LocalchI18n
     
     def process_row(row_hash)
       key = row_hash.delete('key')
-      raise "Locale missing for key #{key}! (locales: #{row_hash.keys.to_s})" if row_hash.size != @locales.size
+      raise "Locale missing for key #{key}! (locales in app: #{@locales} / locales in file: #{row_hash.keys.to_s})" if row_hash.size != @locales.size
       
       key_elements = key.split('.')
       @locales.each do |locale|
