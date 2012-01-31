@@ -1,5 +1,9 @@
+#
+# Configure all spreadsheets you want to import:
+#
 # files:
 #   first.yml: http://www.google.com/spreadsheet/first.csv
 #   second.yml: http://www.google.com/spreadsheet/second.csv
+#
 files:
-  first.yml: /Users/georg/local.ch/gems/spreadsheet-i18n/test/fixtures/tmp_test.csv
+  download.yml: "https://docs.google.com/spreadsheet/pub?key=0ApnemdIdiDXedEpiVFR1RkdWMDhnTTgtdzRJMWZMLUE&single=true&gid=0&output=csv"
