@@ -1,4 +1,6 @@
 
+require 'awesome_print'
+
 namespace :i18n do
   
   desc "Find and list translation keys that do not exist in all locales"
@@ -8,13 +10,13 @@ namespace :i18n do
   end
   
   desc "Download translations from Google Spreadsheet and save them to YAML files."
-  task :update_translations => :environment do
+  task :import_translations => :environment do
     raise "'Rails' not found! Tasks can only run within a Rails application!" if !defined?(Rails)
     
     config_file = Rails.root.join('config', 'translations.yml')
     raise "No config file 'config/translations.yml' found." if !File.exists?(config_file)
     
-    tmp_dir     = Rails.root.join('tmp')
+    tmp_dir = Rails.root.join('tmp')
     
     translations = LocalchI18n::Translations.new(config_file, tmp_dir)
     translations.download_files
@@ -23,48 +25,33 @@ namespace :i18n do
     
   end
   
-  desc "Export all translations of all languages to one CSV file"
-  task :export_to_csv => :environment do
-    finder = LocalchI18n::MissingKeysFinder.new(I18n.backend)
-    all_keys = finder.all_keys
+  desc "Export all language files to CSV files (only files contained in en folder are considered)"
+  task :export_translations => :environment do
+    raise "'Rails' not found! Tasks can only run within a Rails application!" if !defined?(Rails)
     
-    available_locales = I18n.available_locales
+    source_dir  = Rails.root.join('config', 'locales')
+    output_dir  = Rails.root.join('tmp')
+    locales     = I18n.available_locales
     
-    # ap all_keys
-    # ap available_locales
+    input_files = Dir[File.join(source_dir, 'en', '*.yml')]
     
-    # Add ignoring of keys! (from ignore file)
-    # by filtering all_keys
+    puts ""
+    puts "  Detected locales: #{locales}"
+    puts "  Detected files:"
+    input_files.each {|f| puts "    * #{File.basename(f)}" }
     
-    # iterate through all keys and get all translations
+    puts ""
+    puts "  Start exporting files:"
     
-    # write line to CSV file
-    
-    
-    # Get value for key for a given language
-    # Returns true if key exists in the given locale
-    # values = available_locales.map do |locale|
-    #   I18n.locale = locale
-    #   # I18n.translate(key, :raise => true)
-    #   I18n.translate('tel.extended.area_label', :raise => false)
-    # end
-    # ap values
-    
-    CSV.open("all_translations.csv", "wb") do |csv|
-      csv << (["KEY"] + available_locales.map {|l| l.upcase})
-      
-      all_keys.each do |key|
-        values = available_locales.map do |locale|
-          I18n.locale = locale
-          # I18n.translate(key, :raise => true)
-          I18n.translate(key, :raise => false)
-        end
-        
-        csv << (values.unshift(key))
-      end
+    input_files.each do |file|
+      file = File.basename(file)
+      exporter = LocalchI18n::TranslationFileExport.new(source_dir, file, output_dir, locales)
+      exporter.export
     end
     
-    
+    puts ""
+    puts "  CSV files can be removed safely after uploading them manually to Google Spreadsheet."
+    puts ""
   end
   
 end
