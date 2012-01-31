@@ -1,7 +1,7 @@
 require 'open-uri'
 
 
-module SpreadsheetI18n
+module LocalchI18n
   class Translations
     
     attr_accessor :locales

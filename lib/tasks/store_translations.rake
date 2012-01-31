@@ -29,7 +29,7 @@ namespace :i18n do
   
   desc "Export all translations of all languages to one CSV file"
   task :export_to_csv => :environment do
-    finder = SpreadsheetI18n::MissingKeysFinder.new(I18n.backend)
+    finder = LocalchI18n::MissingKeysFinder.new(I18n.backend)
     all_keys = finder.all_keys
     
     available_locales = I18n.available_locales

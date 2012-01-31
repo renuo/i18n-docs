@@ -1,4 +1,4 @@
 require 'test/unit'
-require 'spreadsheet-i18n'
+require 'localch-i18n'
 
 

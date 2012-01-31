@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
-  s.name        = 'spreadsheet-i18n'
+  s.name        = 'localch-i18n'
   s.version     = '0.0.1'
   s.date        = '2012-01-29'
-  s.summary     = "Google Spreadsheet translation downloader"
-  s.description = "GEM providing helper scripts to download translations from multiple Google spreadsheets and store them to YAML files. Allowing translation management in Google Spreadsheet."
+  s.summary     = "Local.ch i18n helpers"
+  s.description = "GEM providing helper scripts to manage i18n translations. Features: check YAML files for missing translations; export YAML files to CSV; download translations from multiple Google spreadsheets and store to YAML files"
   s.authors     = ["Georg Kunz"]
   s.email       = 'georg.kunz@local.ch'
   s.files       = `git ls-files`.split("\n")

@@ -10,7 +10,7 @@ module UnitTests
     def setup
       @input_file = File.join(File.expand_path(File.dirname(__FILE__)), '..', 'fixtures', 'test.csv')
       @output_file = 'test.yml'
-      @builder = SpreadsheetI18n::CsvToYaml.new(@input_file, @output_file, ['de', 'en', 'fr', 'it'])
+      @builder = LocalchI18n::CsvToYaml.new(@input_file, @output_file, ['de', 'en', 'fr', 'it'])
     end
     
     def test_store_translations

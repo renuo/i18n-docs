@@ -1,5 +1,5 @@
 
-module SpreadsheetI18n
+module LocalchI18n
   class MissingKeysFinder
     def initialize(backend)
       @backend = backend

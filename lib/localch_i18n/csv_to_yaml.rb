@@ -1,7 +1,7 @@
 require 'awesome_print'
 require 'yaml'
 
-module SpreadsheetI18n
+module LocalchI18n
   
   class CsvToYaml
     

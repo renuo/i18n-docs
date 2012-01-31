@@ -12,7 +12,7 @@ module UnitTests
       # @output_file = 'test.yml'
       # @builder = SpreadsheetI18n::CsvToYaml.new(@input_file, @output_file, ['de', 'en', 'fr', 'it'])
       
-      @translations = SpreadsheetI18n::Translations.new
+      @translations = LocalchI18n::Translations.new
       @translations.locales = ['de', 'en', 'fr', 'it']
     end
     
