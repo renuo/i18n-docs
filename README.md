@@ -23,7 +23,7 @@ Following Rake tasks are added by the GEM to your Rails project:
 
 Add the GEM to your Rails project:
 
-    gem 'localch-i18n', :git => 'git://github.com/local-ch/ws-localch-i18n.git'
+    gem 'localch-i18n', :git => 'git@github.com:local-ch/ws-localch-i18n.git'
 
 
 The rake task `i18n:import_translations` requires following configuration file in `config/translations.yml`:
