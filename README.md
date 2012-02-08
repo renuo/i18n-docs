@@ -31,9 +31,17 @@ The rake task `i18n:import_translations` requires following configuration file i
     files:
       example1.yml: "https://docs.google.com/spreadsheet/pub?key=0ApnemdIdiDXedGNrcTZoYnNqbjZQb09qeWpsX0JveWc&single=true&gid=0&output=csv"
       example2.yml: "https://docs.google.com/spreadsheet/pub?key=0ApnemdIdiDXsfrtrcTZoYnNqbjZQb09qeWpsX0JveWc&single=true&gid=0&output=csv"
-      
 
 It defines which translations files should be created by exporting a Google Spreadsheet. The content of the Spreadsheet URL is stored to a file called e.g. `example1.yml` within folders `config/locales/en` and all other detected locales.
+
+## Usage
+
+* First run `rake i18n:export_translations`. This will place current translations in the `tmp` folder of the application.
+* Upload generated files to Google Docs
+* In Google Docs, use option `File -> Publish To the Web` to make link to CSV spreadsheet you need for next step
+* In `config` folder of the application, create `translations.yml` file with structure that is explained above in the installation section.
+* Run `rake i18n:export_translations` to import translations from the Google Docs.
+* From now on you should only update translations in Google Docs and run `rake i18n:export_translations` in the application to get changes.
 
 
 
