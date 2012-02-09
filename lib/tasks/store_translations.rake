@@ -1,6 +1,4 @@
 
-require 'awesome_print'
-
 namespace :i18n do
   
   desc "Find and list translation keys that do not exist in all locales"

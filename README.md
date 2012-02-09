@@ -44,4 +44,10 @@ It defines which translations files should be created by exporting a Google Spre
 * From now on you should only update translations in Google Docs and run `rake i18n:export_translations` in the application to get changes.
 
 
+## CHANGELOG
+
+### 0.0.2
+
+* removed loading of `awesome_print` from the rake task. It was breaking
+  download
 
