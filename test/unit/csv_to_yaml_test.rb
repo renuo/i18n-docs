@@ -1,5 +1,6 @@
 require 'test_helper'
 require 'mocha'
+require 'awesome_print'
 
 # run test: ruby -I test/ -I lib/ test/unit/csv_to_yaml_test.rb
 
@@ -37,6 +38,60 @@ module UnitTests
       assert_equal 'Willkommen', translations['de']['homepage']['welcome']
       assert_equal 'Phonebook of Switzerland', translations['en']['homepage']['meta']['title']
       assert_equal 'Welcome', translations['en']['homepage']['welcome']
+    end
+    
+    
+    def test_empty_string_replacement_value
+      # As Google Spreadsheet does not export empty cells we use '_' as a fake whitespace which
+      # we replace with an empty string during CVS2YAML conversion.
+      row = {'key' => 'homepage.meta.title', 'en' => 'Phonebook of Switzerland', 'de' => '_'}
+      @csv_to_yaml.process_row(row)
+      
+      translations = @csv_to_yaml.translations
+      assert_equal '', translations['de']['homepage']['meta']['title']
+      assert_equal 'Phonebook of Switzerland', translations['en']['homepage']['meta']['title']
+    end
+    
+    
+    def test_empty_string_value
+      row = {'key' => 'homepage.meta.title', 'en' => 'Phonebook of Switzerland', 'de' => ''}
+      @csv_to_yaml.process_row(row)
+      
+      translations = @csv_to_yaml.translations
+      assert_equal '', translations['de']['homepage']['meta']['title']
+      assert_equal 'Phonebook of Switzerland', translations['en']['homepage']['meta']['title']
+    end
+    
+    
+    def test_space_value
+      row = {'key' => 'homepage.meta.title', 'en' => 'Phonebook of Switzerland', 'de' => ' '}
+      @csv_to_yaml.process_row(row)
+      
+      translations = @csv_to_yaml.translations
+      assert_equal ' ', translations['de']['homepage']['meta']['title']
+      assert_equal 'Phonebook of Switzerland', translations['en']['homepage']['meta']['title']
+    end
+    
+    def test_nil_value
+      row = {'key' => 'homepage.meta.title', 'en' => 'Phonebook of Switzerland', 'de' => nil}
+      @csv_to_yaml.process_row(row)
+      
+      translations = @csv_to_yaml.translations
+      assert_equal({}, translations['de'])
+      assert_equal 'Phonebook of Switzerland', translations['en']['homepage']['meta']['title']
+    end
+    
+    
+    def test_nil_value_deep_structure
+      row1 = {'key' => 'homepage.meta.title', 'en' => 'Phonebook of Switzerland', 'de' => nil}
+      row2 = {'key' => 'homepage.welcome', 'en' => 'Welcome', 'de' => 'Willkommen'}
+      @csv_to_yaml.process_row(row1)
+      @csv_to_yaml.process_row(row2)
+      
+      translations = @csv_to_yaml.translations
+      assert_nil translations['de']['meta']
+      assert_equal 'Willkommen', translations['de']['homepage']['welcome']
+      assert_equal 'Phonebook of Switzerland', translations['en']['homepage']['meta']['title']
     end
     
     

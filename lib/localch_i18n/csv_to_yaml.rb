@@ -47,6 +47,10 @@ module LocalchI18n
     
     
     def store_translation(keys, locale, value)
+      return nil if value.nil?    # we don't store keys that don't have a valid value
+      # Google Spreadsheet does not export empty strings and therefore we use '_' as a replacement char.
+      value = '' if value == '_'
+      
       tree = keys[0...-1]
       leaf = keys.last
       data_hash = tree.inject(@translations[locale]) do |memo, k|
