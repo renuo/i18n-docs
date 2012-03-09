@@ -1,10 +1,12 @@
 require 'test_helper'
 require 'mocha'
 
+require 'awesome_print'
+
 # run test: ruby -I test/ -I lib/ test/unit/locale_builder_test.rb
 
 module UnitTests
-  class TranslationsTest < Test::Unit::TestCase
+  class TranslationFileExportTest < Test::Unit::TestCase
     include TestHelper
     
     def setup
@@ -30,14 +32,14 @@ module UnitTests
       assert File.exists?(@output_file), "Expected to have a CSV file written"
     end
     
-    def test_load_language
+    def dtest_load_language
       translations = @exporter.load_language('de')
       
       assert translations, "Expected to return a hash with translations"
       assert_equal translations['header']['search'], "Finden"
     end
     
-    def test_flatten_translations_hash
+    def dtest_flatten_translations_hash
       translation_hash = {'a' => {
                             'I' => '1', 
                             'II' => '2', 
@@ -55,7 +57,7 @@ module UnitTests
       assert_equal '4', flat['b']
     end
     
-    def test_load_translations
+    def dtest_load_translations
       assert_empty @exporter.translations
       @exporter.load_translations
       
@@ -66,7 +68,7 @@ module UnitTests
       assert_equal '(c) local.ch', @exporter.translations['de']['copyright']
     end
     
-    def test_write_to_csv
+    def dtest_write_to_csv
       @exporter.translations = {'de' => {'numbers.one' => 'eins'},
                                 'en' => {'numbers.one' => 'one'}}
       

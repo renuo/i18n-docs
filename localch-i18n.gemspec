@@ -10,7 +10,10 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/local-ch/spreadsheet-i18n'
 
   # dependencies
-  s.add_dependency(%q<bundler>)
-  s.add_dependency(%q<rake>)
-  # other dependencies?
+  s.add_dependency('bundler')
+  s.add_dependency('rake')
+  
+  s.add_development_dependency('mocha')
+  s.add_development_dependency('awesome_print')
+  
 end

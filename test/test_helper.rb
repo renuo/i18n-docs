@@ -1,7 +1,6 @@
 require 'test/unit'
 require 'fileutils'
 require 'localch-i18n'
-require 'awesome_print'
 
 
 module TestHelper

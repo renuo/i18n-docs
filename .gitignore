@@ -1,1 +1,9 @@
+*.gem
+.bundle
+Gemfile.lock
+pkg/*
 .rvmrc
+.rake_tasks~
+doc/yardoc
+.yardoc
+tmp/*
