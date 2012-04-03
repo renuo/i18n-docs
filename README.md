@@ -41,7 +41,7 @@ It defines which translations files should be created by exporting a Google Spre
 * In Google Docs, use option `File -> Publish To the Web` to make link to CSV spreadsheet you need for next step
 * In `config` folder of the application, create `translations.yml` file with structure that is explained above in the installation section.
 * Run `rake i18n:export_translations` to import translations from the Google Docs.
-* From now on you should only update translations in Google Docs and run `rake i18n:export_translations` in the application to get changes.
+* From now on you should only update translations in Google Docs and run `rake i18n:import_translations` in the application to get changes.
 
 
 ## CHANGELOG
