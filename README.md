@@ -5,6 +5,8 @@
 
 Although we at use it with Google Docs, it could be used with any CSV file.
 
+*this gem is currently in use and tested with Rails 3.1. It probably works with other 3.x versions, but probably not 2.x at the moment.*
+
 ## Features: 
 
 * download translations from multiple Google spreadsheets and store to YAML files
@@ -13,27 +15,42 @@ Although we at use it with Google Docs, it could be used with any CSV file.
 
 ## Usage
 
+### Configuration
+
 Add the GEM to your Rails project:
 
     gem 'i18n-docs'
 
-The rake task `i18n:import_translations` requires following configuration file in `config/translations.yml`:
+Create a configuration file in `config/translations.yml`:
 
     files:
-      naviagion.yml: "https://docs.google.com/spreadsheet/pub?key=ab43...34f3&single=true&gid=0&output=csv"
+      navigation.yml: "https://docs.google.com/spreadsheet/pub?key=ab43...34f3&single=true&gid=0&output=csv"
       forms.yml: "https://docs.google.com/spreadsheet/pub?key=0Ap...XveWc&single=true&gid=0&output=csv"
 
-This defines which translations files should be created by exporting a Google Spreadsheet. The content of the Spreadsheet URL is stored to a file called e.g. `example1.yml` within folders `config/locales/en` and all other detected locales.
+Make the directories and files to hold the translations (this is a bit annoying, and will be automated soon):
+
+    $ for lang in de en it fr; do \
+        mkdir -p config/locales/$lang; \
+        touch config/locales/$lang/navigation.yml; \
+        touch config/locales/$lang/forms.yml; \
+      done
+      
+Finally, let Rails know what locales you will be using. Add this to `config/application.rb`:
+
+    # locals to support:
+    I18n.available_locales = [:en,:de,:it,:fr]
+
+This defines which languages and translation files to import from a Google Spreadsheet. The content of the Spreadsheet URL is stored to a file called e.g. `example1.yml` within folders `config/locales/en` and all other detected locales.
 
 ### Rake Tasks
 
 Following Rake tasks are added by the GEM to your Rails project:
 
-* rake i18n:export_translations
+* `rake i18n:export_translations`
   Export all language files to CSV files (only files contained in 'en' folder are considered)
-* rake i18n:import_translations
+* `rake i18n:import_translations`
   Download translations from Google Spreadsheet and save them to YAML files.
-* rake i18n:missing_keys
+* `rake i18n:missing_keys`
   Find and list translation keys that do not exist in all locales
 
 
@@ -47,6 +64,14 @@ Following Rake tasks are added by the GEM to your Rails project:
 ![screenshot](http://dl.dropbox.com/u/385855/Screenshots/oom_.png)
 * From now on you should only update translations in Google Docs and run `rake i18n:import_translations` in the application to get changes. You can also export your 
 
+## Todo
+
+*Pull requests welcome!*
+
+* create mocked tests that do not have to download our sample CSV files
+* automate the creation of files in config/locales
+* automate the detection of which languages are supported
+* validate use with rails 2.x, other 3.x versions
 
 ## CHANGELOG
 
