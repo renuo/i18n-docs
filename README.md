@@ -1,14 +1,31 @@
-# local.ch i18n helpers
 
-GEM providing helper scripts to manage i18n translations. 
+# ![local.ch](http://www.local.ch/favicon.ico) local.ch i18n helpers
 
-Features: 
+**i18n-docs** is a ruby gem that helps you to keep translations stored in Google Docs. This makes it easier for translators and project members to coordinate changes and updates. In addition, the standard features of Google Docs are super handy for this process: revision tracking, authorization, publishing, etc. 
 
-* check YAML files for missing translations
-* export YAML files to CSV files for uploading them to Google Spreadsheet
+Although we at use it with Google Docs, it could be used with any CSV file.
+
+## Features: 
+
 * download translations from multiple Google spreadsheets and store to YAML files
+* import/export YAML files with a Google Spreadsheet
+* check YAML files for missing translations (`rake i18n:find_missing_keys`)
 
-## Rake Tasks
+## Usage
+
+Add the GEM to your Rails project:
+
+    gem 'i18n-docs'
+
+The rake task `i18n:import_translations` requires following configuration file in `config/translations.yml`:
+
+    files:
+      naviagion.yml: "https://docs.google.com/spreadsheet/pub?key=ab43...34f3&single=true&gid=0&output=csv"
+      forms.yml: "https://docs.google.com/spreadsheet/pub?key=0Ap...XveWc&single=true&gid=0&output=csv"
+
+This defines which translations files should be created by exporting a Google Spreadsheet. The content of the Spreadsheet URL is stored to a file called e.g. `example1.yml` within folders `config/locales/en` and all other detected locales.
+
+### Rake Tasks
 
 Following Rake tasks are added by the GEM to your Rails project:
 
@@ -19,32 +36,23 @@ Following Rake tasks are added by the GEM to your Rails project:
 * rake i18n:missing_keys
   Find and list translation keys that do not exist in all locales
 
-## Installation
 
-Add the GEM to your Rails project:
+## Setup at Google Docs
 
-    gem 'localch-i18n', :git => 'git@github.com:local-ch/ws-localch-i18n.git'
-
-
-The rake task `i18n:import_translations` requires following configuration file in `config/translations.yml`:
-
-    files:
-      example1.yml: "https://docs.google.com/spreadsheet/pub?key=0ApnemdIdiDXedGNrcTZoYnNqbjZQb09qeWpsX0JveWc&single=true&gid=0&output=csv"
-      example2.yml: "https://docs.google.com/spreadsheet/pub?key=0ApnemdIdiDXsfrtrcTZoYnNqbjZQb09qeWpsX0JveWc&single=true&gid=0&output=csv"
-
-It defines which translations files should be created by exporting a Google Spreadsheet. The content of the Spreadsheet URL is stored to a file called e.g. `example1.yml` within folders `config/locales/en` and all other detected locales.
-
-## Usage
-
-* First run `rake i18n:export_translations`. This will place current translations in the `tmp` folder of the application.
-* Upload generated files to Google Docs
-* In Google Docs, use option `File -> Publish To the Web` to make link to CSV spreadsheet you need for next step
-* In `config` folder of the application, create `translations.yml` file with structure that is explained above in the installation section.
-* Run `rake i18n:export_translations` to import translations from the Google Docs.
-* From now on you should only update translations in Google Docs and run `rake i18n:import_translations` in the application to get changes.
+* At Google Docs, create a new spreadsheet for your translations. The first column is the translation key, the other columns are the languages:
+![screenshot](http://dl.dropbox.com/u/385855/Screenshots/bamr.png)
+* use option `File -> Publish To the Web` 
+![screenshot](http://dl.dropbox.com/u/385855/Screenshots/2-lp.png)
+* use **get a link** to generate a unique url that points to the CSV spreadsheet
+![screenshot](http://dl.dropbox.com/u/385855/Screenshots/oom_.png)
+* From now on you should only update translations in Google Docs and run `rake i18n:import_translations` in the application to get changes. You can also export your 
 
 
 ## CHANGELOG
+
+### 0.0.4
+
+Update docs, license. Push to Rubygems.org.
 
 ### 0.0.3
 
@@ -54,4 +62,8 @@ It defines which translations files should be created by exporting a Google Spre
 
 * removed loading of `awesome_print` from the rake task. It was breaking
   download
+
+### Credits/License
+
+This gem is sponsored by [local.ch](http://www.local.ch/). It is licensed under the [MIT license](http://en.wikipedia.org/wiki/MIT_License). If you're a ruby developer and want to work with us in Switzerland, please check out our [jobs page](http://local-ch.github.com/).
 
