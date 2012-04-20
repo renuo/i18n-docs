@@ -46,6 +46,10 @@ It defines which translations files should be created by exporting a Google Spre
 
 ## CHANGELOG
 
+### 0.0.3
+
+* Open sourced: changed name and description.
+
 ### 0.0.2
 
 * removed loading of `awesome_print` from the rake task. It was breaking

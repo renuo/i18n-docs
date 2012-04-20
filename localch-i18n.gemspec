@@ -1,13 +1,13 @@
 Gem::Specification.new do |s|
-  s.name        = 'localch-i18n'
-  s.version     = '0.0.2'
-  s.date        = '2012-01-29'
-  s.summary     = "local.ch i18n helpers"
-  s.description = "GEM providing helper scripts to manage i18n translations. Features: check YAML files for missing translations; export YAML files to CSV; download translations from multiple Google spreadsheets and store to YAML files"
-  s.authors     = ["Georg Kunz"]
+  s.name        = 'i18n-docs'
+  s.version     = '0.0.3'
+  s.date        = '2012-04-20'
+  s.summary     = "Maintain translations in Google Docs and export them to your Rails project."
+  s.description = "GEM providing helper scripts to manage i18n translations in Google Docs. Features: check YAML files for missing translations; export YAML files to CSV; download translations from multiple Google spreadsheets and store to YAML files"
+  s.authors     = ["Georg Kunz", "Ivan Jovanovic", "Jeremy Seitz"]
   s.email       = 'georg.kunz@local.ch'
   s.files       = `git ls-files`.split("\n")
-  s.homepage    = 'https://github.com/local-ch/spreadsheet-i18n'
+  s.homepage    = 'https://github.com/local-ch/i18n-docs'
 
   # dependencies
   s.add_dependency('bundler')
