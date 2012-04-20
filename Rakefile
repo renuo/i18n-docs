@@ -9,7 +9,7 @@ rescue Bundler::BundlerError => e
 end
 
 require 'bundler/gem_tasks'
-require 'localch-i18n'
+require 'i18n-docs'
 
 task :default => [:test]
 
