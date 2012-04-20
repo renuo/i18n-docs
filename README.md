@@ -1,5 +1,5 @@
 
-# ![local.ch](http://www.local.ch/favicon.ico) local.ch i18n helpers
+# ![local.ch](https://secure.gravatar.com/avatar/0f2b2e84b639b6e829e55d106b507e1b.png?d=retro&r=PG&s=64) local.ch i18n helpers
 
 **i18n-docs** is a ruby gem that helps you to keep translations stored in Google Docs. This makes it easier for translators and project members to coordinate changes and updates. In addition, the standard features of Google Docs are super handy for this process: revision tracking, authorization, publishing, etc. 
 
