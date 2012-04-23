@@ -43,10 +43,11 @@ module I18nDocs
       	yaml['files'].keys
       end
 
-      attr_accessor :locale
+      attr_accessor :locale, :file
 
       def exec_template
-      	files.each do |file|      	
+      	files.each do |file|      
+          self.file = file	
         	template "locale.erb", "config/locales/#{locale}/#{file}"
         end
       end
