@@ -50,7 +50,7 @@ module UnitTests
                           'b' => '4'
                          }
       
-      flat = @exporter.flatten_translations_hash(translation_hash, [])
+      flat = @exporter.flatten_translations_hash(translation_hash)
       assert_equal '1', flat['a.I']
       assert_equal '2', flat['a.II']
       assert_equal '3', flat['a.III.Z']

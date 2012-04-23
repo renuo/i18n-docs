@@ -10,3 +10,6 @@
 - Added 'normalize' generator to normalize tabs to spaces
 - Added 'copy_master' generator to use one locale translation as base for other locales
 - Added :normalize parameter on export to allow pre-normalization before export :)
+- Added :output-dir to export and allow ~ as HOME alias
+- Added :locales option to export to control which locales are exported
+- Added :auto-translate option to export and copy_master, using Google Translate API. Note: Requires key registration at Google (not free).

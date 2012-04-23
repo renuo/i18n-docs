@@ -8,6 +8,12 @@ module I18nDocs
       class_option  :normalize,  :type => :boolean, :default => false, 
           :desc => "Normalize locale files (with overwrite) before export?"
 
+      class_option  :locales,  :type => :array, :default => [], 
+          :desc => "locales to export for, default = all"
+
+      class_option  :output_dir,  :type => :string, :default => nil, 
+          :desc => "Output directory"
+
       def main_flow
         generate "i18n_docs:normalize #{locale_names} --overwrite" if normalize?
         show_files
@@ -26,7 +32,7 @@ module I18nDocs
 
       def show_files
         say ""
-        say "  Detected locales: #{locales}", :green
+        say "  Valid locales to export: #{export_locales}", :green
         say "  Detected files:"
         input_files.each {|f| say "    * #{File.basename(f)}", :green }
       end        
@@ -40,7 +46,7 @@ module I18nDocs
         
         input_files.each do |file|
           file = File.basename(file)
-          exporter = LocalchI18n::TranslationFileExport.new(source_dir, file, output_dir, locales)
+          exporter = LocalchI18n::TranslationFileExport.new(source_dir, file, output_dir, locales_to_export)
           exporter.export
         end
         
@@ -55,13 +61,25 @@ module I18nDocs
       end
 
       def output_dir
-        Rails.root.join('tmp')
+        @output_dir ||= begin
+          odir = options[:output_dir] || Rails.root.join('tmp')
+          odir = odir.gsub(/~/, ENV['HOME']) if odir =~ /~/
+          odir
+        end
       end
     
+      def locales_to_export
+        export_locales.empty? ? I18n.available_locales : export_locales
+      end
+    
+      def export_locales
+        locales.map(&:to_sym) & I18n.available_locales.map(&:to_sym)
+      end
+
       def locales
-        I18n.available_locales
+        options[:locales]
       end
-    
+
       def master_locale
         master || I18n.default_locale || :en
       end

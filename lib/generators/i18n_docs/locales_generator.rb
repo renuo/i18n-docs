@@ -36,6 +36,7 @@ module I18nDocs
       end
 
       def yaml
+        say("Missing #{files_src_path}", :red) and exit(0) unless File.exist?(files_src_path)
       	YAML::load File.open(files_src_path)
       end
 
@@ -43,11 +44,13 @@ module I18nDocs
       	yaml['files'].keys
       end
 
-      attr_accessor :locale, :file
+      attr_accessor :locale, :file, :key, :text
 
       def exec_template
       	files.each do |file|      
-          self.file = file	
+          self.file = file
+          self.key = file.gsub /\..+$/, ''	
+          self.text = options[:text] || "Hello from #{locale} locale"
         	template "locale.erb", "config/locales/#{locale}/#{file}"
         end
       end

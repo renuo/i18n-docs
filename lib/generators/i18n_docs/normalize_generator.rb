@@ -18,6 +18,9 @@ module I18nDocs
       class_option  :accept,  :type => :boolean, :default => false, 
           :desc => "Accept normalized files"
 
+      class_option  :debug,  :type => :boolean, :default => false, 
+          :desc => "Turn debug mode on?"
+
       argument      :locales, :type => :array,  :default => [], 
           :desc => "List of locales to normalize"
 
@@ -33,6 +36,10 @@ module I18nDocs
         options[:delete]
       end
 
+      def debug?
+        options[:delete]
+      end
+
       def accept?
         options[:accept]
       end
@@ -45,7 +52,7 @@ module I18nDocs
         path = locale_path(locale)
         say "Deleting normalized files for: #{locale}"
         normalized_files(path).each do |file|
-          say "Deleting: #{file}"
+          say "Deleting: #{file}" if debug?
           File.delete file
         end       
       end
@@ -62,7 +69,7 @@ module I18nDocs
           file_path = File.join(File.dirname(file), new_file_name)          
           FileUtils.mv file, file_path
 
-          say "Accepted for: #{new_file_name}"
+          say "Accepted for: #{new_file_name}" if debug?
         end       
       end
 
@@ -79,13 +86,13 @@ module I18nDocs
       def normalize_for locale = :en
         path = locale_path(locale)
         replacement = spaces_pr_tab
-        say "Normalizing tabs for: #{locale}"
-        say "In folder: #{path}"
+        say "Normalizing for: #{locale}" if debug?
+        say "In folder: #{path}" if debug?
 
         files(path).each do |file|
           normalize_file_content file
         end
-        say "Normalize completed"        
+        say "Normalize completed", :green        
       end        
 
       def locale_path locale
@@ -93,10 +100,12 @@ module I18nDocs
       end
 
       def normalize_file_content file
-        say "normalizing file: #{file} ..."
+        say "Normalizing file: #{file}" if debug?
+
         content = File.open(file).read
         replaced_content = content.gsub /\t/, spaces_pr_tab
-        
+        replaced_content = content.gsub /^---/, ''        
+
         File.open(new_file(file), 'w') do |f|
           f.puts replaced_content
         end

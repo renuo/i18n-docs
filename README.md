@@ -58,6 +58,12 @@ This defines which languages and translation files to import from a Google Sprea
 
 ## Generators
 
+## Translation APIs
+
+The built in (optional) auto-translation currently only supports Google Translation API.
+
+Please help us add Bing or some other translation API support :)
+
 ### Normalizer
 
 Normalizes yml files, converting tabs to 2 spaces pr. default
@@ -87,12 +93,32 @@ Use one locale as master and copy into other locales while changing the root key
 
 `$ rails g i18n_docs:copy_master da --into se no`
 
+Auto translate from the master locale file to each locale generated. 
+
+`$ rails g i18n_docs:copy_master da --into sv --auto-translate`
 
 ### Export
 
 Export locale files as CSV files to upload to Google Docs
 
 `$ rails g i18n_docs:export`
+
+Use specific (here danish) locale as the master locale
+
+`$ rails g i18n_docs:export da`
+
+Auto translate from the master locale file to each csv generated. 
+
+`$ rails g i18n_docs:export da --auto-translate`
+
+It also supports a locales option to control for which locales to export.
+The normalize option can be used to pre-normalize before export using the normalize generator.
+
+`$ rails g i18n_docs:export da --locales sv --auto-translate --normalize`
+
+Finally the outpur-dir option can be used to control where to export the cvs files. If you use the ~ (HOME alias) it will substitute with ENV['HOME'] and work as expected ;)
+
+`$ rails g i18n_docs:export da --locales sv --output-dir "~/Documents/csv"`
 
 ### Find missing keys
 
