@@ -24,21 +24,34 @@ Add the GEM to your Rails project:
 Create a configuration file in `config/translations.yml`:
 
     files:
-      navigation.yml: "https://docs.google.com/spreadsheet/pub?key=ab43...34f3&single=true&gid=0&output=csv"
-      forms.yml: "https://docs.google.com/spreadsheet/pub?key=0Ap...XveWc&single=true&gid=0&output=csv"
+      pre_signup.yml: "https://docs.google.com/spreadsheet/pub?key=ab43...34f3&single=true&gid=0&output=csv"
+      navigation.yml: "https://docs.google.com/spreadsheet/pub?key=0Ap...XveWc&single=true&gid=0&output=csv"
       ... etc ...
 
-Make the directories and files to hold the translations (this is a bit annoying, and will be automated soon):
+Make the directories and files to hold the translations:
 
-    $ for lang in de en it fr; do \
-        mkdir -p config/locales/$lang; \
-        touch config/locales/$lang/navigation.yml; \
-        touch config/locales/$lang/forms.yml; \
-      done
+```
+$ rails g i18n_docs:locales da se no
+      create  config/locales/da/your_combination.yml.yml
+      create  config/locales/da/pre_signup.yml.yml
+      create  config/locales/da/navigation.yml.yml
+      create  config/locales/da/extras.yml.yml
+      create  config/locales/da/your_team.yml.yml
+      create  config/locales/se/your_combination.yml.yml
+      create  config/locales/se/pre_signup.yml.yml
+      create  config/locales/se/navigation.yml.yml
+      create  config/locales/se/extras.yml.yml
+      create  config/locales/se/your_team.yml.yml
+      create  config/locales/no/your_combination.yml.yml
+      create  config/locales/no/pre_signup.yml.yml
+      create  config/locales/no/navigation.yml.yml
+      create  config/locales/no/extras.yml.yml
+      create  config/locales/no/your_team.yml.yml
+```
       
 Finally, let Rails know what locales you will be using. Add this to `config/application.rb`:
 
-    # locals to support:
+    # locales to support:
     I18n.available_locales = [:en,:de,:it,:fr]
 
 This defines which languages and translation files to import from a Google Spreadsheet. The content of the Spreadsheet URL is stored to a file called e.g. `example1.yml` within folders `config/locales/en` and all other detected locales.

@@ -19,7 +19,17 @@ module I18nDocs
         end
       end
 
+      def instructions
+      	say "----------------------------------"
+      	say "Add this to config/application.rb:"
+      	say "I18n.available_locales = #{available_locales}", :green
+      end
+
       protected
+
+      def available_locales
+      	locales.map(&:to_sym).inspect
+      end
 
       def files_src_path
       	File.join Rails.root, 'config', 'translations.yml'
