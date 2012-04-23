@@ -56,12 +56,34 @@ Finally, let Rails know what locales you will be using. Add this to `config/appl
 
 This defines which languages and translation files to import from a Google Spreadsheet. The content of the Spreadsheet URL is stored to a file called e.g. `example1.yml` within folders `config/locales/en` and all other detected locales.
 
+## Generators
+
+### Export
+
+Export locale files as CSV files to upload to Google Docs
+
+`$ rails g i18n_docs:export`
+
+### Find missing keys
+
+Find and list translation keys that do not exist in all locales
+
+`$ rails g i18n_docs:missing_keys`
+
+### Import
+
+Import csv files from Google Docs as locale files
+
+`$ rails g i18n_docs:import`
+
 ### Rake Tasks
 
 Following Rake tasks are added by the GEM to your Rails project:
 
 * `rake i18n:export_translations`
   Export all language files to CSV files (only files contained in 'en' folder are considered)
+* `rake i18n:export_translations[da]` (override default: only files in 'da' folder)
+
 * `rake i18n:import_translations`
   Download translations from Google Spreadsheet and save them to YAML files.
 * `rake i18n:missing_keys`
