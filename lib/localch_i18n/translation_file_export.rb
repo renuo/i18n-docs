@@ -42,7 +42,11 @@ module LocalchI18n
     def load_translations
       @locales.each do |locale|
         translation_hash = load_language(locale)
-        @translations[locale] = flatten_translations_hash(translation_hash)
+        unless translation_hash.blank?
+          @translations[locale] = flatten_translations_hash(translation_hash)
+        else
+          puts "Error: No translations for locale - #{locale}"
+        end
       end
     end
     
@@ -52,18 +56,29 @@ module LocalchI18n
       
       input_file = File.join(@source_dir, locale, @source_file)
       translations = {}
+      # puts "  input file: #{input_file}"
       translations = YAML.load_file(input_file) if File.exists?(input_file)
+
+      # Hack to fix "bug" when 'no' for Norway encountered. 
+      # Parser turns it into false as the key
+      no = translations[false]
+      translations['no'] = no
+
+      puts "  No translations found!" and return if translations.empty?
+      puts "  Missing or bad translations root key:" and return if !translations[locale]
       translations[locale]
     end
     
     def flatten_translations_hash(translations, parent_key = [])
       flat_hash = {}
-      
       translations.each do |key, t|
         current_key = parent_key.dup << key
-        if t.is_a?(Hash)
+        case t
+        when Hash
           # descend
           flat_hash.merge!(flatten_translations_hash(t, current_key))
+        when nil
+          puts "nil for key: #{key}"
         else
           # leaf -> store as value for key
           flat_hash[current_key.join('.')] = t

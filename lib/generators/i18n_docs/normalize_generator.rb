@@ -1,3 +1,6 @@
+require 'pathname'
+require 'fileutils'
+
 module I18nDocs
   module Generators
     class NormalizeGenerator < Rails::Generators::Base
@@ -9,22 +12,72 @@ module I18nDocs
       class_option  :overwrite,  :type => :boolean, :default => false, 
           :desc => "Overwrite existing locale files?"
 
+      class_option  :delete,  :type => :boolean, :default => false, 
+          :desc => "Delete old normalized files?"
+
+      class_option  :accept,  :type => :boolean, :default => false, 
+          :desc => "Accept normalized files"
+
       argument      :locales, :type => :array,  :default => [], 
           :desc => "List of locales to normalize"
+
+      def main
+        delete_normalized and return if delete?
+        accept_normalized and return if accept?
+        tabs_to_spaces
+      end
+                    
+      protected
+
+      def delete?
+        options[:delete]
+      end
+
+      def accept?
+        options[:accept]
+      end
+
+      def delete_normalized
+        locales.each {|locale| delete_for locale }        
+      end
+
+      def delete_for locale = :all
+        path = locale_path(locale)
+        say "Deleting normalized files for: #{locale}"
+        normalized_files(path).each do |file|
+          say "Deleting: #{file}"
+          File.delete file
+        end       
+      end
+
+      def accept_normalized
+        locales.each {|locale| accept_for locale }        
+      end
+
+      def accept_for locale = :all
+        path = locale_path(locale)
+        say "Accepting normalized files for: #{locale}"
+        normalized_files(path).each do |file|          
+          new_file_name = File.basename(file).gsub /^_/, ''
+          file_path = File.join(File.dirname(file), new_file_name)          
+          FileUtils.mv file, file_path
+
+          say "Accepted for: #{new_file_name}"
+        end       
+      end
+
 
       def tabs_to_spaces
         say "Normalizing tabs for locales: #{locales} - with #{spaces} spaces"
         locales.empty? ? normalize_for(:all) : for_locales
       end
 
-      protected
-
       def for_locales
         locales.each {|locale| normalize_for locale }
       end        
 
       def normalize_for locale = :en
-        path = (locale != :all) ? File.join(locales_root, locale) : locales_root
+        path = locale_path(locale)
         replacement = spaces_pr_tab
         say "Normalizing tabs for: #{locale}"
         say "In folder: #{path}"
@@ -34,6 +87,10 @@ module I18nDocs
         end
         say "Normalize completed"        
       end        
+
+      def locale_path locale
+        (locale != :all) ? File.join(locales_root, locale) : locales_root
+      end
 
       def normalize_file_content file
         say "normalizing file: #{file} ..."
@@ -61,6 +118,14 @@ module I18nDocs
         Dir[File.join(path,'*.yml')]
       end
 
+      def normalized_files path
+        Dir[File.join(path,'_*.yml')]
+      end
+
+      def unnormalized_files path
+        Dir[File.join(path,'[^_]*.yml')]
+      end
+
       def spaces_pr_tab
         @spaces ||= (1..spaces).to_a.inject("") {|res, e| res << ' ' }
       end
@@ -72,10 +137,6 @@ module I18nDocs
       def num_spaces
         spaces.to_i
       end
-
-      # def sub file
-      #   file.gsub /["$`]/, "\\#{$1}"
-      # end
 
       def locales_root
         Rails.root.join 'config', 'locales'

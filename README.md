@@ -73,6 +73,21 @@ In addition you can use the space option to customize spaces pr tab.
 
 `$ rails g i18n_docs:normalize da se --spaces 4`
 
+If you want to clean up and remove the normalized files, use the delete option
+
+`$ rails g i18n_docs:normalize da se --delete`
+
+If you want to accept all normalized files prefixed with '_'
+
+`$ rails g i18n_docs:normalize da se --accept`
+
+## Copy master
+
+Use one locale as master and copy into other locales while changing the root key :) 
+
+`$ rails g i18n_docs:copy_master da --into se no`
+
+
 ### Export
 
 Export locale files as CSV files to upload to Google Docs

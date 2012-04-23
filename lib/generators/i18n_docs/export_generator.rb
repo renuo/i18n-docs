@@ -3,14 +3,26 @@ module I18nDocs
     class ExportGenerator < Rails::Generators::Base
       desc "Export locale files as CSV files"
 
-      argument     :base_locale,  :type => :string,  :default => 'en', :desc => "Base locale (default = en)"
+      argument     :master,  :type => :string,  :default => nil, :desc => "Master locale, default = I18n.default_locale"
       
+      class_option  :normalize,  :type => :boolean, :default => false, 
+          :desc => "Normalize locale files (with overwrite) before export?"
+
       def main_flow
+        generate "i18n_docs:normalize #{locale_names} --overwrite" if normalize?
         show_files
         export_files
       end        
 
       protected
+
+      def normalize?
+        options[:normalize]
+      end
+
+      def locale_names
+        locales.join(' ')
+      end
 
       def show_files
         say ""
@@ -50,8 +62,12 @@ module I18nDocs
         I18n.available_locales
       end
     
+      def master_locale
+        master || I18n.default_locale || :en
+      end
+
       def input_files
-        Dir[File.join(source_dir, base_locale, '*.yml')]
+        Dir[File.join(source_dir, master_locale.to_s, '*.yml')]
       end
     end
   end

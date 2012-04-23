@@ -2,6 +2,11 @@
 
 @kristianmandrup
 - Fixed compatibility with Ruby 1.8.7
-- Added locales generator
 - Added import, export and missing_keys generator for i18n-docs generator namespace
-- Allow export generator to use any locale as base
+- Allow export generator to use any locale as base (I18n.default_locale is now  the default!)
+- Fixed export bug when locale is 'no' for norway ('no' is treated as false value)
+- Added 'locales' generator to generate base locale files
+- Use I18n.default_locale as the default master locale for all generators
+- Added 'normalize' generator to normalize tabs to spaces
+- Added 'copy_master' generator to use one locale translation as base for other locales
+- Added :normalize parameter on export to allow pre-normalization before export :)
