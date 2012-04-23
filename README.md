@@ -58,6 +58,21 @@ This defines which languages and translation files to import from a Google Sprea
 
 ## Generators
 
+### Normalizer
+
+Normalizes yml files, converting tabs to 2 spaces pr. default
+This is useful before export in order to better ensure that yaml files have valid syntax.
+
+`$ rails g i18n_docs:normalize da`
+
+By default, the normalized files are prefixed with '_'. In order to overwrite existing files, use the overwrite option.
+
+`$ rails g i18n_docs:normalize da --overwrite true`
+
+In addition you can use the space option to customize spaces pr tab.
+
+`$ rails g i18n_docs:normalize da se --spaces 4`
+
 ### Export
 
 Export locale files as CSV files to upload to Google Docs

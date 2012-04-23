@@ -22,7 +22,7 @@ module I18nDocs
       def instructions
       	say "----------------------------------"
       	say "Add this to config/application.rb:"
-      	say "I18n.available_locales = #{available_locales}", :green
+      	say "config.i18n.available_locales = #{available_locales}", :green
       end
 
       protected
