@@ -160,25 +160,12 @@ Following Rake tasks are added by the GEM to your Rails project:
 
 *Pull requests welcome!*
 
-* create mocked tests that do not have to download our sample CSV files
-* automate the creation of files in config/locales
-* automate the detection of which languages are supported
-* validate use with rails 2.x, other 3.x versions
+* Create mocked tests that do not have to download our sample CSV files
+* Support more Translation APIs besides Google, fx Bing etc.
 
 ## CHANGELOG
 
-### 0.0.4
-
-Update docs, license. Push to Rubygems.org.
-
-### 0.0.3
-
-* Open sourced: changed name and description.
-
-### 0.0.2
-
-* removed loading of `awesome_print` from the rake task. It was breaking
-  download
+See CHANGELOG file
 
 ### Credits/License
 
