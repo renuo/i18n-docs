@@ -14,11 +14,19 @@ require 'localch_i18n/translation_file_export'
 require 'to_lang'
 
 module I18nDocs
-	def self.add_locale_paths_for locales
-		locales.each do |locale|
-			path = Rails.root.join('config', 'locales', locale.to_s, '*.yml')
-			puts "path: #{path}"
-		  I18n.load_path += Dir[path]
+	class << self
+		attr_writer :debug
+
+		def debug?
+			debug
+		end
+
+		def add_locale_paths_for locales
+			locales.each do |locale|
+				path = Rails.root.join('config', 'locales', locale.to_s, '*.yml')
+				puts "Adding locale path: #{path}" if debug?
+			  I18n.load_path += Dir[path]
+			end
 		end
 	end
 end
