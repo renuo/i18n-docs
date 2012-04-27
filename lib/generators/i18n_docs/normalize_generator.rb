@@ -116,8 +116,8 @@ module I18nDocs
       end
 
       def normalized_file_name file_name
-        new_file_name = '_' + File.basename(file)
-        File.join(File.dirname(file), new_file_name)          
+        new_file_name = '_' + File.basename(file_name)
+        File.join(File.dirname(file_name), new_file_name)          
       end
 
       def overwrite?
