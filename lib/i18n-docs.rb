@@ -15,10 +15,14 @@ require 'to_lang'
 
 module I18nDocs
 	class << self
-		attr_writer :debug
+		attr_accessor :debug
 
 		def debug?
-			debug
+			@debug
+		end
+
+		def debug!
+			@debug = true
 		end
 
 		def add_locale_paths_for locales
