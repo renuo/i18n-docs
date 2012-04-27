@@ -96,7 +96,7 @@ module I18nDocs
      	end
 
       def text_has_args? text
-        text =~ /%{/ || text =~ /%s/
+        text =~ /%\{/ || text =~ /%s/
       end
 
       def locale_path locale
