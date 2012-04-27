@@ -13,10 +13,20 @@ require 'localch_i18n/translation_file_export'
 
 require 'to_lang'
 
+module I18nDocs
+	def self.add_locale_paths_for locales
+		locales.each do |locale|
+			path = Rails.root.join('config', 'locales', locale.to_s, '*.yml')
+		  I18n.load_path += Dir[path]
+		end
+	end
+end
+
+
 module I18n
 	class << self
 		attr_accessor :google_translation_key
-	end
+	end	
 end
 
 if defined?(Rails)
