@@ -105,6 +105,7 @@ module I18nDocs
         content = File.open(file).read
         replaced_content = content.gsub /\t/, spaces_pr_tab
         replaced_content = content.gsub /^---/, ''        
+        replaced_content = content.gsub /^no:/, "'no':"
 
         File.open(new_file(file), 'w') do |f|
           f.puts replaced_content
