@@ -7,18 +7,5 @@ Gem::Specification.new do |s|
   s.authors     = ["Georg Kunz", "Ivan Jovanovic", "Jeremy Seitz", "Kristian Mandrup"]
   s.email       = 'jeremy.seitz@local.ch'
   s.files       = `git ls-files`.split("\n")
-  s.homepage    = 'https://github.com/local-ch/i18n-docs'
-
-  # dependencies
-  s.add_dependency('bundler')
-  s.add_dependency('rake')
-  s.add_dependency('deep_merge')
-
-  # s.add_dependency('google-translate')
-  s.add_dependency('to_lang')
-  # s.add_dependency('bing_translator')
-  
-  s.add_development_dependency('mocha')
-  s.add_development_dependency('awesome_print')
-  
+  s.homepage    = 'https://github.com/local-ch/i18n-docs'  
 end

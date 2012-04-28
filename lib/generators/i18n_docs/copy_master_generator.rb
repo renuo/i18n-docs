@@ -83,7 +83,7 @@ module I18nDocs
 
         translated_hash = {}
         flat_hash.each do |key, text|
-          translation = text # text_has_args?(text) ? text : translate_it(text, locale)
+          translation = text
           trans_row_hash = row_to_hash key, translation
           translated_hash.deep_merge!(trans_row_hash)
         end
@@ -94,10 +94,6 @@ module I18nDocs
           file.puts YAML::dump(final_translation_hash)
         end
      	end
-
-      def text_has_args? text
-        text =~ /%\{/ || text =~ /%s/
-      end
 
       def locale_path locale
         (locale != :all) ? File.join(locales_root, locale) : locales_root
