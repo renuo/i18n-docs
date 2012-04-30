@@ -1,5 +1,5 @@
 module LocalchI18n
-	module Translator
+	class Translator
 	  # Subclass this class in order to support another translation service
 	  class Service
 
@@ -28,4 +28,5 @@ module LocalchI18n
 	    end
 		end
 	end
+end
 	      

@@ -57,3 +57,5 @@ module LocalchI18n
     def text_has_args? text
       text =~ /%\{/
     end
+  end
+end
