@@ -46,53 +46,19 @@ module LocalchI18n
         end
       end
 			if options[:auto_translate] || auto_translate?
-      	auto_translate(flat_hash) 
+      	translator.auto_translate(flat_hash) 
       else
       	flat_hash
       end
     end
 
     def auto_translate?
-    	false
+      false
     end
 
-    # TODO: 
-    #   Refactor all this translation
-    #   should be part of seperate Translation class
-    def auto_translate(flat_hash)
-    	raise '#auto_translate method requires a #current_locale method in the same module' unless respond_to? :current_locale
-    	translated_hash = {}
-    	flat_hash.each do |key, text|
-				translated_hash[key] = translate_it text, current_locale
-			end
-			translated_hash
+    attr_accessor :translator
+    def translator
+      @translator ||= LocalchI18n::Translator.new
     end
-
-    def translate_it text, locale
-      text_has_args? ? translate_with_args(text) : text.translate(current_locale)
-    end
-
-    # split out args parts and pure text parts
-    # translate non-arg parts and use arg parts "as is", while re-assembling
-    def translate_with_args text, locale      
-      parts = text.split /(%\{\w+\})/
-      parts.inject("") do |res, part|
-        res << var_translate(text, locale)
-      end
-    end
-
-    # translate non-arg part but use arg part "as is"
-    def var_translate text, locale
-      is_var?(part) ? part : part.translate(locale)
-    end
-
-    # is it a variable part?
-    def is_var? text
-      text =~ /%\{\w+\}/
-    end
-
-    def text_has_args? text
-      text =~ /%\{/
-    end    
   end
 end

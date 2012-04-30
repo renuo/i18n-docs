@@ -23,6 +23,7 @@ module I18nDocs
 
       protected
 
+      # TODO: refactor this when/if we support other translation services 
       def check_translate_key
         unless I18n.google_translation_key
           say %q{You must set I18n.google_translation_key to a valid API key.
@@ -30,8 +31,7 @@ module I18nDocs
           exit(0)
         end
 
-        say "Using google translation key: #{I18n.google_translation_key}"
-        ToLang.start(I18n.google_translation_key)
+        say "Using google translation key: #{I18n.google_translation_key}"        
       end
 
       def master_locale
@@ -67,17 +67,21 @@ module I18nDocs
       		f.puts local_content
       	end
 
-      	perform_auto_translate(local_file, locale) if auto_translate?
+        # auto translate local file just written 
+      	auto_translate_for(local_file, locale) if auto_translate?
       end
 
      	attr_accessor :content
       attr_reader :current_locale
 
+      # override method in Util module to use options
       def auto_translate?
         options[:auto_translate]
       end
 
-     	def perform_auto_translate(local_file, locale)
+      # flatten_translations_hash has already done the translation
+      # if auto_translate? returned true
+     	def auto_translate_for(local_file, locale)
         @current_locale = locale
      		flat_hash = flatten_translations_hash load_translations_for(local_file, locale)
 
@@ -89,6 +93,7 @@ module I18nDocs
         end
         translated_hash
 
+        # write the translated file
         File.open(local_file, 'w') do |file|
           final_translation_hash = {locale => translated_hash}
           file.puts YAML::dump(final_translation_hash)

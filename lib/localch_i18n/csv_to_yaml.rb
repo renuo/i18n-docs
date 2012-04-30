@@ -30,7 +30,7 @@ module LocalchI18n
 
 
     def process
-      CSV.foreach(@input_file, :headers => true) do |row|
+      FasterCSV.foreach(@input_file, :headers => true) do |row|
         process_row(row.to_hash)
       end
     end

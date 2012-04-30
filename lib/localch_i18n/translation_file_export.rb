@@ -27,7 +27,7 @@ module LocalchI18n
       
       puts "    #{@source_file}: write CSV to '#{@output_file}' \n\n"
       
-      CSV.open(@output_file, "wb") do |csv|
+      FasterCSV.open(@output_file, "wb") do |csv|
         csv << (["key"] + @locales)
                 
         if @translations.empty? || !@translations[main_locale] || @translations[main_locale].keys.empty?
