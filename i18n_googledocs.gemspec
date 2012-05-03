@@ -22,6 +22,8 @@ Gem::Specification.new do |s|
     "LICENSE.md",
     "README.md",
     "Rakefile",
+    "VERSION",
+    "i18n_googledocs.gemspec",
     "lib/generators/i18n_docs/copy_master_generator.rb",
     "lib/generators/i18n_docs/export_generator.rb",
     "lib/generators/i18n_docs/import_generator.rb",
