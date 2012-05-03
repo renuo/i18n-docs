@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name        = 'i18n-docs'
+  s.name        = 'i18n_googledocs'
   s.version     = '0.1.3'
   s.date        = '2012-05-02'
   s.summary     = "Maintain translations in Google Docs and export them to your Rails project."

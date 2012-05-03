@@ -2,7 +2,6 @@ require 'test/unit'
 require 'fileutils'
 require 'localch-i18n'
 
-
 module TestHelper
   
   def fixture_path

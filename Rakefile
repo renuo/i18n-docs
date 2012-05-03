@@ -9,7 +9,7 @@ rescue Bundler::BundlerError => e
 end
 
 require 'bundler/gem_tasks'
-require 'i18n-docs'
+require 'i18n_googledocs'
 
 task :default => [:test]
 
