@@ -1,0 +1,37 @@
+## 
+
+### 0.1.3
+
+2012-05-02 @kristianmandrup
+
+Various fixes. Renamed gem.
+
+### 0.1.1 
+
+2012-04-23 @kristianmandrup
+
+- Fixed compatibility with Ruby 1.8.7
+- Added import, export and missing_keys generator for i18n-docs generator namespace
+- Allow export generator to use any locale as base (I18n.default_locale is now  the default!)
+- Fixed export bug when locale is 'no' for norway ('no' is treated as false value)
+- Added 'locales' generator to generate base locale files
+- Use I18n.default_locale as the default master locale for all generators
+- Added 'normalize' generator to normalize tabs to spaces
+- Added 'copy_master' generator to use one locale translation as base for other locales
+- Added :normalize parameter on export to allow pre-normalization before export :)
+- Added :output-dir to export and allow ~ as HOME alias
+- Added :locales option to export to control which locales are exported
+- Added :auto-translate option to export and copy_master, using Google Translate API. Note: Requires key registration at Google (not free).
+
+### 0.0.4
+
+Update docs, license. Push to Rubygems.org.
+
+### 0.0.3
+
+* Open sourced: changed name and description.
+
+### 0.0.2
+
+* removed loading of `awesome_print` from the rake task. It was breaking
+  download

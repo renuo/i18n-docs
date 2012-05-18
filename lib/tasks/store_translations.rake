@@ -23,15 +23,18 @@ namespace :i18n do
     
   end
   
-  desc "Export all language files to CSV files (only files contained in en folder are considered)"
-  task :export_translations => :environment do
+  # http://stackoverflow.com/questions/1357639/rails-rake-how-to-pass-in-arguments-to-a-task-with-environment
+  desc "Export all language files to CSV files (only files contained in base folder are considered, default = en)"
+  task :export_translations, [:base] => :environment do |t, args|
     raise "'Rails' not found! Tasks can only run within a Rails application!" if !defined?(Rails)
     
+    args.with_defaults(:base => 'en')
+
     source_dir  = Rails.root.join('config', 'locales')
     output_dir  = Rails.root.join('tmp')
     locales     = I18n.available_locales
     
-    input_files = Dir[File.join(source_dir, 'en', '*.yml')]
+    input_files = Dir[File.join(source_dir, base_locale, '*.yml')]
     
     puts ""
     puts "  Detected locales: #{locales}"

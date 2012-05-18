@@ -1,4 +1,3 @@
-
 module LocalchI18n
   class MissingKeysFinder
     def initialize(backend)
