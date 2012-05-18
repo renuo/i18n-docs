@@ -25,11 +25,11 @@ module I18nDocs
 		end
 
 		def add_locale_paths_for locales
-			locales.each do |locale|
-				path = Rails.root.join('config', 'locales', locale.to_s, '*.yml')
-				puts "Adding locale path: #{path}" if debug?
-			  I18n.load_path += Dir[path]
-			end
+      locales.each do |locale|
+        path = Rails.root.join('config', 'locales', locale.to_s, '**/*.yml')
+        puts "Adding locale path: #{path}" if debug?
+        I18n.load_path += Dir[path]
+      end
 		end
 	end
 end
