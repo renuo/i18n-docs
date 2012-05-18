@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "i18n_googledocs"
-  s.version = "0.1.4"
+  s.version = "0.1.4.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Georg Kunz", "Ivan Jovanovic", "Jeremy Seitz", "Kristian Mandrup"]
-  s.date = "2012-05-03"
+  s.date = "2012-05-18"
   s.description = "GEM providing helper scripts to manage i18n translations in Google Docgem. Features: check YAML files for missing translations; export YAML files to CSV; download translations from multiple Google spreadsheets and store to YAML files"
   s.email = "jeremy.seitz@local.ch"
   s.extra_rdoc_files = [
