@@ -1,12 +1,12 @@
 # i18n-docs
 
-**i18n-docs** is a ruby gem that helps you to keep translations stored in Google Docs. This makes it easier for translators and project members to coordinate changes and updates. In addition, the standard features of Google Docs are super handy for this process: revision tracking, authorization, publishing, etc. 
+**i18n-docs** is a ruby gem that helps you to keep translations stored in Google Docs. This makes it easier for translators and project members to coordinate changes and updates. In addition, the standard features of Google Docs are super handy for this process: revision tracking, authorization, publishing, etc.
 
 Although we use it with Google Docs, it could be used with any CSV file.
 
 *this gem is currently in use and tested with Rails 3.1. It probably works with other 3.x versions, but probably not 2.x at the moment.*
 
-## Features: 
+## Features:
 
 * download translations from multiple Google spreadsheets and store to YAML files
 * import/export YAML files with a Google Spreadsheet
@@ -34,7 +34,7 @@ Make the directories and files to hold the translations (this is a bit annoying,
         touch config/locales/$lang/navigation.yml; \
         touch config/locales/$lang/forms.yml; \
       done
-      
+
 Finally, let Rails know what locales you will be using. Add this to `config/application.rb`:
 
     # locals to support:
@@ -47,7 +47,7 @@ This defines which languages and translation files to import from a Google Sprea
 Following Rake tasks are added by the GEM to your Rails project:
 
 * `rake i18n:export_translations`
-  Export all language files to CSV files (only files contained in 'en' folder are considered)
+  Export all language files to CSV files (ENV 'locale' have to set for non-'en' locales else only files contained in 'en' folder are considered)
 * `rake i18n:import_translations`
   Download translations from Google Spreadsheet and save them to YAML files.
 * `rake i18n:missing_keys`
@@ -58,11 +58,11 @@ Following Rake tasks are added by the GEM to your Rails project:
 
 * At Google Docs, create a new spreadsheet for your translations. The first column is the translation key, the other columns are the languages:
 ![screenshot](http://dl.dropbox.com/u/385855/Screenshots/bamr.png)
-* use option `File -> Publish To the Web` 
+* use option `File -> Publish To the Web`
 ![screenshot](http://dl.dropbox.com/u/385855/Screenshots/2-lp.png)
 * use **get a link** to generate a unique url that points to the CSV spreadsheet
 ![screenshot](http://dl.dropbox.com/u/385855/Screenshots/oom_.png)
-* From now on you should only update translations in Google Docs and run `rake i18n:import_translations` in the application to get changes. You can also export your 
+* From now on you should only update translations in Google Docs and run `rake i18n:import_translations` in the application to get changes. You can also export your
 
 ## Todo
 
