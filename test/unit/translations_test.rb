@@ -56,7 +56,7 @@ module UnitTests
       assert !File.exists?(expected_file)
       @translations.download_files
       assert File.exists?(expected_file)
+      assert File.open(expected_file).read.encoding.name == 'UTF-8'
     end
-    
   end
 end
