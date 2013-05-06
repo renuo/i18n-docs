@@ -27,14 +27,6 @@ Create a configuration file in `config/translations.yml`:
       forms.yml: "https://docs.google.com/spreadsheet/pub?key=0Ap...XveWc&single=true&gid=0&output=csv"
       ... etc ...
 
-Make the directories and files to hold the translations (this is a bit annoying, and will be automated soon):
-
-    $ for lang in de en it fr; do \
-        mkdir -p config/locales/$lang; \
-        touch config/locales/$lang/navigation.yml; \
-        touch config/locales/$lang/forms.yml; \
-      done
-
 Finally, let Rails know what locales you will be using. Add this to `config/application.rb`:
 
     # locals to support:

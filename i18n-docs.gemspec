@@ -10,10 +10,9 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/local-ch/i18n-docs'
 
   # dependencies
-  s.add_dependency('bundler')
   s.add_dependency('rake')
-  
-  s.add_development_dependency('mocha')
+
+  s.add_development_dependency('mocha', '~> 0.13.3')
   s.add_development_dependency('awesome_print')
-  
+
 end

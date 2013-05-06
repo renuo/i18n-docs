@@ -19,7 +19,12 @@ module LocalchI18n
 
     def write_files
       @locales.each do |locale|
-        output_file_path = defined?(Rails) ? Rails.root.join('config', 'locales', locale, @output_file) : "#{locale}_#{@output_file}"
+        if defined?(Rails)
+          output_file_path = Rails.root.join('config', 'locales', locale, @output_file)
+          FileUtils.mkdir_p File.dirname(output_file_path)
+        else
+          output_file_path = "#{locale}_#{@output_file}"
+        end
         File.open(output_file_path, 'w') do |file|
           final_translation_hash = {locale => @translations[locale]}
           file.puts YAML::dump(final_translation_hash)
