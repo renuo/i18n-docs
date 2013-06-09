@@ -61,9 +61,9 @@ module LocalchI18n
 
     def download(url, destination_file)
       puts "Download '#{url}' to '#{destination_file}'"
-      File.open(destination_file, 'wb') do |dst|
-        doc = open(url).read
-        dst.write(doc)
+      doc_data = open(url).read.force_encoding('UTF-8')
+      File.open(destination_file, 'w') do |dst|
+        dst.write(doc_data)
       end
     end
 
