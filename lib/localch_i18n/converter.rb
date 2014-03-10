@@ -1,13 +1,14 @@
 module LocalchI18n
 
-  class CsvToYaml
+  class Converter
 
-    attr_reader :input_file, :output_file, :locales, :translations
+    attr_reader :input_file, :output_file, :locales, :translations, :output_format
 
-    def initialize(input_file, output_file, locales = [])
+    def initialize(input_file, output_file, locales = [], output_format)
       @input_file = input_file
       @output_file = File.basename(output_file)
       @locales = locales.map(&:to_s)
+      @output_format = output_format
 
       # init translation hash
       @translations = {}
@@ -27,12 +28,20 @@ module LocalchI18n
         end
         File.open(output_file_path, 'w') do |file|
           final_translation_hash = {locale => @translations[locale]}
-          file.puts YAML::dump(final_translation_hash)
+          file.puts dump(final_translation_hash)
         end
         puts "File '#{@output_file}' for language '#{locale}' written to disc (#{output_file_path})"
       end
     end
 
+    def dump(hash)
+      case @output_format
+        when 'json'
+          hash.to_json
+        else
+          YAML::dump(hash)
+      end
+    end
 
     def process
       CSV.foreach(@input_file, headers: true) do |row|

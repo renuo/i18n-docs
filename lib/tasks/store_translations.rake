@@ -16,7 +16,8 @@ namespace :i18n do
 
     tmp_dir = Rails.root.join('tmp')
 
-    translations = LocalchI18n::Translations.new(config_file, tmp_dir)
+    output_format = ENV['output_format'] unless ENV['output_format'].blank?
+    translations = LocalchI18n::Translations.new(config_file, tmp_dir, output_format)
     translations.download_files
     translations.store_translations
     translations.clean_up

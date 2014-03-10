@@ -7,11 +7,12 @@
 module LocalchI18n
   class Translations
 
-    attr_accessor :locales, :tmp_folder, :config_file, :csv_files
+    attr_accessor :locales, :tmp_folder, :config_file, :csv_files, :output_format
 
-    def initialize(config_file = nil, tmp_folder = nil)
+    def initialize(config_file = nil, tmp_folder = nil, output_format = 'yaml')
       @config_file = config_file
       @tmp_folder  = tmp_folder
+      @output_format  = output_format
 
       @csv_files = {}
 
@@ -44,7 +45,7 @@ module LocalchI18n
 
     def store_translations
       @csv_files.each do |target_file, csv_file|
-        converter = CsvToYaml.new(csv_file, target_file, @locales)
+        converter = Converter.new(csv_file, target_file, @locales, output_format)
         converter.process
         converter.write_files
       end
