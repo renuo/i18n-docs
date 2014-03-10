@@ -44,7 +44,7 @@ module LocalchI18n
 
     def store_translations
       @csv_files.each do |target_file, csv_file|
-        converter = Converter.new(csv_file, target_file, @locales, @settings['output_format'])
+        converter = Converter.new(csv_file, target_file, @locales)
         converter.process
         converter.write_files
       end

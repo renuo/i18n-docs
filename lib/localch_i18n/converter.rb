@@ -2,13 +2,12 @@ module LocalchI18n
 
   class Converter
 
-    attr_reader :input_file, :output_file, :locales, :translations, :output_format
+    attr_reader :input_file, :output_file, :locales, :translations
 
     def initialize(input_file, output_file, locales = [], output_format)
       @input_file = input_file
       @output_file = File.basename(output_file)
       @locales = locales.map(&:to_s)
-      @output_format = output_format
 
       # init translation hash
       @translations = {}
@@ -28,14 +27,14 @@ module LocalchI18n
         end
         File.open(output_file_path, 'w') do |file|
           final_translation_hash = {locale => @translations[locale]}
-          file.puts dump(final_translation_hash)
+          file.puts dump(final_translation_hash, output_file_path)
         end
         puts "File '#{@output_file}' for language '#{locale}' written to disc (#{output_file_path})"
       end
     end
 
-    def dump(hash)
-      case @output_format
+    def dump(hash, output_file_path)
+      case File.extname(output_file_path)
         when 'json'
           hash.to_json
         else
