@@ -42,6 +42,7 @@ module LocalchI18n
 
     def process_row(row_hash)
       key = row_hash.delete('key')
+	  return unless key
 
       key_elements = key.split('.')
       @locales.each do |locale|
