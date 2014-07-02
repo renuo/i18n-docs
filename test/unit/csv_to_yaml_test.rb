@@ -128,6 +128,15 @@ module UnitTests
       @csv_to_yaml.write_files
       assert File.exists?(@output_file)
     end
+    
+    def test_key_has_spaces
+      row = {'key' => 'has. space', 'en' => 'yes', 'de' => 'ja'}
+      @csv_to_yaml.process_row(row)
+
+      translations = @csv_to_yaml.translations
+      assert_equal 'ja', translations['de']['has']['space']
+      assert_equal 'yes', translations['en']['has']['space']
+    end
 
   end
 end
