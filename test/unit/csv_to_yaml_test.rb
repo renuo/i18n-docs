@@ -36,6 +36,17 @@ module UnitTests
       assert_equal 'Welcome', translations['en']['homepage']['welcome']
     end
 
+    def test_empty_row
+      row1 = {'key' => 'homepage.meta.title', 'en' => 'Phonebook of Switzerland', 'de' => 'Telefonbuch der Schweiz'}
+      row2 = {'key' => nil, 'en' => 'Welcome', 'de' => 'Willkommen'}
+      @csv_to_yaml.process_row(row1)
+      @csv_to_yaml.process_row(row2)
+
+      translations = @csv_to_yaml.translations
+      assert_equal 'Telefonbuch der Schweiz', translations['de']['homepage']['meta']['title']
+      assert_equal 'Phonebook of Switzerland', translations['en']['homepage']['meta']['title']
+    end
+
     def test_row_containing_non_locale_columns
       row = {'key' => 'homepage.title', 'en' => "We are the Phonebook", 'de' => 'Test DE', 'comment' => "Test comment"}
       @csv_to_yaml.process_row(row)
