@@ -56,6 +56,7 @@ module LocalchI18n
       # Google Spreadsheet does not export empty strings and therefore we use '_' as a replacement char.
       value = '' if value == '_'
 
+      keys.each(&:strip!)
       tree = keys[0...-1]
       leaf = keys.last
       data_hash = tree.inject(@translations[locale]) do |memo, k|
