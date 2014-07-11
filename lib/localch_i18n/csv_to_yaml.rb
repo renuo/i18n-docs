@@ -1,5 +1,41 @@
 module LocalchI18n
 
+  class RabbitHole
+    def initialize(t, k)
+      @t = t
+      @k = k
+    end
+    def [](key)
+      key = key.gsub(/\s+/, "")
+      @k = @k + '.' + key
+      return self
+    end
+    def to_s
+      @t[@k].to_s
+    end
+    def ==(str)
+      @t[@k].to_s == str
+    end
+    alias_method :eql?, :==
+    alias_method :equal?, :==
+  end
+
+  class LocaleHashTable
+    def initialize
+      @t = {}
+    end
+
+    def [](key)
+      key = key.gsub(/\s+/, "")
+      return RabbitHole.new(@t, key)
+    end
+
+    def []=(key, value)
+      key = key.gsub(/\s+/, "")
+      @t[key] = value
+    end
+  end
+
   class CsvToYaml
 
     attr_reader :input_file, :output_file, :locales, :translations
@@ -12,7 +48,7 @@ module LocalchI18n
       # init translation hash
       @translations = {}
       @locales.each do |locale|
-        @translations[locale] = {}
+        @translations[locale] = LocaleHashTable.new
       end
     end
 
@@ -43,7 +79,7 @@ module LocalchI18n
     def process_row(row_hash)
       key = row_hash.delete('key')
 
-      key_elements = key.split('.')
+      key_elements = key.strip()
       @locales.each do |locale|
         raise "Locale missing for key #{key}! (locales in app: #{@locales} / locales in file: #{row_hash.keys.to_s})" if !row_hash.has_key?(locale)
         store_translation(key_elements, locale, row_hash[locale])
@@ -51,22 +87,12 @@ module LocalchI18n
     end
 
 
-    def store_translation(keys, locale, value)
-      return nil if value.nil?    # we don't store keys that don't have a valid value
+    def store_translation(key, locale, value)
+      # we don't store keys that don't have a valid value
+      return nil if value.nil?
       # Google Spreadsheet does not export empty strings and therefore we use '_' as a replacement char.
       value = '' if value == '_'
-
-      keys.each(&:strip!)
-      tree = keys[0...-1]
-      leaf = keys.last
-      data_hash = tree.inject(@translations[locale]) do |memo, k|
-        if memo.has_key?(k)
-          memo[k]
-        else
-          memo[k] = {}
-        end
-      end
-      data_hash[leaf] = value
+      @translations[locale][key] = value
     end
 
   end
