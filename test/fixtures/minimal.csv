@@ -22,3 +22,5 @@ tel.what_field_teaser,"e.g. Smith, Bar Odeon or 044 308 68 68","z.B. Müller, Ba
 tel.what_label,Who?,Wer?
 tel.where_field_teaser,"e.g. Bern, 8004 or Hauptstrasse","z.B. Luzern, 5700 oder Bergstrasse"
 tel.where_label,Where?,Wo?
+tel,"1","2"
+tel.child,"c1","c2"

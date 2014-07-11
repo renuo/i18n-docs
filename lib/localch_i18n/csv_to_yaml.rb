@@ -25,6 +25,10 @@ module LocalchI18n
       @t = {}
     end
 
+    def translations
+      @t
+    end
+
     def [](key)
       key = key.gsub(/\s+/, "")
       return RabbitHole.new(@t, key)
@@ -62,7 +66,7 @@ module LocalchI18n
           output_file_path = "#{locale}_#{@output_file}"
         end
         File.open(output_file_path, 'w') do |file|
-          final_translation_hash = {locale => @translations[locale]}
+          final_translation_hash = {locale => @translations[locale].translations}
           file.puts YAML::dump(final_translation_hash)
         end
         puts "File '#{@output_file}' for language '#{locale}' written to disc (#{output_file_path})"
@@ -79,10 +83,10 @@ module LocalchI18n
     def process_row(row_hash)
       key = row_hash.delete('key')
 
-      key_elements = key.strip()
+      key = key.strip()
       @locales.each do |locale|
         raise "Locale missing for key #{key}! (locales in app: #{@locales} / locales in file: #{row_hash.keys.to_s})" if !row_hash.has_key?(locale)
-        store_translation(key_elements, locale, row_hash[locale])
+        store_translation(key, locale, row_hash[locale])
       end
     end
 
