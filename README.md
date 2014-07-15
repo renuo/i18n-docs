@@ -29,8 +29,14 @@ Create a configuration file in `config/translations.yml`:
 
 Finally, let Rails know what locales you will be using. Add this to `config/application.rb`:
 
-    # locals to support:
-    I18n.available_locales = [:en,:de,:it,:fr]
+    module Web
+      class Application < Rails::Application
+        # add yml path
+        config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '*', '*.yml').to_s]
+        # locals to support:
+        config.i18n.available_locales = [:en,:de,:it,:fr]
+      end
+    end
 
 This defines which languages and translation files to import from a Google Spreadsheet. The content of the Spreadsheet URL is stored to a file called e.g. `example1.yml` within folders `config/locales/en` and all other detected locales.
 
