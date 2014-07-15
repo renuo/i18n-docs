@@ -15,6 +15,7 @@ namespace :i18n do
     raise "No config file 'config/translations.yml' found." if !File.exists?(config_file)
 
     tmp_dir = Rails.root.join('tmp')
+    Dir.mkdir(tmp_dir) unless Dir.exist?(tmp_dir)
 
     translations = LocalchI18n::Translations.new(config_file, tmp_dir)
     translations.download_files
