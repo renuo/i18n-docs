@@ -5,12 +5,17 @@
 require 'csv'
 require 'yaml'
 require 'open-uri'
-require 'localch_i18n/missing_keys_finder'
-require 'localch_i18n/csv_to_yaml'
-require 'localch_i18n/translations'
-require 'localch_i18n/translation_file_export'
 
+require 'rubygems'
+require 'google/api_client'
+require 'google_drive'
 
+require 'i18n-docs/missing_keys_finder'
+require 'i18n-docs/sub_translation_converter'
+require 'i18n-docs/translations_manager'
+require 'i18n-docs/translations_importer'
+require 'i18n-docs/translations_exporter'
+require 'i18n-docs/google_drive_manager'
 
 if defined?(Rails)
   class LocalchI18nTask < Rails::Railtie
