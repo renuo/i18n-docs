@@ -11,10 +11,8 @@ require 'google/api_client'
 require 'google_drive'
 
 require 'i18n-docs/missing_keys_finder'
-require 'i18n-docs/sub_translation_converter'
 require 'i18n-docs/translations_manager'
-require 'i18n-docs/translations_importer'
-require 'i18n-docs/translations_exporter'
+require 'i18n-docs/sub_translation'
 require 'i18n-docs/google_drive_manager'
 
 if defined?(Rails)

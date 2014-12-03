@@ -12,18 +12,18 @@ namespace :i18n do
 
   desc "Download translations from Google Drive Spreadsheet and save them to YAML files."
   task :import_translations => :environment do
-    translations_importer = I18nDocs::TranslationsImporter.new()
-    translations_importer.download_files
-    translations_importer.import_translations
-    translations_importer.clean_up
+    translations_manager = I18nDocs::TranslationsManager.new()
+    translations_manager.download_files
+    translations_manager.import_translations
+    translations_manager.clean_up
   end
 
   desc "Export all language files to CSV files first, Google Drive second (only files contained in en folder are considered)"
   task :export_translations => :environment do
-    translations_exporter = I18nDocs::TranslationsExporter.new()
-    translations_exporter.export_translations
-    translations_exporter.upload_files
-    translations_exporter.clean_up
+    translations_manager = I18nDocs::TranslationsManager.new()
+    translations_manager.export_translations
+    translations_manager.upload_files
+    translations_manager.clean_up
   end
 
 end

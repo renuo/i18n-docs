@@ -1,13 +1,16 @@
 module I18nDocs
-  SubTranslation = Struct.new(:yml, :csv, :tmp_file, :url, :existing_locales, :status)
-  Status = Struct.new(:downloaded, :imported, :exported, :uploaded)
+
 
   class TranslationsManager
+
+    attr_accessor :config, :options, :locales, :default_locale, :locales_dir, :tmp_dir, :google_drive_manager, :sub_translations
 
     def initialize
       check_rails
 
       set_config
+      set_options
+
       set_locales
       set_default_locale
       set_directories
@@ -32,16 +35,45 @@ module I18nDocs
       puts "Summary"
     end
 
-    def clean_up
-      # remove all tmp files
+    def download_files
+      puts "  Start downloading files:"
       sub_translations.each do |sub_translation|
-        File.unlink(sub_translation.tmp_file)
+        sub_translation.download
       end
     end
 
-    protected
+    def import_translations
+      puts "  Start importing translations:"
+      sub_translations.each do |sub_translation|
+        sub_translation.import
+      end
+    end
 
-    attr_accessor :config, :locales, :default_locale, :locales_dir, :tmp_dir, :google_drive_manager, :sub_translations
+    def export_translations
+      puts "  Start exporting translations:"
+      sub_translations.each do |sub_translation|
+        sub_translation.export
+      end
+    end
+
+    def upload_files
+      puts "  Start uploading files:"
+      sub_translations.each do |sub_translation|
+        sub_translation.upload
+      end
+    end
+
+    def clean_up
+      # remove all tmp files
+      unless options['cleanup'] == false
+        puts "  Start cleaning files:"
+        sub_translations.each do |sub_translation|
+          sub_translation.clean_up
+        end
+      end
+    end
+
+    private
 
     def check_rails
       raise "'Rails' not found! Tasks can only run within a Rails application!" if !defined?(Rails)
@@ -57,16 +89,27 @@ module I18nDocs
       end
     end
 
+    def set_options
+      self.options = {
+        'default_locale' => ENV['locale']   || config['options']['locale'],
+        'locales'        => ENV['locales']  || config['options']['locales'],
+        'files'          => ENV['files']    || config['options']['files'],
+        'cleanup'        => ENV['cleanup']  || config['options']['cleanup'],
+        'debugger'       => ENV['debugger'] || config['options']['debugger'],
+      }
+    end
+
     def set_locales
       if defined?(I18n)
         self.locales = I18n.available_locales.map(&:to_s)
+        self.locales = locales & options['locales'] if options['locales']
       else
         raise "I18n is not defined."
       end
     end
 
     def set_default_locale
-      self.default_locale = (ENV['locale'] || I18n.default_locale || locales.first || 'en').to_s
+      self.default_locale = (options['locale'] || I18n.default_locale || locales.first || 'en').to_s
     end
 
     def set_directories
@@ -88,20 +131,13 @@ module I18nDocs
       end
 
       config['files'].each do |yml_file,url|
-        # Make sure targets are yml files
-        yml_file = yml_file + ".yml" if yml_file !~ /\.yml$/
-        # # Basename
-        # base_name = File.basename(yml_file)
-        # Create CSV pendant file
-        csv_file = File.basename(yml_file).gsub('.yml', '.csv')
-        # Temporary transit file
-        tmp_file = File.join(tmp_dir, csv_file)
-        # Existing locales
-        existing_locales = existing_sub_translations.select{|locale,yml_files| yml_file.in?(yml_files)}.map{|locale,yml_files| locale}
-        # Nothing done yet
-        status = Status.new(false,false,false,false)
+        unless options['files'] && !yml_file.in?(options['files'])
 
-        self.sub_translations << SubTranslation.new(yml_file, csv_file, tmp_file, url, existing_locales, status)
+          # Existing locales
+          existing_locales = existing_sub_translations.select{|locale,yml_files| yml_file.in?(yml_files)}.map{|locale,yml_files| locale}
+
+          self.sub_translations << SubTranslation.new(yml_file,url,existing_locales,self)
+        end
       end
     end
 
