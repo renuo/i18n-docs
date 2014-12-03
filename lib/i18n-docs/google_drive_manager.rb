@@ -25,12 +25,13 @@ module I18nDocs
     end
 
     def upload(source_path, destination_title)
+
       if file = session.spreadsheet_by_title(destination_title)
         # update from spreadsheet
         raw_data = CSV.read(source_path)
-        puts "    Uplaoding: started"
+        puts "    Upload #{destination_title}: started"
         update_all_cells(file,raw_data)
-        puts "    Uploading: finished"
+        puts "    Upload #{destination_title}: finished"
       else
         # create a new spreadsheet (convert => true)
         session.upload_from_file(source_path, destination_title, :convert => true)
@@ -41,7 +42,9 @@ module I18nDocs
       # export from Google = import from app
       file = session.spreadsheet_by_title(source_title)
       if file
+        puts "    Download #{source_title}: started"
         file.export_as_file(destination_path)
+        puts "    Download #{source_title}: finished"
         true
       else
         puts "File #{source_title} was not found on Google Drive"
@@ -82,7 +85,18 @@ module I18nDocs
     end
 
     def update_all_cells(drive_file,raw_data)
+      puts "      getting worksheet: start"
       ws = drive_file.worksheets[0]
+      puts "      getting worksheet: stop"
+
+      # erase everything first
+      (1..ws.num_rows).each do |row|
+        (1..ws.num_cols).each do |col|
+          ws[row,col] = ""
+        end
+      end
+
+      # write then
       raw_data.each_with_index do |data, row|
         data.each_with_index do |val, col|
           ws[row + 1, col + 1] = val || ""
@@ -90,9 +104,17 @@ module I18nDocs
       end
 
       begin
+        # crop blank space around
+        ws.max_cols = ws.num_cols
+        ws.max_rows = ws.num_rows
+        puts "      saving: start"
         ws.save
+        puts "      saving: stop"
       rescue Nokogiri::XML::XPath::SyntaxError => e
         puts "Nokogiri Syntax error"
+        puts "#{e.message}"
+      rescue GoogleDrive::Error => e
+        puts "Google Drive error"
         puts "#{e.message}"
       end
     end
