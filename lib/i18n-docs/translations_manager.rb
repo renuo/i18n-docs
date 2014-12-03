@@ -84,6 +84,7 @@ module I18nDocs
       config_file = Rails.root.join('config', 'translations.yml')
       if File.exists?(config_file)
         self.config = YAML.load_file(config_file) if File.exists?(config_file)
+        self.config['options'] ||= {}
       else
         raise "No config file 'config/translations.yml' found."
       end
