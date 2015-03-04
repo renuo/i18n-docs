@@ -6,14 +6,6 @@ module I18nDocs
     require "google_drive"
 
     def initialize(credentials)
-      if credentials["classic_auth"]
-        self.classic_auth = credentials["classic_auth"]
-      end
-
-      # if credentials["o_auth"]
-      #   self.classic_auth = credentials["o_auth"]
-      # end
-
       set_session
     end
 
@@ -54,14 +46,14 @@ module I18nDocs
 
     private
 
-    attr_accessor :classic_auth, :o_auth, :access_token, :session
+    attr_accessor :access_token, :session
 
     def set_access_token
       # Authorizes with OAuth and gets an access token.
       client = Google::APIClient.new
       auth = client.authorization
-      auth.client_id = o_auth["client_id"]
-      auth.client_secret = o_auth["client_secret"]
+      auth.client_id     = ENV['GOOGLE_DRIVE_CLIENT_ID']
+      auth.client_secret = ENV['GOOGLE_DRIVE_CLIENT_SECRET']
       auth.scope =
           "https://www.googleapis.com/auth/drive " +
           "https://docs.google.com/feeds/ " +
@@ -70,18 +62,15 @@ module I18nDocs
       auth.redirect_uri = "urn:ietf:wg:oauth:2.0:oob"
       print("1. Open this page:\n%s\n\n" % auth.authorization_uri)
       print("2. Enter the authorization code shown in the page: ")
+      system( 'open "'+auth.authorization_uri+'"' )
       auth.code = $stdin.gets.chomp
       auth.fetch_access_token!
       self.access_token = auth.access_token
     end
 
     def set_session
-      set_access_token if o_auth
-      if access_token
-        self.session = GoogleDrive.login_with_oauth(access_token)
-      elsif classic_auth
-        self.session = GoogleDrive.login(classic_auth["username"],classic_auth["password"])
-      end
+      set_access_token
+      self.session = GoogleDrive.login_with_oauth(access_token)
     end
 
     def update_all_cells(drive_file,raw_data)
