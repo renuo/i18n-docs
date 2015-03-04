@@ -30,12 +30,14 @@ module I18nDocs
       end
     end
 
-    def download(source_title, destination_path)
+    def download(spreadsheet_key, worksheet_title, destination_path)
+      source_title = "#{spreadsheet_key}/#{worksheet_title}"
       # export from Google = import from app
-      file = session.spreadsheet_by_title(source_title)
-      if file
+      sheet = session.spreadsheet_by_key(spreadsheet_key)
+      worksheet = sheet.worksheet_by_title(worksheet_title)
+      if worksheet
         puts "    Download #{source_title}: started"
-        file.export_as_file(destination_path)
+        worksheet.export_as_file(destination_path)
         puts "    Download #{source_title}: finished"
         true
       else
@@ -48,6 +50,7 @@ module I18nDocs
 
     attr_accessor :access_token, :session
 
+    # TODO: save and refresh the auth_token per: http://stackoverflow.com/questions/26789804/ruby-google-drive-gem-oauth2-saving
     def set_access_token
       # Authorizes with OAuth and gets an access token.
       client = Google::APIClient.new

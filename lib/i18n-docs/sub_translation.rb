@@ -6,7 +6,9 @@ module I18nDocs
 
     attr_accessor :nested_translations, :flat_translations
 
-    attr_accessor :yml, :csv, :tmp_file, :url, :existing_locales, :manager, :status, :google_drive_title
+    attr_accessor :yml, :csv, :tmp_file, :url, :existing_locales, :manager, :status
+
+    attr_accessor :google_drive_key, :google_drive_worksheet
 
     def initialize(yml_file,url,existing_locales,manager)
       # Make sure targets are yml files
@@ -33,7 +35,7 @@ module I18nDocs
       # Nothing done yet
       self.status = Status.new(false,false,false,false)
       # Google Drive
-      set_google_drive_title
+      set_google_drive_info
     end
 
     def to_s
@@ -44,7 +46,7 @@ module I18nDocs
       puts "    #{csv}: downloaded from '#{url}' to #{tmp_file}"
 
       if is_google_drive?
-        if manager.google_drive_manager.download(google_drive_title,tmp_file)
+        if manager.google_drive_manager.download(google_drive_key, google_drive_worksheet, tmp_file)
           self.status.downloaded = true
         else
           self.status.downloaded = false
@@ -75,7 +77,7 @@ module I18nDocs
 
     def upload
       if is_google_drive?
-        manager.google_drive_manager.upload(tmp_file,google_drive_title)
+        manager.google_drive_manager.upload(tmp_file, google_drive_key)
         self.status.uploaded = true
       end
     end
@@ -98,18 +100,19 @@ module I18nDocs
       s
     end
 
-    def set_google_drive_title
-      google_drive = /^google-drive\|(.*)/
+    def set_google_drive_info
+      google_drive = /^google-drive\|(.*)\|(.*)/
 
       if result = url.match(google_drive)
-        self.google_drive_title = result[1]
+        self.google_drive_key       = result[1]
+        self.google_drive_worksheet = result[2]
       else
-        self.google_drive_title = nil
+        self.google_drive_key = nil
       end
     end
 
     def is_google_drive?
-      google_drive_title.present?
+      google_drive_key.present?
     end
 
     ##########
