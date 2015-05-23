@@ -50,9 +50,9 @@ module I18nDocs
 
     attr_accessor :access_token, :session
 
-    # TODO: save and refresh the auth_token per: http://stackoverflow.com/questions/26789804/ruby-google-drive-gem-oauth2-saving
-    def set_access_token
-      # Authorizes with OAuth and gets an access token.
+    # save and refresh the auth_token per: http://stackoverflow.com/questions/26789804/ruby-google-drive-gem-oauth2-saving
+
+    def google_api_client_auth
       client = Google::APIClient.new
       auth = client.authorization
       auth.client_id     = ENV['GOOGLE_DRIVE_CLIENT_ID']
@@ -63,12 +63,61 @@ module I18nDocs
           "https://docs.googleusercontent.com/ " +
           "https://spreadsheets.google.com/feeds/"
       auth.redirect_uri = "urn:ietf:wg:oauth:2.0:oob"
+      [ client, auth ]
+    end
+
+    # get a new access token from google
+    def get_new_access_token
+      client, auth = google_api_client_auth
       print("1. Open this page:\n%s\n\n" % auth.authorization_uri)
       print("2. Enter the authorization code shown in the page: ")
       system( 'open "'+auth.authorization_uri+'"' )
       auth.code = $stdin.gets.chomp
       auth.fetch_access_token!
-      self.access_token = auth.access_token
+      auth.access_token
+    end
+
+    # refresh an existing access token
+    def refresh_access_token(access_token)
+      begin
+        client, auth = google_api_client_auth
+        auth.refresh_token = access_token
+        auth.refresh!
+        auth.access_token
+      rescue
+        puts "Failed to refresh Google OAuth access token"
+        nil
+      end
+    end
+
+    def read_access_token
+      begin
+        access_token = nil
+        File.open('.i18n-docs-access-token', 'r') { |f| access_token = f.read }
+        access_token
+      rescue
+        nil
+      end
+    end
+
+    def write_access_token(access_token)
+      File.open('.i18n-docs-access-token', 'w') { |f| f.write(access_token) }
+    end
+
+    def set_access_token
+      # attempt to refresh our existing token
+      access_token = read_access_token
+      if access_token
+        access_token = refresh_access_token(access_token)
+      end
+      # if reading and refreshing failed, then request a new one
+      if access_token.nil?
+        access_token = get_new_access_token
+      end
+      # write our token
+      write_access_token(access_token)
+      # set the token for this session
+      self.access_token = access_token
     end
 
     def set_session
