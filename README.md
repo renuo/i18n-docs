@@ -27,6 +27,14 @@ Create a configuration file in `config/translations.yml`:
       forms.yml: "https://docs.google.com/spreadsheet/pub?key=0Ap...XveWc&single=true&gid=0&output=csv"
       ... etc ...
 
+Add Google OAuth credentials to your `config/translations.yml file:
+
+    google_drive_credentials:
+      oauth:
+        client_id: "YOUR_ID_GOES_HERE"
+        client_secret: "YOUR_SECRET_GOES_HERE"
+
+
 Let Rails know what locales you will be using. Add this to `config/application.rb`:
 
     module Web
@@ -40,10 +48,6 @@ Let Rails know what locales you will be using. Add this to `config/application.r
 
 This defines which languages and translation files to import from a Google Spreadsheet. The content of the Spreadsheet URL is stored to a file called e.g. `example1.yml` within folders `config/locales/en` and all other detected locales.
 
-Set your Google credentials. (Use the Client ID for native application type.)
-
-    export GOOGLE_CLIENT_ID="347592245774-lfus95agaou8o5c26mtneqbgfdkkitok.apps.googleusercontent.com"
-    export GOOGLE_CLIENT_SECRET="xeZM-4D_k0KZ2KjLCAgfEBQE"
 
 ### Rake Tasks
 
@@ -71,6 +75,10 @@ FIXME **THIS IS OUTDATED**
 
 ## CHANGELOG
 
+### 0.0.7-2
+
+Use translations.yml configuration file for Google OAuth credentials.
+
 ### 0.0.7-1
 
 Upgrade to OAuth before Google deprecation deadline.
@@ -91,4 +99,3 @@ Update docs, license. Push to Rubygems.org.
 ### Credits/License
 
 This gem is sponsored by [local.ch](http://www.local.ch/). It is licensed under the [MIT license](http://en.wikipedia.org/wiki/MIT_License). If you're a ruby developer and want to work with us in Switzerland, please check out our [jobs page](http://local-ch.github.com/).
-

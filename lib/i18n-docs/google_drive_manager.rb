@@ -6,6 +6,10 @@ module I18nDocs
     require "google_drive"
 
     def initialize(credentials)
+      if credentials["oauth"]
+        self.oauth = credentials["oauth"]
+      end
+
       set_session
     end
 
@@ -48,15 +52,15 @@ module I18nDocs
 
     private
 
-    attr_accessor :access_token, :session
+    attr_accessor :oauth, :access_token, :session
 
     # save and refresh the auth_token per: http://stackoverflow.com/questions/26789804/ruby-google-drive-gem-oauth2-saving
 
     def google_api_client_auth
       client = Google::APIClient.new
       auth = client.authorization
-      auth.client_id     = ENV['GOOGLE_DRIVE_CLIENT_ID']
-      auth.client_secret = ENV['GOOGLE_DRIVE_CLIENT_SECRET']
+      auth.client_id     = oauth["client_id"]
+      auth.client_secret = oauth["client_secret"]
       auth.scope =
           "https://www.googleapis.com/auth/drive " +
           "https://docs.google.com/feeds/ " +
