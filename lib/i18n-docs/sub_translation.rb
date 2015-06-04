@@ -119,12 +119,6 @@ module I18nDocs
     # IMPORT #
     ##########
 
-    def encode_csv_value(value)
-      return value if value.nil? || value.empty?
-      new_value = value.gsub('"', '\"')
-      "\"#{new_value}\""
-    end
-
     def load_csv
       CSV.foreach(tmp_file, headers: true) do |row|
         row_hash = row.to_hash
