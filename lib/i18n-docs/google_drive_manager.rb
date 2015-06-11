@@ -6,13 +6,9 @@ module I18nDocs
     require "google_drive"
 
     def initialize(credentials)
-      if credentials["classic_auth"]
-        self.classic_auth = credentials["classic_auth"]
+      if credentials["oauth"]
+        self.oauth = credentials["oauth"]
       end
-
-      # if credentials["o_auth"]
-      #   self.classic_auth = credentials["o_auth"]
-      # end
 
       set_session
     end
@@ -38,12 +34,14 @@ module I18nDocs
       end
     end
 
-    def download(source_title, destination_path)
+    def download(spreadsheet_key, worksheet_title, destination_path)
+      source_title = "#{spreadsheet_key}/#{worksheet_title}"
       # export from Google = import from app
-      file = session.spreadsheet_by_title(source_title)
-      if file
+      sheet = session.spreadsheet_by_key(spreadsheet_key)
+      worksheet = sheet.worksheet_by_title(worksheet_title)
+      if worksheet
         puts "    Download #{source_title}: started"
-        file.export_as_file(destination_path)
+        worksheet.export_as_file(destination_path)
         puts "    Download #{source_title}: finished"
         true
       else
@@ -54,34 +52,81 @@ module I18nDocs
 
     private
 
-    attr_accessor :classic_auth, :o_auth, :access_token, :session
+    attr_accessor :oauth, :access_token, :session
 
-    def set_access_token
-      # Authorizes with OAuth and gets an access token.
+    # save and refresh the auth_token per: http://stackoverflow.com/questions/26789804/ruby-google-drive-gem-oauth2-saving
+
+    def google_api_client_auth
       client = Google::APIClient.new
       auth = client.authorization
-      auth.client_id = o_auth["client_id"]
-      auth.client_secret = o_auth["client_secret"]
+      auth.client_id     = oauth["client_id"]
+      auth.client_secret = oauth["client_secret"]
       auth.scope =
           "https://www.googleapis.com/auth/drive " +
           "https://docs.google.com/feeds/ " +
           "https://docs.googleusercontent.com/ " +
           "https://spreadsheets.google.com/feeds/"
       auth.redirect_uri = "urn:ietf:wg:oauth:2.0:oob"
+      [ client, auth ]
+    end
+
+    # get a new access token from google
+    def get_new_access_token
+      client, auth = google_api_client_auth
       print("1. Open this page:\n%s\n\n" % auth.authorization_uri)
       print("2. Enter the authorization code shown in the page: ")
+      system( 'open "'+auth.authorization_uri+'"' )
       auth.code = $stdin.gets.chomp
       auth.fetch_access_token!
-      self.access_token = auth.access_token
+      auth.access_token
+    end
+
+    # refresh an existing access token
+    def refresh_access_token(access_token)
+      begin
+        client, auth = google_api_client_auth
+        auth.refresh_token = access_token
+        auth.refresh!
+        auth.access_token
+      rescue
+        puts "Failed to refresh Google OAuth access token"
+        nil
+      end
+    end
+
+    def read_access_token
+      begin
+        access_token = nil
+        File.open('.i18n-docs-access-token', 'r') { |f| access_token = f.read }
+        access_token
+      rescue
+        nil
+      end
+    end
+
+    def write_access_token(access_token)
+      File.open('.i18n-docs-access-token', 'w') { |f| f.write(access_token) }
+    end
+
+    def set_access_token
+      # attempt to refresh our existing token
+      access_token = read_access_token
+      if access_token
+        access_token = refresh_access_token(access_token)
+      end
+      # if reading and refreshing failed, then request a new one
+      if access_token.nil?
+        access_token = get_new_access_token
+      end
+      # write our token
+      write_access_token(access_token)
+      # set the token for this session
+      self.access_token = access_token
     end
 
     def set_session
-      set_access_token if o_auth
-      if access_token
-        self.session = GoogleDrive.login_with_oauth(access_token)
-      elsif classic_auth
-        self.session = GoogleDrive.login(classic_auth["username"],classic_auth["password"])
-      end
+      set_access_token
+      self.session = GoogleDrive.login_with_oauth(access_token)
     end
 
     def update_all_cells(drive_file,raw_data)

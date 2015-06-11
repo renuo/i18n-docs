@@ -27,7 +27,15 @@ Create a configuration file in `config/translations.yml`:
       forms.yml: "https://docs.google.com/spreadsheet/pub?key=0Ap...XveWc&single=true&gid=0&output=csv"
       ... etc ...
 
-Finally, let Rails know what locales you will be using. Add this to `config/application.rb`:
+Add Google OAuth credentials to your `config/translations.yml file:
+
+    google_drive_credentials:
+      oauth:
+        client_id: "YOUR_ID_GOES_HERE"
+        client_secret: "YOUR_SECRET_GOES_HERE"
+
+
+Let Rails know what locales you will be using. Add this to `config/application.rb`:
 
     module Web
       class Application < Rails::Application
@@ -39,6 +47,7 @@ Finally, let Rails know what locales you will be using. Add this to `config/appl
     end
 
 This defines which languages and translation files to import from a Google Spreadsheet. The content of the Spreadsheet URL is stored to a file called e.g. `example1.yml` within folders `config/locales/en` and all other detected locales.
+
 
 ### Rake Tasks
 
@@ -54,6 +63,8 @@ Following Rake tasks are added by the GEM to your Rails project:
 
 ## Setup at Google Docs
 
+FIXME **THIS IS OUTDATED**
+
 * At Google Docs, create a new spreadsheet for your translations. The first column is the translation key, the other columns are the languages:
 ![screenshot](http://dl.dropbox.com/u/385855/Screenshots/bamr.png)
 * use option `File -> Publish To the Web`
@@ -62,16 +73,15 @@ Following Rake tasks are added by the GEM to your Rails project:
 ![screenshot](http://dl.dropbox.com/u/385855/Screenshots/oom_.png)
 * From now on you should only update translations in Google Docs and run `rake i18n:import_translations` in the application to get changes. You can also export your
 
-## Todo
-
-*Pull requests welcome!*
-
-* create mocked tests that do not have to download our sample CSV files
-* automate the creation of files in config/locales
-* automate the detection of which languages are supported
-* validate use with rails 2.x, other 3.x versions
-
 ## CHANGELOG
+
+### 0.0.7-2
+
+Use translations.yml configuration file for Google OAuth credentials.
+
+### 0.0.7-1
+
+Upgrade to OAuth before Google deprecation deadline.
 
 ### 0.0.4
 
@@ -89,4 +99,3 @@ Update docs, license. Push to Rubygems.org.
 ### Credits/License
 
 This gem is sponsored by [local.ch](http://www.local.ch/). It is licensed under the [MIT license](http://en.wikipedia.org/wiki/MIT_License). If you're a ruby developer and want to work with us in Switzerland, please check out our [jobs page](http://local-ch.github.com/).
-
