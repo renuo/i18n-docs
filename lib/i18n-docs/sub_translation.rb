@@ -126,7 +126,7 @@ module I18nDocs
         key = row_hash.delete('key')
 
         manager.locales.each do |locale|
-          raise "Locale missing for key #{key}! (locales in app: #{locales} / locales in file: #{row_hash.keys.to_s})" unless row_hash.has_key?(locale)
+          raise "Locale missing for key #{key}! (locales in app: #{manager.locales} / locales in file: #{row_hash.keys.to_s})" unless row_hash.has_key?(locale)
           self.flat_translations[locale][key] = row_hash[locale]
         end
       end
@@ -163,7 +163,12 @@ module I18nDocs
     def export_to_yml
       # Write each sub_translation in each locale
       nested_translations.each do |locale,translations|
-        output_file_path = File.join(manager.locales_dir, locale, yml)
+        output_file_path = if manager.options['single_locale_file']
+           File.join(manager.locales_dir, "#{locale}.yml")
+        else
+          File.join(manager.locales_dir, locale, yml)
+        end
+
         # YML
         File.open(output_file_path, 'w') do |file|
           if Utils.present?(translations)

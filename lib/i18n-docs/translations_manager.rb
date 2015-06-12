@@ -53,6 +53,8 @@ module I18nDocs
       puts "Summary"
     end
 
+    # Import
+
     def download_files
       puts "  Start downloading files:"
       sub_translations.each do |sub_translation|
@@ -66,6 +68,8 @@ module I18nDocs
         sub_translation.import
       end
     end
+
+    # Export
 
     def export_translations
       puts "  Start exporting translations:"
@@ -109,41 +113,71 @@ module I18nDocs
 
     def set_config
       # Get configuration file
-      config_file = Rails.root.join('config', 'translations.yml')
-      if File.exists?(config_file)
-        self.config = YAML.load_file(config_file) if File.exists?(config_file)
-        self.config['options'] ||= {}
+      # Fallback
+      # 1. specified / 2. same level / 3. rails
+      if load_config_file(ENV['config'])
+        true
+      elsif load_config_file(File.join(Dir.pwd,'translations.yml'))
+        true
+      elsif use_rails
+        load_config_file(Rails.root.join('config', 'translations.yml'))
+        true
       else
         raise "No config file 'config/translations.yml' found."
       end
     end
 
-    def set_options
+    def load_config_file(config_file)
+      if !config_file.nil? && File.exists?(config_file)
+        begin
+          self.config = YAML.load_file(config_file)
+          self.config['options'] ||= {}
+          true
+        rescue Psych::SyntaxError => e
+          puts "YAML parsing error"
+          puts "#{e.message}"
+          false
+        end
+      else
+        false
+      end
+    end
+
+    def set_options(ruby_options = {})
       self.options = {
-        'default_locale' => ENV['locale']   || config['options']['locale'],
-        'locales'        => ENV['locales']  || config['options']['locales'],
-        'files'          => ENV['files']    || config['options']['files'],
-        'cleanup'        => ENV['cleanup']  || config['options']['cleanup'],
-        'debugger'       => ENV['debugger'] || config['options']['debugger'],
+        'default_locale'      => option_fallback('default_locale'),
+        'locales'             => option_fallback('locales'),
+        'files'               => option_fallback('files'),
+        'cleanup'             => option_fallback('cleanup'),
+        'debugger'            => option_fallback('debugger'),
+
+        'tmp_dir'             => option_fallback('tmp_dir'),
+        'locales_dir'         => option_fallback('locales_dir'),
+        'single_locale_file'  => ([true,"true"].include? option_fallback('single_locale_file') && config['files'].count == 1),
       }
     end
 
+    def option_fallback(key)
+      ruby_options[key] || ENV[key] || config['options'][key]
+    end
+
     def set_locales
-      if defined?(I18n)
-        self.locales = I18n.available_locales.map(&:to_s)
-        self.locales = locales & options['locales'] if options['locales']
-      else
-        raise "I18n is not defined."
+      self.locales = options['locales'] || []
+      if use_i18n
+        self.locales = locales & I18n.available_locales.map(&:to_s)
       end
     end
 
     def set_default_locale
-      self.default_locale = (options['locale'] || I18n.default_locale || locales.first || 'en').to_s
+      self.default_locale = (options['default_locale'] || (use_i18n ? I18n.default_locale : nil) || locales.first || 'en').to_s
     end
 
     def set_directories
-      self.locales_dir = Rails.root.join('config', 'locales')
-      self.tmp_dir = Rails.root.join('tmp')
+      # locales directory: 1.options / 2.rails / 3.locales
+      self.locales_dir = options['locales_dir'] || (use_rails ? Rails.root.join('config', 'locales') : nil) || File.join(Dir.pwd,'locales')
+      Dir.mkdir(locales_dir) unless Dir.exist?(locales_dir)
+      # tmp directory: 1.options / 2.rails / 3.locales
+      self.tmp_dir = options['tmp_dir'] || (use_rails ? Rails.root.join('tmp') : nil) || File.join(Dir.pwd,'tmp')
       Dir.mkdir(tmp_dir) unless Dir.exist?(tmp_dir)
     end
 
@@ -156,15 +190,16 @@ module I18nDocs
 
       existing_sub_translations = {}
       locales.each do |locale|
+        # Look for local translation files (ex: locales/en/set1.yml, locales/en/set2.yml, locales/fr/set1.yml, locales/fr/set2.yml)
         existing_sub_translations[locale] = Dir[File.join(locales_dir, locale, '*.yml')].map{|f| File.basename(f)}
       end
 
+      # Look for files declared in config
       config['files'].each do |yml_file,url|
-        unless options['files'] && !yml_file.in?(options['files'])
-
-          # Existing locales
-          existing_locales = existing_sub_translations.select{|locale,yml_files| yml_file.in?(yml_files)}.map{|locale,yml_files| locale}
-
+        # If files defined, only use the defined ones
+        unless options['files'] && !options['files'].include?(yml_file)
+          # Set each file existing locales
+          existing_locales = existing_sub_translations.select{|locale,yml_files| yml_files.include?(yml_file)}.map{|locale,yml_files| locale}
           self.sub_translations << SubTranslation.new(yml_file,url,existing_locales,self)
         end
       end
@@ -172,5 +207,3 @@ module I18nDocs
 
   end
 end
-
-
