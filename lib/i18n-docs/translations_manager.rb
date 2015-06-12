@@ -1,25 +1,43 @@
 module I18nDocs
-
-
   class TranslationsManager
 
-    attr_accessor :config, :options, :locales, :default_locale, :locales_dir, :tmp_dir, :google_drive_manager, :sub_translations
+    attr_accessor :config, :use_rails, :use_i18n, :ruby_options, :options, :locales, :default_locale, :locales_dir, :tmp_dir, :google_drive_manager, :sub_translations
 
-    def initialize
-      check_rails
+    # Class methods
 
-      set_config
-      set_options
+    def self.import_translations(ruby_options = {})
+      translations_manager = I18nDocs::TranslationsManager.new(ruby_options)
+      translations_manager.download_files
+      translations_manager.import_translations
+      translations_manager.clean_up
+    end
 
-      set_locales
-      set_default_locale
-      set_directories
+    def self.export_translations(ruby_options = {})
+      translations_manager = I18nDocs::TranslationsManager.new(ruby_options)
+      translations_manager.export_translations
+      translations_manager.upload_files
+      translations_manager.clean_up
+    end
 
-      set_sub_translations
+    # Instance methods
 
-      set_google_drive_manager
+    def initialize(ruby_options = {})
+      check_rails()
 
-      print_introduction
+      set_ruby_options(ruby_options)
+
+      set_config()
+      set_options()
+
+      set_locales()
+      set_default_locale()
+      set_directories()
+
+      set_sub_translations()
+
+      set_google_drive_manager()
+
+      print_introduction()
     end
 
     def print_introduction
@@ -76,7 +94,17 @@ module I18nDocs
     private
 
     def check_rails
-      raise "'Rails' not found! Tasks can only run within a Rails application!" if !defined?(Rails)
+      self.use_rails = !defined?(Rails).nil?
+      self.use_i18n = !defined?(I18n).nil? && use_rails
+
+      puts "Using rails: #{use_rails}"
+      if use_rails
+        puts "Using I18n: #{use_i18n}"
+      end
+    end
+
+    def set_ruby_options(ruby_options)
+      self.ruby_options = ruby_options
     end
 
     def set_config
