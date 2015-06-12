@@ -35,10 +35,10 @@ module I18nDocs
     end
 
     def download(spreadsheet_key, worksheet_title, destination_path)
-      source_title = "#{spreadsheet_key}/#{worksheet_title}"
       # export from Google = import from app
       sheet = session.spreadsheet_by_key(spreadsheet_key)
       worksheet = sheet.worksheet_by_title(worksheet_title)
+      source_title = "#{sheet.title}/#{worksheet.title}"
       if worksheet
         puts "    Download #{source_title}: started"
         worksheet.export_as_file(destination_path)
@@ -57,7 +57,12 @@ module I18nDocs
     # save and refresh the auth_token per: http://stackoverflow.com/questions/26789804/ruby-google-drive-gem-oauth2-saving
 
     def google_api_client_auth
-      client = Google::APIClient.new
+      options = {
+        :application_name    => "i18n-docs",
+        :application_version => "7.2",
+      }
+
+      client = Google::APIClient.new(options)
       auth = client.authorization
       auth.client_id     = oauth["client_id"]
       auth.client_secret = oauth["client_secret"]
