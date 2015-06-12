@@ -11,7 +11,7 @@ module UnitTests
 
       config_file = File.join(fixture_path, 'config.yml')
       @translations = LocalchI18n::Translations.new(config_file, tmp_dir)
-      @translations.tmp_folder = tmp_dir
+      @translations.tmp_dir = tmp_dir
       @translations.locales = ['de', 'en']
 
       @fixture_file = File.join(fixture_path, 'minimal.csv')
