@@ -10,6 +10,7 @@ require 'rubygems'
 require 'google/api_client'
 require 'google_drive'
 
+require 'i18n-docs/utils'
 require 'i18n-docs/missing_keys_finder'
 require 'i18n-docs/translations_manager'
 require 'i18n-docs/sub_translation'
