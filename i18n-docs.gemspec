@@ -1,14 +1,15 @@
 # encoding: utf-8
 Gem::Specification.new do |s|
   s.name        = 'i18n-docs'
-  s.version     = '0.0.7-3'
-  s.date        = '2015-06-02'
-  s.summary     = "Maintain translations in Google Docs and export them to your Rails project."
+  s.version     = '0.0.8'
+  s.date        = '2015-06-12'
+  s.summary     = "Maintain translations in Google Docs and export them to your Rails project or any other project."
   s.description = "GEM providing helper scripts to manage i18n translations in Google Docs. Features: check YAML files for missing translations; export YAML files to CSV; download translations from multiple Google spreadsheets and store to YAML files"
-  s.authors     = ["Georg Kunz", "Ivan Jovanovic", "Jeremy Seitz", "Eduard Schäli", "Robin Wunderlin", "Esteban Pastorino", "Michael Wood"]
+  s.authors     = ["Georg Kunz", "Ivan Jovanovic", "Jeremy Seitz", "Eduard Schäli", "Robin Wunderlin", "Esteban Pastorino", "Antoine Censi", "Michael Wood"]
   s.email       = 'jeremy.seitz@local.ch'
   s.files       = Dir["lib/**/*.rb","lib/tasks/*.rake"]
-  s.homepage    = 'https://github.com/local-ch/i18n-docs'
+  s.homepage    = 'https://github.com/AntoineInsa/i18n-docs'
+  s.license       = 'MIT'
 
   # dependencies
   s.add_dependency('rake')
@@ -17,5 +18,4 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency('mocha', '~> 0.13.3')
   s.add_development_dependency('awesome_print')
-
 end
