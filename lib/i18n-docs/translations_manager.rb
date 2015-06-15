@@ -46,8 +46,17 @@ module I18nDocs
       puts ""
       puts "  Detected locales: #{locales}"
       puts "  Main locale: \"#{default_locale}\""
-      puts "  Declared files:"
-      sub_translations.each {|sb| puts "    * #{sb.yml}: avalaible in #{sb.existing_locales}" }
+
+      puts "  Using rails: #{use_rails}"
+      puts "  Using I18n: #{use_i18n}"
+      puts "  Using GoogleDrive: #{use_google_drive?}"
+
+      if options['single_locale_file']
+        puts "  Looking for translations in: #{locales_dir}/"
+      else
+        puts "  Declared files:"
+        sub_translations.each {|sb| puts "    * #{sb.yml}: avalaible in #{sb.existing_locales}" }
+      end
       puts ""
     end
 
@@ -102,11 +111,6 @@ module I18nDocs
     def check_rails
       self.use_rails = !defined?(Rails).nil?
       self.use_i18n = !defined?(I18n).nil? && use_rails
-
-      puts "Using rails: #{use_rails}"
-      if use_rails
-        puts "Using I18n: #{use_i18n}"
-      end
     end
 
     def set_ruby_options(ruby_options)

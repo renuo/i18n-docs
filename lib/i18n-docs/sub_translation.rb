@@ -43,7 +43,7 @@ module I18nDocs
     end
 
     def download
-      puts "    #{csv}: downloaded from '#{url}' to #{tmp_file}"
+      puts "    #{csv}: downloaded from #{url} to #{tmp_file}"
 
       if is_google_drive?
         if manager.google_drive_manager.download(google_drive_key, google_drive_worksheet, tmp_file)
@@ -181,7 +181,7 @@ module I18nDocs
         File.open(output_file_path, 'w') do |file|
           file.puts YAML::dump(content)
         end
-        puts "      #{yml}: written to disk for language '#{locale}' (#{output_file_path})"
+        puts "      #{output_file_path} written on disk for locale '#{locale}'"
       end
     end
 
@@ -263,7 +263,9 @@ module I18nDocs
     ###################
 
     def encode(value)
-      # To force empty string
+      # To force:
+      # empty string, use "-"
+      # one whitespace, use "--"
       value = "_" if value == ""
       value = "__" if value == " "
       value
@@ -287,7 +289,9 @@ module I18nDocs
         new_value ||= value
       end
 
-      # To force empty string
+      # To force:
+      # empty string, use "-"
+      # one whitespace, use "--"
       new_value = "" if new_value == "_"
       new_value = " " if new_value == "__"
 
