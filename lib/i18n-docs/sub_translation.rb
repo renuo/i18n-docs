@@ -79,6 +79,8 @@ module I18nDocs
       if is_google_drive?
         manager.google_drive_manager.upload(tmp_file, google_drive_key)
         self.status.uploaded = true
+      else
+        FileUtils.cp(tmp_file,url)
       end
     end
 
@@ -235,7 +237,7 @@ module I18nDocs
       CSV.open(tmp_file, "wb") do |csv|
         csv << (["key"] + manager.locales)
 
-        flat_translations[manager.default_locale].keys.each do |key|
+        flat_translations[manager.default_locale].keys.sort.each do |key|
           values = manager.locales.map do |locale|
             encode(flat_translations[locale][key])
           end
