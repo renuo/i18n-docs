@@ -89,6 +89,10 @@ module I18nDocs
       File.unlink(tmp_file)
     end
 
+    def is_google_drive?
+      Utils.present?(google_drive_key)
+    end
+
     private
 
     # generic
@@ -111,10 +115,6 @@ module I18nDocs
       else
         self.google_drive_key = nil
       end
-    end
-
-    def is_google_drive?
-      Utils.present?(google_drive_key)
     end
 
     ##########

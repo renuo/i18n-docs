@@ -35,7 +35,9 @@ module I18nDocs
 
       set_sub_translations()
 
-      set_google_drive_manager()
+      if use_google_drive?
+        set_google_drive_manager()
+      end
 
       print_introduction()
     end
@@ -190,6 +192,10 @@ module I18nDocs
       # tmp directory: 1.options / 2.rails / 3.locales
       self.tmp_dir = options['tmp_dir'] || (use_rails ? Rails.root.join('tmp') : nil) || File.join(Dir.pwd,'tmp')
       Dir.mkdir(tmp_dir) unless Dir.exist?(tmp_dir)
+    end
+
+    def use_google_drive?
+      sub_translations.any?{|sub_translation| sub_translation.is_google_drive?}
     end
 
     def set_google_drive_manager
