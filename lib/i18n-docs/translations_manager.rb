@@ -114,21 +114,23 @@ module I18nDocs
     def set_config
       # Get configuration file
       # Fallback
-      # 1. specified / 2. same level / 3. rails
-      if load_config_file(ENV['config'])
+      # 1. ruby / 2. ENV / 3. same level / 4. rails
+      if ruby_options['i18n-docs-path'] && load_config_file(File.join(ruby_options['i18n-docs-path'],'i18n-docs.yml'))
         true
-      elsif load_config_file(File.join(Dir.pwd,'translations.yml'))
+      elsif ENV['i18n-docs-path'] && load_config_file(File.join(ENV['i18n-docs-path'],'i18n-docs.yml'))
+        true
+      elsif load_config_file(File.join(Dir.pwd,'i18n-docs.yml'))
         true
       elsif use_rails
-        load_config_file(Rails.root.join('config', 'translations.yml'))
+        load_config_file(Rails.root.join('config', 'i18n-docs.yml'))
         true
       else
-        raise "No config file 'config/translations.yml' found."
+        raise "No config file 'i18n-docs.yml' found."
       end
     end
 
     def load_config_file(config_file)
-      if !config_file.nil? && File.exists?(config_file)
+      if !config_file.nil? && File.file?(config_file)
         begin
           self.config = YAML.load_file(config_file)
           self.config['options'] ||= {}
@@ -148,8 +150,8 @@ module I18nDocs
         'default_locale'      => option_fallback('default_locale'),
         'locales'             => option_fallback('locales'),
         'files'               => option_fallback('files'),
-        'cleanup'             => option_fallback('cleanup'),
-        'debugger'            => option_fallback('debugger'),
+        'cleanup'             => option_fallback('cleanup',true),
+        'debugger'            => option_fallback('debugger',0),
 
         'tmp_dir'             => option_fallback('tmp_dir'),
         'locales_dir'         => option_fallback('locales_dir'),
@@ -157,8 +159,16 @@ module I18nDocs
       }
     end
 
-    def option_fallback(key)
-      ruby_options[key] || ENV[key] || config['options'][key]
+    def option_fallback(key, default = nil)
+      if !ruby_options[key].nil?
+        ruby_options[key]
+      elsif !ENV[key].nil?
+        ENV[key]
+      elsif !config['options'][key].nil?
+        config['options'][key]
+      else
+        default
+      end
     end
 
     def set_locales
