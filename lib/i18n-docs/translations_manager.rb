@@ -156,6 +156,7 @@ module I18nDocs
         'tmp_dir'             => option_fallback('tmp_dir'),
         'locales_dir'         => option_fallback('locales_dir'),
         'single_locale_file'  => ([true,"true"].include? option_fallback('single_locale_file') && config['files'].count == 1),
+        'include_locale_key'  => option_fallback('include_locale_key',true)
       }
     end
 
