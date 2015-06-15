@@ -163,11 +163,7 @@ module I18nDocs
     def export_to_yml
       # Write each sub_translation in each locale
       nested_translations.each do |locale,translations|
-        output_file_path = if manager.options['single_locale_file']
-           File.join(manager.locales_dir, "#{locale}.yml")
-        else
-          File.join(manager.locales_dir, locale, yml)
-        end
+        output_file_path = locale_file(locale)
 
         content = if Utils.present?(translations)
           translations
@@ -199,8 +195,16 @@ module I18nDocs
 
     def load_locale(locale)
       puts "      #{yml}: load translations for '#{locale}'"
-      input_file = File.join(manager.locales_dir, locale, yml)
-      YAML.load_file(input_file)[locale] if File.file?(input_file)
+      input_file = locale_file(locale)
+
+      if File.file?(input_file)
+        content = YAML.load_file(input_file)
+        content = content[locale] if manager.options['include_locale_key']
+      else
+        raise "#{input_file} not found"
+      end
+
+      content
     end
 
     def flatten_translations
@@ -237,6 +241,18 @@ module I18nDocs
           end
           csv << values.unshift(key)
         end
+      end
+    end
+
+    #########
+    # UTILS #
+    #########
+
+    def locale_file(locale)
+      if manager.options['single_locale_file']
+         File.join(manager.locales_dir, "#{locale}.yml")
+      else
+        File.join(manager.locales_dir, locale, yml)
       end
     end
 
