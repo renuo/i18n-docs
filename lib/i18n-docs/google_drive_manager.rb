@@ -20,32 +20,43 @@ module I18nDocs
       end
     end
 
-    def upload(source_path, destination_title)
+    def get_worksheet(spreadsheet_key, worksheet_title)
+      if sheet = session.spreadsheet_by_key(spreadsheet_key)
+        if worksheet = sheet.worksheet_by_title(worksheet_title)
+          worksheet
+        else
+          puts "Worksheet #{worksheet_title} was not found in spreadsheet #{spreadsheet_key}"
+          false
+        end
+      else
+        puts "Spreadsheet #{spreadsheet_key} was not found"
+        false
+      end
+    end
 
-      if file = session.spreadsheet_by_title(destination_title)
+    def upload(source_path, spreadsheet_key, worksheet_title )
+      if worksheet = get_worksheet(spreadsheet_key,worksheet_title)
         # update from spreadsheet
         raw_data = CSV.read(source_path)
-        puts "    Upload #{destination_title}: started"
-        update_all_cells(file,raw_data)
-        puts "    Upload #{destination_title}: finished"
+        puts "    Upload #{humanize_worksheet(worksheet)}: started"
+        update_all_cells(worksheet,raw_data)
+        puts "    Upload #{humanize_worksheet(worksheet)}: finished"
+        true
       else
         # create a new spreadsheet (convert => true)
-        session.upload_from_file(source_path, destination_title, :convert => true)
+        # session.upload_from_file(source_path, destination_title, :convert => true)
+        false
       end
     end
 
     def download(spreadsheet_key, worksheet_title, destination_path)
-      # export from Google = import from app
-      sheet = session.spreadsheet_by_key(spreadsheet_key)
-      worksheet = sheet.worksheet_by_title(worksheet_title)
-      source_title = "#{sheet.title}/#{worksheet.title}"
-      if worksheet
-        puts "    Download #{source_title}: started"
+      # export from Google = download from gem
+      if worksheet = get_worksheet(spreadsheet_key,worksheet_title)
+        puts "    Download #{humanize_worksheet(worksheet)}: started"
         worksheet.export_as_file(destination_path)
-        puts "    Download #{source_title}: finished"
+        puts "    Download #{humanize_worksheet(worksheet)}: finished"
         true
       else
-        puts "File #{source_title} was not found on Google Drive"
         false
       end
     end
@@ -134,10 +145,12 @@ module I18nDocs
       self.session = GoogleDrive.login_with_oauth(access_token)
     end
 
-    def update_all_cells(drive_file,raw_data)
-      puts "      getting worksheet: start"
-      ws = drive_file.worksheets[0]
-      puts "      getting worksheet: stop"
+    def humanize_worksheet(worksheet)
+      "#{worksheet.spreadsheet.title}/#{worksheet.title}"
+    end
+
+    def update_all_cells(worksheet,raw_data)
+      ws = worksheet
 
       # erase everything first
       (1..ws.num_rows).each do |row|

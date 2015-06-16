@@ -77,7 +77,7 @@ module I18nDocs
 
     def upload
       if is_google_drive?
-        manager.google_drive_manager.upload(tmp_file, google_drive_key)
+        manager.google_drive_manager.upload(tmp_file, google_drive_key, google_drive_worksheet)
         self.status.uploaded = true
       else
         FileUtils.cp(tmp_file,url)
@@ -90,7 +90,7 @@ module I18nDocs
     end
 
     def is_google_drive?
-      Utils.present?(google_drive_key)
+      Utils.present?(google_drive_key) && Utils.present?(google_drive_worksheet)
     end
 
     private
