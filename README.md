@@ -1,6 +1,6 @@
 # i18n-docs
 
-**i18n-docs** is a ruby gem that helps you to keep translations stored in Google Docs. This makes it easier for translators and project members to coordinate changes and updates. In addition, the standard features of Google Docs are super handy for this process: revision tracking, authorization, publishing, etc. 
+**i18n-docs** is a ruby gem that helps you to keep translations stored in Google Docs. This makes it easier for translators and project members to coordinate changes and updates. In addition, the standard features of Google Docs are super handy for this process: revision tracking, authorization, publishing, etc.
 
 This gem works as well outside of a Rails environment. You can call it any from any ruby file.
 
@@ -15,10 +15,10 @@ This gem works as well outside of a Rails environment. You can call it any from 
 
 The spreadsheet can either be a Google Drive spreadsheet worksheet or a CSV file.
 
-eg: **Google Drive**  
-Spreadsheet name: `my-i18n`  
-Speadsheet key: `1GsK...Cjwfw` (see the url `https://docs.google.com/spreadsheets/d/{spreadsheet_key}/edit`)  
-Worksheet name: `numbers`  
+eg: **Google Drive**
+Spreadsheet name: `my-i18n`
+Speadsheet key: `1GsK...Cjwfw` (see the url `https://docs.google.com/spreadsheets/d/{spreadsheet_key}/edit`)
+Worksheet name: `numbers`
 ```
 | key           | en    | fr    | de   |
 |---------------|-------|-------|------|
@@ -27,8 +27,8 @@ Worksheet name: `numbers`
 | numbers.three | three | trois | drei |
 ```
 
-eg: **CSV spreadsheet**  
-File path: `config/locales/activities.yml`  
+eg: **CSV spreadsheet**
+File path: `config/locales/activities.yml`
 ```
 | key         | en   | fr      | de     |
 |-------------|------|---------|--------|
@@ -88,6 +88,7 @@ options:
   locales_dir: 'i18n'             # Final locales directory, default './_i18n' or './locales'
   single_locale_file: true        # Deal only with one file per locale (no locale subdirectories)
   include_locale_key: true        # Include the locale as a key at the root of the locale file
+  force_fallback: true            # Force all translations to have a value, default: false
 
   # Future work
   logger_level: 0                 # Verbose?
@@ -141,6 +142,25 @@ numbers:
   three: three
 ```
 Note that `en:` has disappeared from the top.
+
+With `force_locale=true`, all blank values will be force to be present:
+```
+| key         | en (default) | fr     | de   |
+|-------------|--------------|--------|------|
+| places.home | Home         | Maison | Heim |
+| places.work | Workplace    |        |      |
+| places.park |              |        |      |
+```
+becomes
+```
+| key                | en (default) | fr          | de          |
+|--------------------|--------------|-------------|-------------|
+| places.home        | Home         | Maison      | Heim        |
+| places.work        | Workplace    | Workplace   | Workplace   |
+| places.castle_park | Castle park  | Castle park | Castle park |
+```
+Note that locales are defaulting to the default locale, and then to the humnanized key.
+
 
 ## 3. Usage
 

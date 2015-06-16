@@ -29,5 +29,24 @@ module I18nDocs
       !blank?(object)
     end
 
+    # https://github.com/rails/rails/blob/master/activesupport/lib/active_support/inflector/methods.rb#L125
+    def self.humanize(lower_case_and_underscored_word, options = {})
+      result = lower_case_and_underscored_word.to_s.dup
+
+      result.sub!(/\A_+/, '')
+      result.sub!(/_id\z/, '')
+      result.tr!('_', ' ')
+
+      result.gsub!(/([a-z\d]*)/i) do |match|
+        "#{match.downcase}"
+      end
+
+      if options.fetch(:capitalize, true)
+        result.sub!(/\A\w/) { |match| match.upcase }
+      end
+
+      result
+    end
+
   end
 end

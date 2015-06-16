@@ -63,6 +63,7 @@ module I18nDocs
     def import()
       puts "    From #{csv}"
       load_csv
+      force_fallback if manager.options['force_fallback']
       nest_translations
       export_to_yml
       self.status.imported = true
@@ -130,6 +131,24 @@ module I18nDocs
         manager.locales.each do |locale|
           raise "Locale missing for key #{key}! (locales in app: #{manager.locales} / locales in file: #{row_hash.keys.to_s})" unless row_hash.has_key?(locale)
           self.flat_translations[locale][key] = row_hash[locale]
+        end
+      end
+    end
+
+    def default_flat_translations
+      flat_translations[manager.default_locale]
+    end
+
+    def force_fallback
+      flat_translations.each do |locale,translations|
+        translations.each do |composed_key,translation|
+          if Utils.blank?(translation)
+            if Utils.blank?(default_flat_translations[composed_key])
+              translations[composed_key] = Utils.humanize(composed_key.split('.').last)
+            else
+              translations[composed_key] = default_flat_translations[composed_key]
+            end
+          end
         end
       end
     end
