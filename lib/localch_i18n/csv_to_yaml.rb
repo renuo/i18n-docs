@@ -54,10 +54,14 @@ module LocalchI18n
       tree = keys[0...-1]
       leaf = keys.last
       data_hash = tree.inject(@translations[locale]) do |memo, k|
-        if memo.has_key?(k)
-          memo[k]
+        if memo.is_a? Hash
+          if memo.has_key?(k)
+            memo[k]
+          else
+            memo[k] = {}
+          end
         else
-          memo[k] = {}
+          raise "Error around key '#{keys.join '.'}': Expected #{memo.inspect} to be a Hash"
         end
       end
       data_hash[leaf] = value
