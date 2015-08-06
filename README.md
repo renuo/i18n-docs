@@ -43,6 +43,11 @@ It defines which translations files should be created by exporting a Google Spre
 * Run `rake i18n:export_translations` to import translations from the Google Docs.
 * From now on you should only update translations in Google Docs and run `rake i18n:import_translations` in the application to get changes.
 
+## Error Handling
+
+I case of the error `OpenSSL::SSL::SSLError: SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed`
+Follow this: http://stackoverflow.com/questions/12562697/opensslsslsslerror-ssl-connect-returned-1-errno-0-state-sslv3-read-server-ce?answertab=active#tab-top
+
 
 ## CHANGELOG
 
