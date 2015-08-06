@@ -45,7 +45,7 @@ It defines which translations files should be created by exporting a Google Spre
 
 ## Error Handling
 
-I case of the error `OpenSSL::SSL::SSLError: SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed`
+I case of the error `OpenSSL::SSL::SSLError: SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed` when running `rake i18n:import_translations`
 Follow this: http://stackoverflow.com/questions/12562697/opensslsslsslerror-ssl-connect-returned-1-errno-0-state-sslv3-read-server-ce?answertab=active#tab-top
 
 
