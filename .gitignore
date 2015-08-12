@@ -8,3 +8,6 @@ doc/yardoc
 .yardoc
 tmp/*
 *.DS_Store
+.ruby-version
+.ruby-gemset
+rdoc/

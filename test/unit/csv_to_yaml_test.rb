@@ -1,6 +1,4 @@
 require 'test_helper'
-require 'mocha'
-require 'awesome_print'
 
 # run test: ruby -I test/ -I lib/ test/unit/csv_to_yaml_test.rb
 

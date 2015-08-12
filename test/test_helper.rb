@@ -1,7 +1,8 @@
 require 'test/unit'
 require 'fileutils'
 require 'localch-i18n'
-
+require 'mocha/mini_test'
+require 'awesome_print'
 
 module TestHelper
   
