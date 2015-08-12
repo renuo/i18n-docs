@@ -19,10 +19,11 @@ Gem::Specification.new do |s|
 
   s.requirements << 'Ruby >= 1.9.2'
   s.required_ruby_version = '>= 1.9.2'
-  
+
   s.add_dependency('rails', '>= 3.0.0')
   s.add_dependency('i18n')
   
   s.add_development_dependency('mocha')
   s.add_development_dependency('awesome_print')
+  s.add_development_dependency('geminabox')
 end

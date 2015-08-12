@@ -1,4 +1,4 @@
-source "http://rubygems.org"
+source 'https://GemInAbox:e3XRBgVJRNUmwJ5y@gembox-vm-inx01.intra.local.ch/'
 
 # Declare your gem's dependencies in lhc.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
