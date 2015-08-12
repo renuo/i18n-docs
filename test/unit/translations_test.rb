@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'mocha'
 
 # run test: ruby -I test/ -I lib/ test/unit/locale_builder_test.rb
 

@@ -1,7 +1,4 @@
 require 'test_helper'
-require 'mocha'
-
-require 'awesome_print'
 
 # run test: ruby -I test/ -I lib/ test/unit/locale_builder_test.rb
 
