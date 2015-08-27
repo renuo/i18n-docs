@@ -98,6 +98,7 @@ options:
   single_locale_file: true        # Deal only with one file per locale (no locale subdirectories)
   include_locale_key: true        # Include the locale as a key at the root of the locale file
   force_fallback: true            # Force all translations to have a value, default: false
+                                  # Fallback chain 1.locale, 2.default locale, 3.humanized key
 
   # Future work
   logger_level: 0                 # Verbose?
