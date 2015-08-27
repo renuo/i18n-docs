@@ -129,9 +129,11 @@ module I18nDocs
         raise "Need a 'key' column header" unless row_hash.has_key?('key')
         key = row_hash.delete('key')
 
-        manager.locales.each do |locale|
-          raise "Locale missing for key #{key}! (locales in app: #{manager.locales} / locales in file: #{row_hash.keys.to_s})" unless row_hash.has_key?(locale)
-          self.flat_translations[locale][key] = row_hash[locale]
+        if Utils.present?(key)
+          manager.locales.each do |locale|
+            raise "Locale missing for key #{key}! (locales in app: #{manager.locales} / locales in file: #{row_hash.keys.to_s})" unless row_hash.has_key?(locale)
+            self.flat_translations[locale][key] = row_hash[locale]
+          end
         end
       end
     end
