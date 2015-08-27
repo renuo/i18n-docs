@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.name        = 'i18n-docs'
   s.version     = '0.0.8a'
   s.date        = '2015-06-12'
-  s.summary     = "Maintain translations in Google Docs and export them to your Rails project or any other project."
+  s.summary     = "Maintain translations in Google Docs and import them to your Rails/non-Rails project."
   s.description = "GEM providing helper scripts to manage i18n translations in Google Docs. Features: check YAML files for missing translations; export YAML files to CSV; download translations from multiple Google spreadsheets and store to YAML files"
   s.authors     = ["Georg Kunz", "Ivan Jovanovic", "Jeremy Seitz", "Eduard Schäli", "Robin Wunderlin", "Esteban Pastorino", "Antoine Censi", "Michael Wood"]
   s.email       = 'jeremy.seitz@local.ch'
