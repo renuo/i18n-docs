@@ -138,7 +138,7 @@ module I18nDocs
     def load_config_file(config_file)
       if !config_file.nil? && File.file?(config_file)
         begin
-          self.config = YAML.load_file(config_file)
+          self.config = YAML.load_file(config_file) || {}
           self.config['options'] ||= {}
           true
         rescue Psych::SyntaxError => e
@@ -152,21 +152,25 @@ module I18nDocs
     end
 
     def set_options(ruby_options = {})
+      files = option_fallback('files')
+
       self.options = {
         'default_locale'      => option_fallback('default_locale'),
         'locales'             => option_fallback('locales'),
-        'files'               => option_fallback('files'),
+        'files'               => files,
+        'files_only'          => option_fallback('files_only'),
         'cleanup'             => option_fallback('cleanup',true),
         'debugger'            => option_fallback('debugger',0),
 
         'tmp_dir'             => option_fallback('tmp_dir'),
         'locales_dir'         => option_fallback('locales_dir'),
-        'single_locale_file'  => ([true,"true"].include? option_fallback('single_locale_file') && config['files'].count == 1),
+        'single_locale_file'  => ([true,"true"].include? option_fallback('single_locale_file') && files.count == 1),
         'include_locale_key'  => option_fallback('include_locale_key',true),
         'force_fallback'      => option_fallback('force_fallback',false)
       }
     end
 
+    # ruby_options > ENV > config > default
     def option_fallback(key, default = nil)
       if !ruby_options[key].nil?
         ruby_options[key]
@@ -217,9 +221,9 @@ module I18nDocs
       end
 
       # Look for files declared in config
-      config['files'].each do |yml_file,url|
+      options['files'].each do |yml_file,url|
         # If files defined, only use the defined ones
-        unless options['files'] && !options['files'].include?(yml_file)
+        unless options['files_only'] && !options['files_only'].include?(yml_file)
           # Set each file existing locales
           existing_locales = existing_sub_translations.select{|locale,yml_files| yml_files.include?(yml_file)}.map{|locale,yml_files| locale}
           self.sub_translations << SubTranslation.new(yml_file,url,existing_locales,self)

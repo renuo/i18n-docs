@@ -82,7 +82,8 @@ google_drive_credentials:
 options:
   default_locale: 'en'            # The main locale, does only count for export
   locales: ['en','fr','de']       # Subset of locales to play with
-  files: ['navigation.yml']       # Subset of filesname to use
+  files: {key => value}           # Files to use (overwrites `i18n-docs.yml` files)
+  files_only: ['activities.yml']  # Subset of filename to use
   cleanup: false                  # Remove temporary files
   tmp_dir: 'tmp'                  # Temporary upload/download directory, default: './tmp/i18n-docs/'
   locales_dir: 'i18n'             # Final locales directory, default './_i18n' or './locales'
@@ -246,7 +247,7 @@ Open sourced: changed name and description.
 
 ### 0.0.2
 
-removed loading of `awesome_print` from the rake task. It was breaking download.
+Removed loading of `awesome_print` from the rake task. It was breaking download.
 
 ## 5. Contributing
 
