@@ -142,7 +142,7 @@ module I18nDocs
     def force_fallback
       flat_translations.each do |locale,translations|
         translations.each do |composed_key,translation|
-          if Utils.blank?(translation)
+          if Utils.present?(composed_key) && Utils.blank?(translation)
             if Utils.blank?(default_flat_translations[composed_key])
               translations[composed_key] = Utils.humanize(composed_key.split('.').last)
             else
