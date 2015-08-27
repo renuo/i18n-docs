@@ -180,7 +180,12 @@ module I18nDocs
             memo[k] = {}
           end
         end
-        data_hash[leaf] = decode(value)
+
+        if data_hash.is_a?(Hash)
+          data_hash[leaf] = decode(value)
+        else
+          raise "Key '#{tree.join('.')}' and '#{composed_key}' nesting is inconsistent"
+        end
       end
     end
 
