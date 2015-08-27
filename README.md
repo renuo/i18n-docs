@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/AntoineInsa/i18n-docs.png?label=ready&title=Ready)](https://waffle.io/AntoineInsa/i18n-docs)
 # i18n-docs
 
 **i18n-docs** is a ruby gem that helps you to keep translations stored in Google Docs. This makes it easier for translators and project members to coordinate changes and updates. In addition, the standard features of Google Docs are super handy for this process: revision tracking, authorization, publishing, etc.
