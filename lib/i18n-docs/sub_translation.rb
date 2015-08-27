@@ -126,6 +126,7 @@ module I18nDocs
       CSV.foreach(tmp_file, headers: true) do |row|
         row_hash = row.to_hash
 
+        raise "Need a 'key' column header" unless row_hash.has_key?('key')
         key = row_hash.delete('key')
 
         manager.locales.each do |locale|
