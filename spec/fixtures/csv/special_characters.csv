@@ -1,0 +1,29 @@
+key,en
+,
+normal_string,normal
+empty_string,
+special_empty_string,_
+whitespace,
+special_whitespace,__
+simple_multiline,"un
+deux
+trois"
+quoted_multiline,"""un
+deux
+trois"""
+simple_multiline_with_comma,"un,
+deux,
+trois"
+quoted_multiline_with_comma,"""un,
+deux,
+trois"""
+not_fully_quoted_multiline,"""un
+deux"
+simple_comma,","
+quoted_comma,""","""
+key with space ,key
+boolean_true,TRUE
+boolean_false,FALSE
+array,"[""Sun"", ""Mon"", ""Tue"", ""Wed"", ""Thu"", ""Fri"", ""Sat""]"
+html_element,"<a a=\""one.com\"" target=\""_blank\"">One</a>"
+quoted_html_element,"""<a a=\""one.com\"" target=\""_blank\"">One</a>"""
