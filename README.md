@@ -89,7 +89,8 @@ google_drive_credentials:
 options:
   default_locale: 'en'            # The main locale, does only count for export
   locales: ['en','fr','de']       # Subset of locales to play with
-  files: {key => value}           # Files to use (overwrites `i18n-docs.yml` files)
+  google_drive_credentials: {}    # Google Drive credentials (see `i18n-docs.yml`)
+  files: {key => value}           # Files to use (see `i18n-docs.yml`)
   files_only: ['activities.yml']  # Subset of filename to use
   cleanup: false                  # Remove temporary files
   tmp_dir: 'tmp'                  # Temporary upload/download directory, default: './tmp/i18n-docs/'
