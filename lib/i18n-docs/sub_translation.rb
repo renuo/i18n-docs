@@ -291,8 +291,8 @@ module I18nDocs
 
     def encode(value)
       # To force:
-      # empty string, use "-"
-      # one whitespace, use "--"
+      # empty string, use "_"
+      # one whitespace, use "__"
       value = "_" if value == ""
       value = "__" if value == " "
       value
