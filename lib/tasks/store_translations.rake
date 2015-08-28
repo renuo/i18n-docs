@@ -3,7 +3,7 @@ namespace :i18n do
 
   desc "Find and list translation keys that do not exist in all locales"
   task :missing_keys => :environment do
-    finder = LocalchI18n::MissingKeysFinder.new(I18n.backend)
+    finder = I18nDocs::MissingKeysFinder.new(I18n.backend)
     finder.find_missing_keys
   end
 
@@ -17,7 +17,7 @@ namespace :i18n do
     tmp_dir = Rails.root.join('tmp')
     Dir.mkdir(tmp_dir) unless Dir.exist?(tmp_dir)
 
-    translations = LocalchI18n::Translations.new(config_file, tmp_dir)
+    translations = I18nDocs::Translations.new(config_file, tmp_dir)
     translations.download_files
     translations.store_translations
     translations.clean_up
@@ -44,7 +44,7 @@ namespace :i18n do
 
     input_files.each do |file|
       file = File.basename(file)
-      exporter = LocalchI18n::TranslationFileExport.new(source_dir, file, output_dir, locales)
+      exporter = I18nDocs::TranslationFileExport.new(source_dir, file, output_dir, locales)
       exporter.export
     end
 

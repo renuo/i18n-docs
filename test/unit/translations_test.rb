@@ -10,7 +10,7 @@ module UnitTests
       create_tmp_dir
 
       config_file = File.join(fixture_path, 'config.yml')
-      @translations = LocalchI18n::Translations.new(config_file, tmp_dir)
+      @translations = I18nDocs::Translations.new(config_file, tmp_dir)
       @translations.tmp_folder = tmp_dir
       @translations.locales = ['de', 'en']
 

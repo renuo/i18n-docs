@@ -13,7 +13,7 @@ require 'localch_i18n/translation_file_export'
 
 
 if defined?(Rails)
-  class LocalchI18nTask < Rails::Railtie
+  class I18nDocsTask < Rails::Railtie
     rake_tasks do
       Dir[File.join(File.dirname(__FILE__),'tasks/*.rake')].each { |f| load f }
     end
