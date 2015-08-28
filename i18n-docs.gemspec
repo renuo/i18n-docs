@@ -18,6 +18,4 @@ Gem::Specification.new do |s|
   s.add_dependency('rake')
 
   s.add_development_dependency('mocha', '~> 0.13.3')
-  s.add_development_dependency('awesome_print')
-
 end
