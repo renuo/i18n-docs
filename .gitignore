@@ -7,4 +7,7 @@ pkg/*
 doc/yardoc
 .yardoc
 tmp/*
-.ruby-*
+*.DS_Store
+.ruby-version
+.ruby-gemset
+rdoc/

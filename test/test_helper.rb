@@ -1,7 +1,6 @@
 require 'test/unit'
 require 'fileutils'
 require 'mocha/setup'
-
 require 'i18n-docs'
 
 Rails = Struct.new(:dummy)
