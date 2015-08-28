@@ -86,23 +86,23 @@ google_drive_credentials:
     client_id: "YOUR_ID_GOES_HERE"
     client_secret: "YOUR_SECRET_GOES_HERE"
 
-options:
-  default_locale: 'en'            # The main locale, does only count for export
-  locales: ['en','fr','de']       # Subset of locales to play with
-  google_drive_credentials: {}    # Google Drive credentials (see `i18n-docs.yml`)
-  files: {key => value}           # Files to use (see `i18n-docs.yml`)
-  files_only: ['activities.yml']  # Subset of filename to use
-  cleanup: false                  # Remove temporary files
-  tmp_dir: 'tmp'                  # Temporary upload/download directory, default: './tmp/i18n-docs/'
-  locales_dir: 'i18n'             # Final locales directory, default './_i18n' or './locales'
-  single_locale_file: true        # Deal only with one file per locale (no locale subdirectories)
-  include_locale_key: true        # Include the locale as a key at the root of the locale file
-  force_fallback: true            # Force all translations to have a value, default: false
-                                  # Fallback chain 1.locale, 2.default locale, 3.humanized key
 
-  # Future work
-  logger_level: 0                 # Verbose?
-  format: 'yml'                   # .yml or .json ? default: .yml
+default_locale: 'en'            # The main locale, does only count for export
+locales: ['en','fr','de']       # Subset of locales to play with
+google_drive_credentials: {}    # Google Drive credentials (see `i18n-docs.yml`)
+files: {key => value}           # Files to use (see `i18n-docs.yml`)
+files_only: ['activities.yml']  # Subset of filename to use
+cleanup: false                  # Remove temporary files
+tmp_dir: 'tmp'                  # Temporary upload/download directory, default: './tmp/i18n-docs/'
+locales_dir: 'i18n'             # Final locales directory, default './_i18n' or './locales'
+single_locale_file: true        # Deal only with one file per locale (no locale subdirectories)
+include_locale_key: true        # Include the locale as a key at the root of the locale file
+force_fallback: true            # Force all translations to have a value, default: false
+                                # Fallback chain 1.locale, 2.default locale, 3.humanized key
+
+# Future work
+logger_level: 0                 # Verbose?
+format: 'yml'                   # .yml or .json ? default: .yml
 ```
 
 ### 2.1 Files

@@ -178,8 +178,8 @@ module I18nDocs
         ruby_options[key]
       elsif !ENV[key].nil?
         ENV[key]
-      elsif !config['options'][key].nil?
-        config['options'][key]
+      elsif !config[key].nil?
+        config[key]
       else
         default
       end
