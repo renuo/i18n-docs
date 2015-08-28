@@ -73,7 +73,7 @@ Following Rake tasks are added by the GEM to your Rails project:
 
 ## CHANGELOG
 
-## 0.0.8
+## 0.0.9
 
 * add version.rb
 * content downloaded is forced to UTF-8
@@ -81,6 +81,11 @@ Following Rake tasks are added by the GEM to your Rails project:
 * fixes a bug when loading documents with an empty key
 * create tmp directory if it does not exist
 * strip spaces from keys
+
+## 0.0.8
+
+* screwed up rubygems.org push
+* this version has been YANKED
 
 ### 0.0.7
 
