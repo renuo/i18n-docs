@@ -75,19 +75,24 @@ Following Rake tasks are added by the GEM to your Rails project:
 
 ## 0.0.8
 
-* Add version.rb
+* add version.rb
+* content downloaded is forced to UTF-8
+* translation keys read are not downcased anymore
+* fixes a bug when loading documents with an empty key
+* create tmp directory if it does not exist
+* strip spaces from keys
 
 ### 0.0.7
 
-* Get in sync with Rubygems.org version
+* get in sync with Rubygems.org version
 
 ### 0.0.4
 
-* Update docs, license. Push to Rubygems.org.
+* update docs, license. Push to Rubygems.org.
 
 ### 0.0.3
 
-* Open sourced: changed name and description.
+* open sourced: changed name and description.
 
 ### 0.0.2
 
