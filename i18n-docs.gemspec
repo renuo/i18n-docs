@@ -1,7 +1,11 @@
+$:.push File.expand_path("../lib", __FILE__)
+# Maintain your gem's version:
+require 'localch_i18n/version'
+
 # encoding: utf-8
 Gem::Specification.new do |s|
   s.name        = 'i18n-docs'
-  s.version     = '0.0.7'
+  s.version     = LocalchI18n::VERSION
   s.date        = '2013-05-10'
   s.summary     = "Maintain translations in Google Docs and export them to your Rails project."
   s.description = "GEM providing helper scripts to manage i18n translations in Google Docs. Features: check YAML files for missing translations; export YAML files to CSV; download translations from multiple Google spreadsheets and store to YAML files"

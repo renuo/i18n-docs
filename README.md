@@ -73,10 +73,12 @@ Following Rake tasks are added by the GEM to your Rails project:
 
 ## CHANGELOG
 
+## 0.0.8
+
+* Add version.rb
 
 ### 0.0.7
 
-* Add version.rb
 * Get in sync with Rubygems.org version
 
 ### 0.0.4
