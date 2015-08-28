@@ -4,7 +4,7 @@
 #  store_translations
 #  clean_up
 #
-module LocalchI18n
+module I18nDocs
   class Translations
 
     attr_accessor :locales, :tmp_folder, :config_file, :csv_files

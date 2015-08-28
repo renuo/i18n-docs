@@ -1,13 +1,13 @@
 require 'csv'
 require 'yaml'
 require 'open-uri'
-require 'localch_i18n/missing_keys_finder'
-require 'localch_i18n/csv_to_yaml'
-require 'localch_i18n/translations'
-require 'localch_i18n/translation_file_export'
+require 'i18n_docs/missing_keys_finder'
+require 'i18n_docs/csv_to_yaml'
+require 'i18n_docs/translations'
+require 'i18n_docs/translation_file_export'
 
 if defined?(Rails)
-  class LocalchI18nTask < Rails::Railtie
+  class I18nDocs::Railtie < Rails::Railtie
     rake_tasks do
       Dir[File.join(File.dirname(__FILE__),'tasks/*.rake')].each { |f| load f }
     end

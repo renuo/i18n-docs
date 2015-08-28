@@ -16,7 +16,7 @@ module UnitTests
 
       Rails.stubs(:root).returns(stub(:join => @output_file))
 
-      @csv_to_yaml = LocalchI18n::CsvToYaml.new(@input_file, @output_file, @locales)
+      @csv_to_yaml = I18nDocs::CsvToYaml.new(@input_file, @output_file, @locales)
     end
 
     def teardown
@@ -139,7 +139,7 @@ module UnitTests
       @csv_to_yaml.write_files
       assert File.exists?(@output_file)
     end
-    
+
     def test_key_has_spaces
       row = {'key' => 'has. space', 'en' => 'yes', 'de' => 'ja'}
       @csv_to_yaml.process_row(row)
