@@ -1,6 +1,6 @@
 $:.push File.expand_path("../lib", __FILE__)
 # Maintain your gem's version:
-require 'localch_i18n/version'
+require 'i18n_docs/version'
 
 # encoding: utf-8
 Gem::Specification.new do |s|
