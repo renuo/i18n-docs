@@ -174,7 +174,35 @@ Note that locales are defaulting to the default locale, and then to the humnaniz
 
 ## 3. Usage
 
-### 3.1 For Rails user
+### 3.1 Specifying gem
+
+The official i18n-docs gem lives here https://rubygems.org/gems/i18n-docs.
+You can refer to it via:
+
+    group :development do
+      gem 'i18n-docs'
+      gem 'i18n-docs',  '~> 0.0.7'
+    end
+
+But because a lot of development had happened lately
+which hasn't been merged into local-ch/i18n-docs yet,
+you may want to reference a commit directly on github,
+following http://bundler.io/git.html.
+
+    group :development do
+        gem 'i18n-docs', :github => 'AntoineInsa/i18n-docs',
+        gem 'i18n-docs', :github => 'AntoineInsa/i18n-docs', :ref => 'b2ea22e18b3'
+        gem 'i18n-docs', :github => 'AntoineInsa/i18n-docs', :branch => 'master'
+        gem 'i18n-docs', :github => 'AntoineInsa/i18n-docs', :tag => 'v0.0.8'
+    end
+
+You can as well clone/download the project, and use it locally:
+
+    group :development do
+      gem 'i18n-docs', :path => '~/Sites/i18n-docs'
+    end
+
+### 3.2 For Rails user
 
 Add the gem to your Rails project:
 
@@ -200,17 +228,17 @@ The following rake tasks are added by the gem to your Rails project:
 * `rake i18n:import_translations`
   Download translations from spreadsheets (Google Drive and/or local files) and save them into YAML files.
 
-### 3.2 For non-Rails users
+### 3.3 For non-Rails users
 
 Pick-up any directory, add a `i18n-docs.yml` file (see 2.).
 
-Add a Gemfile:
+Add a `Gemfile`:
 
     source "https://rubygems.org"
-    gem 'i18n-docs', :github => 'AntoineInsa/i18n-docs', :branch => 'v0.0.8'
+    gem 'i18n-docs', :github => 'AntoineInsa/i18n-docs', :branch => 'master'
 
 
-Add a i18n-docs.rb:
+Add a `i18n-docs.rb`:
 
     #!/usr/bin/env ruby
 
