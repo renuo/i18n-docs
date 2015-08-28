@@ -78,6 +78,11 @@ Follow this: http://stackoverflow.com/questions/12562697/opensslsslsslerror-ssl-
 
 ## CHANGELOG
 
+### 0.0.10
+
+* rename module to be inline with the gem-name
+* various cleanups
+
 ### 0.0.9
 
 * add version.rb
