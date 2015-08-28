@@ -62,6 +62,11 @@ Following Rake tasks are added by the GEM to your Rails project:
 ![screenshot](http://dl.dropbox.com/u/385855/Screenshots/oom_.png)
 * From now on you should only update translations in Google Docs and run `rake i18n:import_translations` in the application to get changes. You can also export your
 
+## Error Handling
+
+I case of the error `OpenSSL::SSL::SSLError: SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed` when running `rake i18n:import_translations`
+Follow this: http://stackoverflow.com/questions/12562697/opensslsslsslerror-ssl-connect-returned-1-errno-0-state-sslv3-read-server-ce?answertab=active#tab-top
+
 ## Todo
 
 *Pull requests welcome!*
@@ -73,7 +78,7 @@ Following Rake tasks are added by the GEM to your Rails project:
 
 ## CHANGELOG
 
-## 0.0.9
+### 0.0.9
 
 * add version.rb
 * content downloaded is forced to UTF-8
@@ -82,10 +87,9 @@ Following Rake tasks are added by the GEM to your Rails project:
 * create tmp directory if it does not exist
 * strip spaces from keys
 
-## 0.0.8
+### 0.0.7
 
-* screwed up rubygems.org push
-* this version has been YANKED
+* YANKED from rubygems.org, sorry
 
 ### 0.0.7
 

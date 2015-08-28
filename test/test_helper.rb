@@ -1,6 +1,9 @@
 require 'test/unit'
 require 'fileutils'
 require 'mocha/setup'
+require 'localch-i18n'
+require 'mocha/mini_test'
+require 'awesome_print'
 
 require 'i18n-docs'
 
