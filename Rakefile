@@ -4,13 +4,13 @@ rescue LoadError
   puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
 end
 
-require 'localch-i18n'
+require 'i18n-docs'
 require 'rdoc/task'
 require 'rake/testtask'
 
 RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'localch-i18n'
+  rdoc.title    = 'i18n-docs'
   rdoc.options << '--line-numbers'
   rdoc.rdoc_files.include('README.md')
   rdoc.rdoc_files.include('lib/**/*.rb')
