@@ -26,6 +26,3 @@ Rake::TestTask.new(:test) do |test|
 end
 
 task :default => [:test]
-
-# Load tasks
-Dir.glob('lib/tasks/**/*.rake').each { |r| Rake.application.add_import r }
