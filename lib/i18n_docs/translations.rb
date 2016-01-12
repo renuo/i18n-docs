@@ -6,7 +6,6 @@
 #
 module I18nDocs
   class Translations
-
     attr_accessor :locales, :tmp_folder, :config_file, :csv_files
 
     def initialize(config_file = nil, tmp_folder = nil)
@@ -26,14 +25,14 @@ module I18nDocs
 
     def load_config
       @settings = {}
-      @settings = YAML.load_file(config_file) if File.exists?(config_file)
+      @settings = YAML.load_file(config_file) if File.exist?(config_file)
     end
 
     def download_files
       files = @settings['files']
       files.each do |target_file, url|
-        #ensure .yml filename
-        target_file = target_file + ".yml" if target_file !~ /\.yml$/
+        # ensure .yml filename
+        target_file += '.yml' if target_file !~ /\.yml$/
         # download file to tmp directory
         tmp_file = File.basename(target_file).gsub('.yml', '.csv')
         tmp_file = File.join(@tmp_folder, tmp_file)
@@ -54,7 +53,7 @@ module I18nDocs
 
     def clean_up
       # remove all tmp files
-      @csv_files.each do |target_file, csv_file|
+      @csv_files.each do |_target_file, csv_file|
         File.unlink(csv_file)
       end
     end
@@ -66,8 +65,5 @@ module I18nDocs
         dst.write(doc_data)
       end
     end
-
   end
 end
-
-

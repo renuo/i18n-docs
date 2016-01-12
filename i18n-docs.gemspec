@@ -1,4 +1,4 @@
-$:.push File.expand_path("../lib", __FILE__)
+$LOAD_PATH.push File.expand_path('../lib', __FILE__)
 # Maintain your gem's version:
 require 'i18n_docs/version'
 
@@ -7,9 +7,14 @@ Gem::Specification.new do |s|
   s.name        = 'i18n-docs'
   s.version     = I18nDocs::VERSION
   s.date        = '2013-05-10'
-  s.summary     = "Maintain translations in Google Docs and export them to your Rails project."
-  s.description = "GEM providing helper scripts to manage i18n translations in Google Docs. Features: check YAML files for missing translations; export YAML files to CSV; download translations from multiple Google spreadsheets and store to YAML files"
-  s.authors     = ["Georg Kunz", "Ivan Jovanovic", "Jeremy Seitz", "Eduard Schäli", "Robin Wunderlin", "Esteban Pastorino"]
+  s.summary     = 'Maintain translations in Google Docs and export them to your Rails project.'
+  s.description = <<-TEXT
+                  GEM providing helper scripts to manage i18n translations in Google Docs.
+                  Features: check YAML files for missing translations; export YAML files to CSV;
+                  download translations from multiple Google spreadsheets and store to YAML files
+                  TEXT
+  s.authors     = ['Georg Kunz', 'Ivan Jovanovic', 'Jeremy Seitz', 'Eduard Schäli',
+                   'Robin Wunderlin', 'Esteban Pastorino']
   s.email       = 'jeremy.seitz@local.ch'
   s.files       = `git ls-files`.split("\n")
   s.homepage    = 'https://github.com/local-ch/i18n-docs'
@@ -17,5 +22,7 @@ Gem::Specification.new do |s|
   # dependencies
   s.add_dependency('rake')
 
+  s.add_development_dependency('test-unit')
   s.add_development_dependency('mocha', '~> 0.13.3')
+  s.add_development_dependency('rubocop')
 end
