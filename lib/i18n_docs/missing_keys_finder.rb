@@ -46,16 +46,18 @@ module I18nDocs
     end
 
     def output_available_locales
-      puts "#{I18n.available_locales.size} #{I18n.available_locales.size == 1 ? 'locale' : 'locales'} available: #{I18n.available_locales.join(', ')}"
+      amount = I18n.available_locales.size
+      puts "#{amount} #{amount == 1 ? 'locale' : 'locales'} available: #{I18n.available_locales.join(', ')}"
     end
 
     def output_missing_keys(missing_keys)
-      if missing_keys.size > 0
-        puts "#{missing_keys.size} #{missing_keys.size == 1 ? 'key is missing' : 'keys are missing'} from one or more locales:"
+      amount = missing_keys.size
+      if amount > 0
+        puts "#{amount} #{amount == 1 ? 'key is' : 'keys are'} missing from one or more locales:"
         missing_keys.keys.sort.each do |key|
           puts "'#{key}': Missing from #{missing_keys[key].collect(&:inspect).join(', ')}"
         end
-        puts "\nERROR: #{missing_keys.size} #{missing_keys.size == 1 ? 'key is missing' : 'keys are missing'} from one or more locales."
+        puts "\nERROR: #{amount} #{amount == 1 ? 'key is' : 'keys are'} missing from one or more locales:"
       else
         puts 'No keys are missing'
       end
