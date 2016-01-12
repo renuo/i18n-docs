@@ -17,5 +17,6 @@ Gem::Specification.new do |s|
   # dependencies
   s.add_dependency('rake')
 
+  s.add_development_dependency('test-unit')
   s.add_development_dependency('mocha', '~> 0.13.3')
 end

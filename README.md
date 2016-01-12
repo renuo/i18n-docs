@@ -12,6 +12,13 @@ Although we use it with Google Docs, it could be used with any CSV file.
 * import/export YAML files with a Google Spreadsheet
 * check YAML files for missing translations (`rake i18n:find_missing_keys`)
 
+## Tests
+
+Verify the quality of this gem by checking out this repo and running:
+
+    bundle install
+    rake test
+
 ## Usage
 
 ### Configuration
