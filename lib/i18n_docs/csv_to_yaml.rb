@@ -42,7 +42,9 @@ module I18nDocs
 
       key_elements = key.split('.')
       @locales.each do |locale|
-        fail "Locale missing for key #{key}! (locales in app: #{@locales} / locales in file: #{row_hash.keys})" unless row_hash.key?(locale)
+        unless row_hash.key?(locale)
+          fail "Locale missing for key #{key}! (locales in app: #{@locales} / locales in file: #{row_hash.keys})"
+        end
         store_translation(key_elements, locale, row_hash[locale])
       end
     end

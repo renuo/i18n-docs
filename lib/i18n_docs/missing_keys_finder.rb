@@ -93,7 +93,7 @@ module I18nDocs
     end
 
     def load_translations
-      # Make sure we’ve loaded the translations
+      # Make sure we've loaded the translations
       I18n.backend.send(:init_translations)
     end
 
@@ -101,7 +101,7 @@ module I18nDocs
       @yaml = {}
       begin
         @yaml = YAML.load_file(File.join(Rails.root, 'config', 'ignore_missing_i18n_keys.yml'))
-      rescue => e
+      rescue => _e
         STDERR.puts 'No ignore_missing_keys.yml config file.'
       end
     end
