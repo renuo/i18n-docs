@@ -12,13 +12,13 @@ module UnitTests
       config_file = File.join(fixture_path, 'config.yml')
       @translations = I18nDocs::Translations.new(config_file, tmp_dir)
       @translations.tmp_folder = tmp_dir
-      @translations.locales = ['de', 'en']
+      @translations.locales = %w(de en)
 
       @fixture_file = File.join(fixture_path, 'minimal.csv')
       @tmp_file = File.join(tmp_dir, 'downloaded.csv')
       @output_file = File.join(tmp_dir, 'test.yml')
 
-      Rails.stubs(:root).returns(stub(:join => @output_file))
+      Rails.stubs(:root).returns(stub(join: @output_file))
     end
 
     def teardown
@@ -26,33 +26,33 @@ module UnitTests
     end
 
     def test_download
-      assert !File.exists?(@tmp_file)
-      @translations.download("https://docs.google.com/spreadsheet/pub?key=0ApnemdIdiDXedEpiVFR1RkdWMDhnTTgtdzRJMWZMLUE&single=true&gid=0&output=csv", @tmp_file)
-      assert File.exists?(@tmp_file), "Expected to have downloaded Google Spreadsheet to '#{@tmp_file}'"
+      assert !File.exist?(@tmp_file)
+      @translations.download('https://docs.google.com/spreadsheet/pub?key=0ApnemdIdiDXedEpiVFR1RkdWMDhnTTgtdzRJMWZMLUE&single=true&gid=0&output=csv', @tmp_file)
+      assert File.exist?(@tmp_file), "Expected to have downloaded Google Spreadsheet to '#{@tmp_file}'"
     end
 
     def test_cleanup
-      @translations.csv_files = {'dummy.yml' => @tmp_file}
-      File.open(@tmp_file, "w") {}
-      assert File.exists?(@tmp_file)
+      @translations.csv_files = { 'dummy.yml' => @tmp_file }
+      File.open(@tmp_file, 'w') {}
+      assert File.exist?(@tmp_file)
       @translations.clean_up
-      assert !File.exists?(@tmp_file), "Expected to delete file"
+      assert !File.exist?(@tmp_file), 'Expected to delete file'
     end
 
     def test_store_translations
-      assert !File.exists?(@output_file)
+      assert !File.exist?(@output_file)
 
-      @translations.csv_files = {@output_file => @fixture_file}
+      @translations.csv_files = { @output_file => @fixture_file }
       @translations.store_translations
 
-      assert File.exists?(@output_file)
+      assert File.exist?(@output_file)
     end
 
     def test_download_files
       expected_file = File.join(tmp_dir, 'download.csv')
-      assert !File.exists?(expected_file)
+      assert !File.exist?(expected_file)
       @translations.download_files
-      assert File.exists?(expected_file)
+      assert File.exist?(expected_file)
       assert File.open(expected_file).read.encoding.name == 'UTF-8'
     end
   end
