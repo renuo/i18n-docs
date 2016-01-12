@@ -37,7 +37,7 @@ module I18nDocs
             missing_keys[key] << locale
           else
             missing_keys[key] = [locale]
-                      end
+          end
         end
       end
 
