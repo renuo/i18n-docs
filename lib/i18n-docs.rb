@@ -7,9 +7,11 @@ require 'i18n_docs/translations'
 require 'i18n_docs/translation_file_export'
 
 if defined?(Rails)
-  class I18nDocs::Railtie < Rails::Railtie
-    rake_tasks do
-      Dir[File.join(File.dirname(__FILE__), 'tasks/*.rake')].each { |f| load f }
+  module I18nDocs
+    class Railtie < Rails::Railtie
+      rake_tasks do
+        Dir[File.join(File.dirname(__FILE__), 'tasks/*.rake')].each { |f| load f }
+      end
     end
   end
 end
