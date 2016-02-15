@@ -149,5 +149,14 @@ module UnitTests
       assert_equal 'yes', translations['en']['has']['space']
     end
 
+    def test_wrong_csv_format_error_message
+      @input_file  = File.join(fixture_path, 'error.csv')
+      @csv_to_yaml = I18nDocs::CsvToYaml.new(@input_file, @output_file, @locales)
+
+      assert_raise "Error around key 'top_level.key.another_key': Expected \"Value2\" to be a Hash" do
+        @csv_to_yaml.process
+      end
+    end
+
   end
 end
