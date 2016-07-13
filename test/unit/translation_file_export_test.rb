@@ -24,9 +24,9 @@ module UnitTests
 
 
     def test_export
-      assert !File.exists?(@output_file)
+      assert !File.exist?(@output_file)
       @exporter.export
-      assert File.exists?(@output_file), "Expected to have a CSV file written"
+      assert File.exist?(@output_file), "Expected to have a CSV file written"
     end
 
     def dtest_load_language

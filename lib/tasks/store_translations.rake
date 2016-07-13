@@ -12,7 +12,7 @@ namespace :i18n do
     raise "'Rails' not found! Tasks can only run within a Rails application!" if !defined?(Rails)
 
     config_file = Rails.root.join('config', 'translations.yml')
-    raise "No config file 'config/translations.yml' found." if !File.exists?(config_file)
+    raise "No config file 'config/translations.yml' found." if !File.exist?(config_file)
 
     tmp_dir = Rails.root.join('tmp')
     Dir.mkdir(tmp_dir) unless Dir.exist?(tmp_dir)

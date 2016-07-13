@@ -134,10 +134,10 @@ module UnitTests
     end
 
     def test_write_files
-      assert !File.exists?(@output_file)
+      assert !File.exist?(@output_file)
       @csv_to_yaml.process
       @csv_to_yaml.write_files
-      assert File.exists?(@output_file)
+      assert File.exist?(@output_file)
     end
 
     def test_key_has_spaces

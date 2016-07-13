@@ -26,7 +26,7 @@ module I18nDocs
 
     def load_config
       @settings = {}
-      @settings = YAML.load_file(config_file) if File.exists?(config_file)
+      @settings = YAML.load_file(config_file) if File.exist?(config_file)
     end
 
     def download_files
@@ -69,5 +69,3 @@ module I18nDocs
 
   end
 end
-
-
