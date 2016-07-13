@@ -27,7 +27,7 @@ module UnitTests
 
     def test_download
       assert !File.exists?(@tmp_file)
-      @translations.download("https://docs.google.com/spreadsheet/pub?key=0ApnemdIdiDXedEpiVFR1RkdWMDhnTTgtdzRJMWZMLUE&single=true&gid=0&output=csv", @tmp_file)
+      @translations.download("https://docs.google.com/spreadsheets/d/1PbmkqamXuNyP7gnVARpeCfV8rA7WvX98dTqsQB3Wdts/pub?output=csv", @tmp_file)
       assert File.exists?(@tmp_file), "Expected to have downloaded Google Spreadsheet to '#{@tmp_file}'"
     end
 
