@@ -4,6 +4,10 @@ module I18nDocs
 
     attr_reader :input_file, :output_file, :locales, :translations
 
+    def self.root_path
+      @root_path ||= defined?(Rails) ? Rails.root : Pathname.new(Dir.pwd)
+    end
+
     def initialize(input_file, output_file, locales = [])
       @input_file = input_file
       @output_file = File.basename(output_file)
@@ -19,12 +23,9 @@ module I18nDocs
 
     def write_files
       @locales.each do |locale|
-        if defined?(Rails)
-          output_file_path = Rails.root.join('config', 'locales', locale, @output_file)
-          FileUtils.mkdir_p File.dirname(output_file_path)
-        else
-          output_file_path = "#{locale}_#{@output_file}"
-        end
+        output_file_path = self.class.root_path.join('config', 'locales', locale, @output_file)
+        FileUtils.mkdir_p File.dirname(output_file_path)
+
         File.open(output_file_path, 'w') do |file|
           final_translation_hash = {locale => @translations[locale]}
           file.puts YAML::dump(final_translation_hash)
