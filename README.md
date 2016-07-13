@@ -16,7 +16,7 @@ Although we use it with Google Docs, it could be used with any CSV file.
 
 ### Configuration
 
-Add the GEM to your Rails project:
+Add the GEM to your project:
 
     gem 'i18n-docs'
 
@@ -26,6 +26,8 @@ Create a configuration file in `config/translations.yml`:
       navigation.yml: "https://docs.google.com/spreadsheet/pub?key=ab43...34f3&single=true&gid=0&output=csv"
       forms.yml: "https://docs.google.com/spreadsheet/pub?key=0Ap...XveWc&single=true&gid=0&output=csv"
       ... etc ...
+
+#### Rails
 
 Finally, let Rails know what locales you will be using. Add this to `config/application.rb`:
 
@@ -39,6 +41,41 @@ Finally, let Rails know what locales you will be using. Add this to `config/appl
     end
 
 This defines which languages and translation files to import from a Google Spreadsheet. The content of the Spreadsheet URL is stored to a file called e.g. `example1.yml` within folders `config/locales/en` and all other detected locales.
+
+#### Non Rails
+
+Load rake tasks in your `Rakefile`:
+
+```ruby
+require 'i18n-docs'
+
+spec = Gem::Specification.find_by_name 'i18n-docs'
+load "#{spec.gem_dir}/lib/tasks/store_translations.rake"
+```
+
+Create `environment` task in your `Rakefile`:
+
+```ruby
+task :environment do
+  ...
+end
+
+```
+
+The minimal scope of this task is to set up `I18n.available_locales`.
+
+Translations will be stored under `config/locales` in project root directory.
+Don't forget to setup `I18n` accordingly:
+
+```ruby
+I18n.load_path = Dir[File.join(MyProject.root, 'config', 'locales', '**', '*.yml')]
+```
+
+And to load them:
+
+```ruby
+I18n.backend.load_translations
+```
 
 ### Rake Tasks
 
@@ -116,4 +153,3 @@ Follow this: http://stackoverflow.com/questions/12562697/opensslsslsslerror-ssl-
 ### Credits/License
 
 This gem is sponsored by [local.ch](http://www.local.ch/). It is licensed under the [MIT license](http://en.wikipedia.org/wiki/MIT_License). If you're a ruby developer and want to work with us in Switzerland, please check out our [jobs page](http://local-ch.github.com/).
-

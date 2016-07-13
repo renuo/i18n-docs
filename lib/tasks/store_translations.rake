@@ -9,12 +9,11 @@ namespace :i18n do
 
   desc "Download translations from Google Spreadsheet and save them to YAML files."
   task :import_translations => :environment do
-    raise "'Rails' not found! Tasks can only run within a Rails application!" if !defined?(Rails)
 
-    config_file = Rails.root.join('config', 'translations.yml')
-    raise "No config file 'config/translations.yml' found." if !File.exists?(config_file)
+    config_file = I18nDocs::CsvToYaml.root_path.join('config', 'translations.yml')
+    raise "No config file 'config/translations.yml' found." if !File.exist?(config_file)
 
-    tmp_dir = Rails.root.join('tmp')
+    tmp_dir = I18nDocs::CsvToYaml.root_path.join('tmp')
     Dir.mkdir(tmp_dir) unless Dir.exist?(tmp_dir)
 
     translations = I18nDocs::Translations.new(config_file, tmp_dir)
@@ -26,10 +25,8 @@ namespace :i18n do
 
   desc "Export all language files to CSV files (only files contained in en folder are considered)"
   task :export_translations => :environment do
-    raise "'Rails' not found! Tasks can only run within a Rails application!" if !defined?(Rails)
-
-    source_dir  = Rails.root.join('config', 'locales')
-    output_dir  = Rails.root.join('tmp')
+    source_dir  = I18nDocs::CsvToYaml.root_path.join('config', 'locales')
+    output_dir  = I18nDocs::CsvToYaml.root_path.join('tmp')
     locales     = I18n.available_locales
 
     input_files = Dir[File.join(source_dir, ENV['locale'] || 'en', '*.yml')]
@@ -54,5 +51,3 @@ namespace :i18n do
   end
 
 end
-
-

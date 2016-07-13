@@ -52,7 +52,7 @@ module I18nDocs
 
       input_file = File.join(@source_dir, locale, @source_file)
       translations = {}
-      translations = YAML.load_file(input_file) if File.exists?(input_file)
+      translations = YAML.load_file(input_file) if File.exist?(input_file)
       translations[locale]
     end
 
