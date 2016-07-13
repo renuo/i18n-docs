@@ -71,10 +71,10 @@ module I18nDocs
 
     def collect_keys(scope, translations)
       full_keys = []
-      translations.to_a.each do |key, translations|
+      translations.to_a.each do |key, translation|
         new_scope = scope.dup << key
-        if translations.is_a?(Hash)
-          full_keys += collect_keys(new_scope, translations)
+        if translation.is_a?(Hash)
+          full_keys += collect_keys(new_scope, translation)
         else
           full_keys << new_scope.join('.')
         end
@@ -102,7 +102,7 @@ module I18nDocs
       @yaml = {}
       begin
         @yaml = YAML.load_file(File.join(Rails.root, 'config', 'ignore_missing_i18n_keys.yml'))
-      rescue => e
+      rescue
         STDERR.puts "No ignore_missing_keys.yml config file."
       end
 
