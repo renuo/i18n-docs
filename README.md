@@ -115,6 +115,10 @@ Follow this: http://stackoverflow.com/questions/12562697/opensslsslsslerror-ssl-
 
 ## CHANGELOG
 
+### 0.1.0
+
+* usable outside of rails
+
 ### 0.0.10
 
 * rename module to be inline with the gem-name
