@@ -5,6 +5,11 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
 require 'i18n-docs'
 
+RSpec.configure do |config|
+    config.filter_run focus: true
+    config.run_all_when_everything_filtered = true
+end
+
 module Helpers
 
   def fixture_path

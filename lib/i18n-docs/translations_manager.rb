@@ -155,6 +155,8 @@ module I18nDocs
       files = option_fallback('files')
 
       self.options = {
+        'google_drive_credentials' => option_fallback('google_drive_credentials'),
+
         'default_locale'      => option_fallback('default_locale'),
         'locales'             => option_fallback('locales'),
         'files'               => files,
@@ -176,8 +178,8 @@ module I18nDocs
         ruby_options[key]
       elsif !ENV[key].nil?
         ENV[key]
-      elsif !config['options'][key].nil?
-        config['options'][key]
+      elsif !config[key].nil?
+        config[key]
       else
         default
       end
@@ -208,7 +210,7 @@ module I18nDocs
     end
 
     def set_google_drive_manager
-      self.google_drive_manager = GoogleDriveManager.new(config["google_drive_credentials"])
+      self.google_drive_manager = GoogleDriveManager.new(options['google_drive_credentials'])
     end
 
     def set_sub_translations

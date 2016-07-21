@@ -7,24 +7,22 @@
 
 # i18n-docs
 
-**i18n-docs** is a ruby gem that helps you to keep translations stored in Google Docs. This makes it easier for translators and project members to coordinate changes and updates. In addition, the standard features of Google Docs are super handy for this process: revision tracking, authorization, publishing, etc.
+**i18n-docs** is a ruby gem that helps you to maintain your translations files, using a Google Docs Spreadsheet, or any other csv file. This makes it easier for translators and project members to coordinate changes and updates. In addition, the standard features of Google Docs are super handy for this process: revision tracking, authorization, etc.
 
-This gem works as well outside of a Rails environment. You can call it any from any ruby file.
-
-*This gem is currently in use and tested with Rails 3.1. It probably works with other 3.x versions, but probably not 2.x at the moment.*
+This gem works both in Rails and non-Rails environment. See [3. Usage](#3-usage) for more details.
 
 ## 1. Features
 
-- import translations from Google Spreadsheet/Worksheet or CSV files to locales yml files (one per locale)
-- export translations from local locales yml files to Google Spreadsheet/Worksheet or CSV files
+- import translations from Google Spreadsheet/Worksheet or csv files to locales yml files (one per locale)
+- export translations from local locales yml files to Google Spreadsheet/Worksheet or csv files
 
 ### 1.1 Spreadsheet structure
 
-The spreadsheet can either be a Google Drive spreadsheet worksheet or a CSV file.
+The spreadsheet can either be a Google Drive spreadsheet worksheet or a csv file.
 
 eg: **Google Drive**
 Spreadsheet name: `my-i18n`
-Speadsheet key: `1GsK...Cjwfw` (see the url `https://docs.google.com/spreadsheets/d/{spreadsheet_key}/edit`)
+Spreadsheet key: `1GsK...Cjwfw` (see the url `https://docs.google.com/spreadsheets/d/{spreadsheet_key}/edit`)
 Worksheet name: `numbers`
 ```
 | key           | en    | fr    | de   |
@@ -34,7 +32,7 @@ Worksheet name: `numbers`
 | numbers.three | three | trois | drei |
 ```
 
-eg: **CSV spreadsheet**
+eg: **csv spreadsheet**
 File path: `config/locales/activities.yml`
 ```
 | key         | en   | fr      | de     |
@@ -86,21 +84,23 @@ google_drive_credentials:
     client_id: "YOUR_ID_GOES_HERE"
     client_secret: "YOUR_SECRET_GOES_HERE"
 
-options:
-  default_locale: 'en'            # The main locale, does only count for export
-  locales: ['en','fr','de']       # Subset of locales to play with
-  files: {key => value}           # Files to use (overwrites `i18n-docs.yml` files)
-  files_only: ['activities.yml']  # Subset of filename to use
-  cleanup: false                  # Remove temporary files
-  tmp_dir: 'tmp'                  # Temporary upload/download directory, default: './tmp/i18n-docs/'
-  locales_dir: 'i18n'             # Final locales directory, default './_i18n' or './locales'
-  single_locale_file: true        # Deal only with one file per locale (no locale subdirectories)
-  include_locale_key: true        # Include the locale as a key at the root of the locale file
-  force_fallback: true            # Force all translations to have a value, default: false
 
-  # Future work
-  logger_level: 0                 # Verbose?
-  format: 'yml'                   # .yml or .json ? default: .yml
+default_locale: 'en'            # The main locale, does only count for export
+locales: ['en','fr','de']       # Subset of locales to play with
+google_drive_credentials: {}    # Google Drive credentials (see `i18n-docs.yml`)
+files: {key => value}           # Files to use (see `i18n-docs.yml`)
+files_only: ['activities.yml']  # Subset of filename to use
+cleanup: false                  # Remove temporary files
+tmp_dir: 'tmp'                  # Temporary upload/download directory, default: './tmp/i18n-docs/'
+locales_dir: 'i18n'             # Final locales directory, default './_i18n' or './locales'
+single_locale_file: true        # Deal only with one file per locale (no locale subdirectories)
+include_locale_key: true        # Include the locale as a key at the root of the locale file
+force_fallback: true            # Force all translations to have a value, default: false
+                                # Fallback chain 1.locale, 2.default locale, 3.humanized key
+
+# Future work
+logger_level: 0                 # Verbose?
+format: 'yml'                   # .yml or .json ? default: .yml
 ```
 
 ### 2.1 Files
@@ -126,7 +126,7 @@ Copy and paste the key in the prompt. The key will be saved for future calls in 
 
 There's actually different ways of calling these options. You can define them:
 - when calling a method in ruby, by passing options as a hash (eg: `I18nDocs::TranslationsManager.import_translations({'locales_dir' => '_i18n'})`)
-- when runing a rake task, by setting env variables (eg: `locales_dir=_i18n rake i18n:export_translations`)
+- when running a rake task, by setting env variables (eg: `locales_dir=_i18n rake i18n:export_translations`)
 - or simply by writing them in `i18n-docs.yml`
 
 The only options that is not in the config file is the directory where to find the config file!
@@ -167,16 +167,45 @@ becomes
 | places.work        | Workplace    | Workplace   | Workplace   |
 | places.castle_park | Castle park  | Castle park | Castle park |
 ```
-Note that locales are defaulting to the default locale, and then to the humnanized key.
+Note that locales are defaulting to the default locale, and then to the humanized key.
 
 
 ## 3. Usage
 
-### 3.1 For Rails user
+### 3.1 Specifying gem
+
+The official i18n-docs gem lives here https://rubygems.org/gems/i18n-docs.
+You can refer to it via:
+
+    group :development do
+      gem 'i18n-docs'
+      gem 'i18n-docs',  '~> 0.0.7'
+    end
+
+But because a lot of development had happened lately
+which hasn't been merged into local-ch/i18n-docs yet,
+you may want to reference a commit directly on github,
+following http://bundler.io/git.html.
+
+    group :development do
+        gem 'i18n-docs', :github => 'AntoineInsa/i18n-docs',
+        gem 'i18n-docs', :github => 'AntoineInsa/i18n-docs', :branch => 'master'
+        gem 'i18n-docs', :github => 'AntoineInsa/i18n-docs', :tag => 'v0.0.8'
+        gem 'i18n-docs', :github => 'AntoineInsa/i18n-docs', :ref => 'b2ea22e18b3'
+    end
+
+You can as well clone/download the project, and use it locally:
+
+    group :development do
+      gem 'i18n-docs', :path => '~/Sites/i18n-docs'
+    end
+
+### 3.2 For Rails user
 
 Add the gem to your Rails project:
 
-    gem 'i18n-docs'
+    gem 'i18n-docs', :github => 'AntoineInsa/i18n-docs'
+
 
 Let Rails know what locales you will be using. Add this to `config/application.rb`:
 
@@ -198,17 +227,19 @@ The following rake tasks are added by the gem to your Rails project:
 * `rake i18n:import_translations`
   Download translations from spreadsheets (Google Drive and/or local files) and save them into YAML files.
 
-### 3.2 For non-Rails users
+*This gem is currently in use and tested with Rails 3.1. It probably works with other 3.x versions, but probably not 2.x at the moment.*  
+
+### 3.3 For non-Rails users
 
 Pick-up any directory, add a `i18n-docs.yml` file (see 2.).
 
-Add a Gemfile:
+Add a `Gemfile`:
 
     source "https://rubygems.org"
-    gem 'i18n-docs', :github => 'AntoineInsa/i18n-docs', :branch => 'v0.0.8'
+    gem 'i18n-docs', :github => 'AntoineInsa/i18n-docs'
 
 
-Add a i18n-docs.rb:
+Add a `i18n-docs.rb`:
 
     #!/usr/bin/env ruby
 
@@ -268,3 +299,5 @@ Removed loading of `awesome_print` from the rake task. It was breaking download.
 ## 6. Credits/License
 
 This gem is sponsored by [local.ch](http://www.local.ch/). It is licensed under the [MIT license](http://en.wikipedia.org/wiki/MIT_License). If you're a ruby developer and want to work with us in Switzerland, please check out our [jobs page](http://local-ch.github.com/).
+
+This gem has been improved by [Attendease](http://attendease.com) as well, from Vancouver, BC, Canada.

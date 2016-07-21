@@ -126,11 +126,14 @@ module I18nDocs
       CSV.foreach(tmp_file, headers: true) do |row|
         row_hash = row.to_hash
 
+        raise "Need a 'key' column header" unless row_hash.has_key?('key')
         key = row_hash.delete('key')
 
-        manager.locales.each do |locale|
-          raise "Locale missing for key #{key}! (locales in app: #{manager.locales} / locales in file: #{row_hash.keys.to_s})" unless row_hash.has_key?(locale)
-          self.flat_translations[locale][key] = row_hash[locale]
+        if Utils.present?(key)
+          manager.locales.each do |locale|
+            raise "Locale missing for key #{key}! (locales in app: #{manager.locales} / locales in file: #{row_hash.keys.to_s})" unless row_hash.has_key?(locale)
+            self.flat_translations[locale][key] = row_hash[locale]
+          end
         end
       end
     end
@@ -177,7 +180,12 @@ module I18nDocs
             memo[k] = {}
           end
         end
-        data_hash[leaf] = decode(value)
+
+        if data_hash.is_a?(Hash)
+          data_hash[leaf] = decode(value)
+        else
+          raise "Key '#{tree.join('.')}' and '#{composed_key}' nesting is inconsistent"
+        end
       end
     end
 
@@ -283,8 +291,8 @@ module I18nDocs
 
     def encode(value)
       # To force:
-      # empty string, use "-"
-      # one whitespace, use "--"
+      # empty string, use "_"
+      # one whitespace, use "__"
       value = "_" if value == ""
       value = "__" if value == " "
       value
