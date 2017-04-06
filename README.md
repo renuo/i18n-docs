@@ -1,7 +1,3 @@
-# ATTENTION
-
-This gem is no longer actively maintained. If you are interested in taking over, please contact us at: sascha.kaestle@localsearch.ch
-
 # i18n-docs
 
 **i18n-docs** is a ruby gem that helps you to keep translations stored in Google Docs. This makes it easier for translators and project members to coordinate changes and updates. In addition, the standard features of Google Docs are super handy for this process: revision tracking, authorization, publishing, etc.
