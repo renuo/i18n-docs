@@ -6,11 +6,18 @@ Although we use it with Google Docs, it could be used with any CSV file.
 
 *this gem is currently in use and tested with Rails 3.1. It probably works with other 3.x versions, but probably not 2.x at the moment.*
 
-## Features:
+## Features
 
 * download translations from multiple Google spreadsheets and store to YAML files
 * import/export YAML files with a Google Spreadsheet
 * check YAML files for missing translations (`rake i18n:find_missing_keys`)
+
+## Tests
+
+Verify the quality of this gem by checking out this repo and running:
+
+    bundle install
+    rake test
 
 ## Usage
 
