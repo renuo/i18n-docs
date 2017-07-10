@@ -12,7 +12,7 @@ module UnitTests
       source_dir = fixture_path
       source_file = 'header.yml'
       output_dir = tmp_dir
-      locales = ['en', 'de']
+      locales = %w(en de)
 
       @exporter = I18nDocs::TranslationFileExport.new(source_dir, source_file, output_dir, locales)
       @output_file = File.join(output_dir, 'header.csv')
