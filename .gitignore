@@ -11,3 +11,4 @@ tmp/*
 .ruby-version
 .ruby-gemset
 rdoc/
+coverage/
