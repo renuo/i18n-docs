@@ -47,7 +47,7 @@ module I18nDocs
 
       key_elements = key.split('.')
       @locales.each do |locale|
-        raise "Locale missing for key #{key}! (locales in app: #{@locales} / locales in file: #{row_hash.keys.to_s})" if !row_hash.has_key?(locale)
+        raise "Locale missing for key #{key}! (locales in app: #{@locales} / locales in file: #{row_hash.keys.to_s})" if !row_hash.key?(locale)
         store_translation(key_elements, locale, row_hash[locale])
       end
     end
@@ -63,7 +63,7 @@ module I18nDocs
       leaf = keys.last
       data_hash = tree.inject(@translations[locale]) do |memo, k|
         if memo.is_a? Hash
-          if memo.has_key?(k)
+          if memo.key?(k)
             memo[k]
           else
             memo[k] = {}
