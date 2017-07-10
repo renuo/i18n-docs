@@ -20,9 +20,7 @@ module I18nDocs
 
       missing_keys = {}
       all_keys.each do |key|
-
         I18n.available_locales.each do |locale|
-
           skip = false
           ls = locale.to_s
           unless @yaml[ls].nil?

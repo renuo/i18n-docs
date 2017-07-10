@@ -1,6 +1,5 @@
 
 namespace :i18n do
-
   desc 'Find and list translation keys that do not exist in all locales'
   task missing_keys: :environment do
     finder = I18nDocs::MissingKeysFinder.new(I18n.backend)
@@ -9,7 +8,6 @@ namespace :i18n do
 
   desc 'Download translations from Google Spreadsheet and save them to YAML files.'
   task import_translations: :environment do
-
     config_file = I18nDocs::CsvToYaml.root_path.join('config', 'translations.yml')
     raise "No config file 'config/translations.yml' found." unless File.exist?(config_file)
 
@@ -20,7 +18,6 @@ namespace :i18n do
     translations.download_files
     translations.store_translations
     translations.clean_up
-
   end
 
   desc 'Export all language files to CSV files (only files contained in en folder are considered)'
@@ -49,5 +46,4 @@ namespace :i18n do
     puts '  CSV files can be removed safely after uploading them manually to Google Spreadsheet.'
     puts ''
   end
-
 end
