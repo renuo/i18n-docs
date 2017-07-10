@@ -38,12 +38,12 @@ module UnitTests
     def dtest_flatten_translations_hash
       translation_hash = { 'a' => {
         'I' => '1',
-                            'II' => '2',
-                            'III' => {
+        'II' => '2',
+        'III' => {
                               'Z' => '3'
                             }
       },
-                          'b' => '4'}
+                           'b' => '4'}
 
       flat = @exporter.flatten_translations_hash(translation_hash, [])
       assert_equal '1', flat['a.I']
@@ -65,7 +65,7 @@ module UnitTests
 
     def dtest_write_to_csv
       @exporter.translations = { 'de' => { 'numbers.one' => 'eins' },
-                                'en' => { 'numbers.one' => 'one' } }
+                                 'en' => { 'numbers.one' => 'one' } }
 
       @exporter.write_to_csv
 
