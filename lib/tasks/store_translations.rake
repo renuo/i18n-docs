@@ -34,7 +34,7 @@ namespace :i18n do
     puts ''
     puts "  Detected locales: #{locales}"
     puts '  Detected files:'
-    input_files.each {|f| puts "    * #{File.basename(f)}" }
+    input_files.each { |f| puts "    * #{File.basename(f)}" }
 
     puts ''
     puts '  Start exporting files:'
