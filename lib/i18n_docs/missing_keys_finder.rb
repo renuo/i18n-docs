@@ -53,7 +53,7 @@ module I18nDocs
     end
 
     def output_missing_keys(missing_keys)
-      if missing_keys.size > 0
+      if !missing_keys.empty?
         puts "#{missing_keys.size} #{missing_keys.size == 1 ? 'key is missing' : 'keys are missing'} from one or more locales:"
         missing_keys.keys.sort.each do |key|
           puts "'#{key}': Missing from #{missing_keys[key].collect(&:inspect).join(', ')}"
