@@ -32,7 +32,7 @@ module I18nDocs
     def download_files
       files = @settings['files']
       files.each do |target_file, url|
-        #ensure .yml filename
+        # ensure .yml filename
         target_file += '.yml' if target_file !~ /\.yml$/
         # download file to tmp directory
         tmp_file = File.basename(target_file).gsub('.yml', '.csv')
