@@ -8,7 +8,7 @@ module I18nDocs
       @source_file = source_file
 
       @output_file = File.join(output_dir, source_file.gsub('.yml', '.csv'))
-      @locales = locales.map {|l| l.to_s }
+      @locales = locales.map(&:to_s)
 
       @translations = {}
     end
