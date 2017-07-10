@@ -74,7 +74,5 @@ module UnitTests
       assert_match(/^key,(en|de|,){3}$/, output)
       assert_match(/^numbers.one,(one|eins|,){3}$/, output)
     end
-
-
   end
 end

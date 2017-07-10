@@ -1,6 +1,5 @@
 module I18nDocs
   class TranslationFileExport
-
     attr_accessor :translations
 
     def initialize(source_dir, source_file, output_dir, locales)
@@ -69,6 +68,5 @@ module I18nDocs
       end
       flat_hash
     end
-
   end
 end

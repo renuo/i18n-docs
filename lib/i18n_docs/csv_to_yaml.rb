@@ -1,6 +1,5 @@
 module I18nDocs
   class CsvToYaml
-
     attr_reader :input_file, :output_file, :locales, :translations
 
     def self.root_path
@@ -78,6 +77,5 @@ module I18nDocs
 
       data_hash[leaf] = value
     end
-
   end
 end

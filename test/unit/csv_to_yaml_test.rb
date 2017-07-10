@@ -156,6 +156,5 @@ module UnitTests
         @csv_to_yaml.process
       end
     end
-
   end
 end

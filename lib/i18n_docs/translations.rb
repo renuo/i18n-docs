@@ -6,7 +6,6 @@
 #
 module I18nDocs
   class Translations
-
     attr_accessor :locales, :tmp_folder, :config_file, :csv_files
 
     def initialize(config_file = nil, tmp_folder = nil)
@@ -66,6 +65,5 @@ module I18nDocs
         dst.write(doc_data)
       end
     end
-
   end
 end
