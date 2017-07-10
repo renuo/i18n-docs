@@ -60,7 +60,7 @@ module I18nDocs
         end
         puts "\nERROR: #{missing_keys.size} #{missing_keys.size == 1 ? 'key is missing' : 'keys are missing'} from one or more locales."
       else
-        puts "No keys are missing"
+        puts 'No keys are missing'
       end
     end
 
@@ -103,7 +103,7 @@ module I18nDocs
       begin
         @yaml = YAML.load_file(File.join(Rails.root, 'config', 'ignore_missing_i18n_keys.yml'))
       rescue
-        STDERR.puts "No ignore_missing_keys.yml config file."
+        STDERR.puts 'No ignore_missing_keys.yml config file.'
       end
 
     end

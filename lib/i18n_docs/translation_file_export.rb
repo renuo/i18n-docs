@@ -25,8 +25,8 @@ module I18nDocs
 
       puts "    #{@source_file}: write CSV to '#{@output_file}' \n\n"
 
-      CSV.open(@output_file, "wb") do |csv|
-        csv << (["key"] + @locales)
+      CSV.open(@output_file, 'wb') do |csv|
+        csv << (['key'] + @locales)
 
         @translations[main_locale].keys.each do |key|
           values = @locales.map do |locale|

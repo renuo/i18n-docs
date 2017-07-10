@@ -26,14 +26,14 @@ module UnitTests
     def test_export
       assert !File.exist?(@output_file)
       @exporter.export
-      assert File.exist?(@output_file), "Expected to have a CSV file written"
+      assert File.exist?(@output_file), 'Expected to have a CSV file written'
     end
 
     def dtest_load_language
       translations = @exporter.load_language('de')
 
-      assert translations, "Expected to return a hash with translations"
-      assert_equal translations['header']['search'], "Finden"
+      assert translations, 'Expected to return a hash with translations'
+      assert_equal translations['header']['search'], 'Finden'
     end
 
     def dtest_flatten_translations_hash

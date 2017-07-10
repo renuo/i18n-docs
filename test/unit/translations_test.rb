@@ -27,16 +27,16 @@ module UnitTests
 
     def test_download
       assert !File.exist?(@tmp_file)
-      @translations.download("https://docs.google.com/spreadsheets/d/1PbmkqamXuNyP7gnVARpeCfV8rA7WvX98dTqsQB3Wdts/pub?output=csv", @tmp_file)
+      @translations.download('https://docs.google.com/spreadsheets/d/1PbmkqamXuNyP7gnVARpeCfV8rA7WvX98dTqsQB3Wdts/pub?output=csv', @tmp_file)
       assert File.exist?(@tmp_file), "Expected to have downloaded Google Spreadsheet to '#{@tmp_file}'"
     end
 
     def test_cleanup
       @translations.csv_files = {'dummy.yml' => @tmp_file}
-      File.open(@tmp_file, "w") {}
+      File.open(@tmp_file, 'w') {}
       assert File.exist?(@tmp_file)
       @translations.clean_up
-      assert !File.exist?(@tmp_file), "Expected to delete file"
+      assert !File.exist?(@tmp_file), 'Expected to delete file'
     end
 
     def test_store_translations
