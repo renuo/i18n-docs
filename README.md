@@ -1,5 +1,6 @@
 # i18n-docs
 
+[![Build Status](https://travis-ci.org/renuo/i18n-docs.svg?branch=master)](https://travis-ci.org/renuo/i18n-docs)
 [![Code Climate](https://codeclimate.com/github/renuo/i18n-docs/badges/gpa.svg)](https://codeclimate.com/github/renuo/i18n-docs)
 [![Test Coverage](https://codeclimate.com/github/renuo/i18n-docs/badges/coverage.svg)](https://codeclimate.com/github/renuo/i18n-docs/coverage)
 [![Issue Count](https://codeclimate.com/github/renuo/i18n-docs/badges/issue_count.svg)](https://codeclimate.com/github/renuo/i18n-docs)
