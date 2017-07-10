@@ -13,4 +13,3 @@ if defined?(Rails)
     end
   end
 end
-
