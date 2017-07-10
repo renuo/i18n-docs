@@ -27,7 +27,7 @@ module I18nDocs
         FileUtils.mkdir_p File.dirname(output_file_path)
 
         File.open(output_file_path, 'w') do |file|
-          final_translation_hash = {locale => @translations[locale]}
+          final_translation_hash = { locale => @translations[locale] }
           file.puts YAML::dump(final_translation_hash)
         end
         puts "File '#{@output_file}' for language '#{locale}' written to disc (#{output_file_path})"

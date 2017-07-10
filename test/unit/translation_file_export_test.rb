@@ -37,7 +37,7 @@ module UnitTests
     end
 
     def dtest_flatten_translations_hash
-      translation_hash = {'a' => {
+      translation_hash = { 'a' => {
                             'I' => '1',
                             'II' => '2',
                             'III' => {
@@ -66,8 +66,8 @@ module UnitTests
     end
 
     def dtest_write_to_csv
-      @exporter.translations = {'de' => {'numbers.one' => 'eins'},
-                                'en' => {'numbers.one' => 'one'}}
+      @exporter.translations = { 'de' => { 'numbers.one' => 'eins' },
+                                'en' => { 'numbers.one' => 'one' } }
 
       @exporter.write_to_csv
 

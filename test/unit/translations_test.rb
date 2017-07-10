@@ -32,7 +32,7 @@ module UnitTests
     end
 
     def test_cleanup
-      @translations.csv_files = {'dummy.yml' => @tmp_file}
+      @translations.csv_files = { 'dummy.yml' => @tmp_file }
       File.open(@tmp_file, 'w') {}
       assert File.exist?(@tmp_file)
       @translations.clean_up
@@ -42,7 +42,7 @@ module UnitTests
     def test_store_translations
       assert !File.exist?(@output_file)
 
-      @translations.csv_files = {@output_file => @fixture_file}
+      @translations.csv_files = { @output_file => @fixture_file }
       @translations.store_translations
 
       assert File.exist?(@output_file)
