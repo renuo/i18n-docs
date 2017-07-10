@@ -22,7 +22,6 @@ module UnitTests
       remove_tmp_dir
     end
 
-
     def test_export
       assert !File.exist?(@output_file)
       @exporter.export

@@ -54,7 +54,6 @@ module UnitTests
       assert_equal 'We are the Phonebook', translations['en']['homepage']['title']
     end
 
-
     def test_empty_string_replacement_value
       # As Google Spreadsheet does not export empty cells we use '_' as a fake whitespace which
       # we replace with an empty string during CVS2YAML conversion.
@@ -66,7 +65,6 @@ module UnitTests
       assert_equal 'Phonebook of Switzerland', translations['en']['homepage']['meta']['title']
     end
 
-
     def test_empty_string_value
       row = { 'key' => 'homepage.meta.title', 'en' => 'Phonebook of Switzerland', 'de' => '' }
       @csv_to_yaml.process_row(row)
@@ -75,7 +73,6 @@ module UnitTests
       assert_equal '', translations['de']['homepage']['meta']['title']
       assert_equal 'Phonebook of Switzerland', translations['en']['homepage']['meta']['title']
     end
-
 
     def test_space_value
       row = { 'key' => 'homepage.meta.title', 'en' => 'Phonebook of Switzerland', 'de' => ' ' }
@@ -95,7 +92,6 @@ module UnitTests
       assert_equal 'Phonebook of Switzerland', translations['en']['homepage']['meta']['title']
     end
 
-
     def test_nil_value_deep_structure
       row1 = { 'key' => 'homepage.meta.title', 'en' => 'Phonebook of Switzerland', 'de' => nil }
       row2 = { 'key' => 'homepage.welcome', 'en' => 'Welcome', 'de' => 'Willkommen' }
@@ -107,7 +103,6 @@ module UnitTests
       assert_equal 'Willkommen', translations['de']['homepage']['welcome']
       assert_equal 'Phonebook of Switzerland', translations['en']['homepage']['meta']['title']
     end
-
 
     def test_store_translations
       keys = %w(homepage meta title)

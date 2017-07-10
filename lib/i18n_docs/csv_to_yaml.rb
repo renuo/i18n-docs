@@ -18,7 +18,6 @@ module I18nDocs
       end
     end
 
-
     def write_files
       @locales.each do |locale|
         output_file_path = self.class.root_path.join('config', 'locales', locale, @output_file)
@@ -31,7 +30,6 @@ module I18nDocs
         puts "File '#{@output_file}' for language '#{locale}' written to disc (#{output_file_path})"
       end
     end
-
 
     def process
       CSV.foreach(@input_file, headers: true) do |row|
@@ -49,7 +47,6 @@ module I18nDocs
         store_translation(key_elements, locale, row_hash[locale])
       end
     end
-
 
     def store_translation(keys, locale, value)
       return nil if value.nil? # we don't store keys that don't have a valid value

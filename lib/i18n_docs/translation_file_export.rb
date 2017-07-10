@@ -12,12 +12,10 @@ module I18nDocs
       @translations = {}
     end
 
-
     def export
       load_translations
       write_to_csv
     end
-
 
     def write_to_csv
       main_locale = @locales.include?('en') ? 'en' : @locales.first
@@ -35,7 +33,6 @@ module I18nDocs
         end
       end
     end
-
 
     def load_translations
       @locales.each do |locale|
