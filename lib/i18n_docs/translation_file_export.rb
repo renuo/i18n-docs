@@ -35,7 +35,6 @@ module I18nDocs
           csv << values.unshift(key)
         end
       end
-
     end
 
 
@@ -47,7 +46,6 @@ module I18nDocs
     end
 
     def load_language(locale)
-
       puts "    #{@source_file}: load translations for '#{locale}'"
 
       input_file = File.join(@source_dir, locale, @source_file)

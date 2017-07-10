@@ -105,7 +105,6 @@ module I18nDocs
       rescue
         STDERR.puts 'No ignore_missing_keys.yml config file.'
       end
-
     end
 
   end
