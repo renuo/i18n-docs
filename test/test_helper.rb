@@ -19,7 +19,7 @@ module TestHelper
   end
 
   def create_tmp_dir
-    FileUtils::mkdir(tmp_dir) if !File.exist?(tmp_dir)
+    FileUtils::mkdir(tmp_dir) unless File.exist?(tmp_dir)
   end
 
   def remove_tmp_dir

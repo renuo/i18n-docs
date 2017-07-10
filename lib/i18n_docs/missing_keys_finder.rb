@@ -25,7 +25,7 @@ module I18nDocs
 
           skip = false
           ls = locale.to_s
-          if !@yaml[ls].nil?
+          unless @yaml[ls].nil?
             @yaml[ls].each do |re|
               if key.match(re)
                 skip = true

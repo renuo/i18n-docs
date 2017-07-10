@@ -11,7 +11,7 @@ namespace :i18n do
   task :import_translations => :environment do
 
     config_file = I18nDocs::CsvToYaml.root_path.join('config', 'translations.yml')
-    raise "No config file 'config/translations.yml' found." if !File.exist?(config_file)
+    raise "No config file 'config/translations.yml' found." unless File.exist?(config_file)
 
     tmp_dir = I18nDocs::CsvToYaml.root_path.join('tmp')
     Dir.mkdir(tmp_dir) unless Dir.exist?(tmp_dir)
