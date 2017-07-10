@@ -54,7 +54,7 @@ module I18nDocs
 
     def clean_up
       # remove all tmp files
-      @csv_files.each do |target_file, csv_file|
+      @csv_files.each do |_target_file, csv_file|
         File.unlink(csv_file)
       end
     end

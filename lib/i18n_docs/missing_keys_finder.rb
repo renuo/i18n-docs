@@ -9,7 +9,7 @@ module I18nDocs
 
     # Returns an array with all keys from all locales
     def all_keys
-      I18n.backend.send(:translations).collect do |check_locale, translations|
+      I18n.backend.send(:translations).collect do |_check_locale, translations|
         collect_keys([], translations).sort
       end.flatten.uniq
     end
