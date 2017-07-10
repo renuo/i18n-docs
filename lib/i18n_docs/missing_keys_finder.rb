@@ -45,7 +45,7 @@ module I18nDocs
       end
 
       output_missing_keys(missing_keys)
-      return missing_keys
+      missing_keys
     end
 
     def output_available_locales
@@ -79,7 +79,7 @@ module I18nDocs
           full_keys << new_scope.join('.')
         end
       end
-      return full_keys
+      full_keys
     end
 
     # Returns true if key exists in the given locale
