@@ -18,7 +18,7 @@ module UnitTests
       @tmp_file = File.join(tmp_dir, 'downloaded.csv')
       @output_file = File.join(tmp_dir, 'test.yml')
 
-      Rails.stubs(:root).returns(stub(:join => @output_file))
+      Rails.stubs(:root).returns(stub(join: @output_file))
     end
 
     def teardown

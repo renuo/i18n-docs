@@ -2,13 +2,13 @@
 namespace :i18n do
 
   desc 'Find and list translation keys that do not exist in all locales'
-  task :missing_keys => :environment do
+  task missing_keys: :environment do
     finder = I18nDocs::MissingKeysFinder.new(I18n.backend)
     finder.find_missing_keys
   end
 
   desc 'Download translations from Google Spreadsheet and save them to YAML files.'
-  task :import_translations => :environment do
+  task import_translations: :environment do
 
     config_file = I18nDocs::CsvToYaml.root_path.join('config', 'translations.yml')
     raise "No config file 'config/translations.yml' found." unless File.exist?(config_file)
@@ -24,7 +24,7 @@ namespace :i18n do
   end
 
   desc 'Export all language files to CSV files (only files contained in en folder are considered)'
-  task :export_translations => :environment do
+  task export_translations: :environment do
     source_dir  = I18nDocs::CsvToYaml.root_path.join('config', 'locales')
     output_dir  = I18nDocs::CsvToYaml.root_path.join('tmp')
     locales     = I18n.available_locales

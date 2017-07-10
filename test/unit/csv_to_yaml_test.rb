@@ -14,7 +14,7 @@ module UnitTests
       @output_file = File.join(tmp_dir, 'test.yml')
       @locales = %w(de en)
 
-      Rails.stubs(:root).returns(stub(:join => @output_file))
+      Rails.stubs(:root).returns(stub(join: @output_file))
 
       @csv_to_yaml = I18nDocs::CsvToYaml.new(@input_file, @output_file, @locales)
     end
