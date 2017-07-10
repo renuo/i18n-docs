@@ -1,5 +1,9 @@
 # i18n-docs
 
+[![Code Climate](https://codeclimate.com/github/renuo/i18n-docs/badges/gpa.svg)](https://codeclimate.com/github/renuo/i18n-docs)
+[![Test Coverage](https://codeclimate.com/github/renuo/i18n-docs/badges/coverage.svg)](https://codeclimate.com/github/renuo/i18n-docs/coverage)
+[![Issue Count](https://codeclimate.com/github/renuo/i18n-docs/badges/issue_count.svg)](https://codeclimate.com/github/renuo/i18n-docs)
+
 **i18n-docs** is a ruby gem that helps you to keep translations stored in Google Docs. This makes it easier for translators and project members to coordinate changes and updates. In addition, the standard features of Google Docs are super handy for this process: revision tracking, authorization, publishing, etc.
 
 Although we use it with Google Docs, it could be used with any CSV file.
