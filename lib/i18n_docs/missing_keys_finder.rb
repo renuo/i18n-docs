@@ -3,8 +3,8 @@ module I18nDocs
   class MissingKeysFinder
     def initialize(backend)
       @backend = backend
-      self.load_config
-      self.load_translations
+      load_config
+      load_translations
     end
 
     # Returns an array with all keys from all locales
