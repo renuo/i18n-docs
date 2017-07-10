@@ -3,7 +3,6 @@ require 'test_helper'
 # run test: ruby -I test/ -I lib/ test/unit/csv_to_yaml_test.rb
 
 module UnitTests
-
   class CsvToYamlTest < Test::Unit::TestCase
     include TestHelper
 

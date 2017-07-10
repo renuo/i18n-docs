@@ -1,5 +1,4 @@
 module I18nDocs
-
   class CsvToYaml
 
     attr_reader :input_file, :output_file, :locales, :translations
@@ -81,5 +80,4 @@ module I18nDocs
     end
 
   end
-
 end

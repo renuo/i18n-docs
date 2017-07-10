@@ -9,7 +9,6 @@ require 'i18n-docs'
 Rails = Struct.new(:dummy)
 
 module TestHelper
-
   def fixture_path
     File.join(File.expand_path(File.dirname(__FILE__)), 'fixtures')
   end
@@ -25,5 +24,4 @@ module TestHelper
   def remove_tmp_dir
     FileUtils::rmtree(tmp_dir)
   end
-
 end

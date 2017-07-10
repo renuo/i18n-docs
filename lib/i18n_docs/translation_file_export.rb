@@ -73,5 +73,4 @@ module I18nDocs
     end
 
   end
-
 end
