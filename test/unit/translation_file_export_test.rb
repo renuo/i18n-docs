@@ -38,12 +38,12 @@ module UnitTests
 
     def dtest_flatten_translations_hash
       translation_hash = { 'a' => {
-                            'I' => '1',
+        'I' => '1',
                             'II' => '2',
                             'III' => {
                               'Z' => '3'
                             }
-                          },
+      },
                           'b' => '4'}
 
       flat = @exporter.flatten_translations_hash(translation_hash, [])
