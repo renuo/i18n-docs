@@ -11,7 +11,7 @@ module UnitTests
 
       @input_file  = File.join(fixture_path, 'minimal.csv')
       @output_file = File.join(tmp_dir, 'test.yml')
-      @locales = %w(de en)
+      @locales = %w[de en]
 
       Rails.stubs(:root).returns(stub(join: @output_file))
 
@@ -106,7 +106,7 @@ module UnitTests
     end
 
     def test_store_translations
-      keys = %w(homepage meta title)
+      keys = %w[homepage meta title]
       @csv_to_yaml.store_translation(keys, 'de', 'Telefonbuch der Schweiz')
 
       translations = @csv_to_yaml.translations
