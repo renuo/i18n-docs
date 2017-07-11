@@ -46,6 +46,7 @@ module I18nDocs
       missing_keys
     end
 
+    # rubocop:disable Metrics/LineLength
     def output_available_locales
       puts "#{I18n.available_locales.size} #{I18n.available_locales.size == 1 ? 'locale' : 'locales'} available: #{I18n.available_locales.join(', ')}"
     end
@@ -61,6 +62,7 @@ module I18nDocs
         puts 'No keys are missing'
       end
     end
+    # rubocop:enable Metrics/LineLength
 
     def output_unique_key_stats(keys)
       number_of_keys = keys.size

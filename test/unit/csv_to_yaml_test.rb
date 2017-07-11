@@ -47,7 +47,8 @@ module UnitTests
     end
 
     def test_row_containing_non_locale_columns
-      row = { 'key' => 'homepage.title', 'en' => 'We are the Phonebook', 'de' => 'Test DE', 'comment' => 'Test comment' }
+      row = { 'key' => 'homepage.title', 'en' => 'We are the Phonebook', 'de' => 'Test DE',
+              'comment' => 'Test comment' }
       @csv_to_yaml.process_row(row)
 
       translations = @csv_to_yaml.translations
