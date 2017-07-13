@@ -12,13 +12,13 @@ module UnitTests
       config_file = File.join(fixture_path, 'config.yml')
       @translations = I18nDocs::Translations.new(config_file, tmp_dir)
       @translations.tmp_folder = tmp_dir
-      @translations.locales = ['de', 'en']
+      @translations.locales = %w[de en]
 
       @fixture_file = File.join(fixture_path, 'minimal.csv')
       @tmp_file = File.join(tmp_dir, 'downloaded.csv')
       @output_file = File.join(tmp_dir, 'test.yml')
 
-      Rails.stubs(:root).returns(stub(:join => @output_file))
+      Rails.stubs(:root).returns(stub(join: @output_file))
     end
 
     def teardown
@@ -27,22 +27,23 @@ module UnitTests
 
     def test_download
       assert !File.exist?(@tmp_file)
-      @translations.download("https://docs.google.com/spreadsheets/d/1PbmkqamXuNyP7gnVARpeCfV8rA7WvX98dTqsQB3Wdts/pub?output=csv", @tmp_file)
+      sheet_url = 'https://docs.google.com/spreadsheets/d/1PbmkqamXuNyP7gnVARpeCfV8rA7WvX98dTqsQB3Wdts/pub?output=csv'
+      @translations.download(sheet_url, @tmp_file)
       assert File.exist?(@tmp_file), "Expected to have downloaded Google Spreadsheet to '#{@tmp_file}'"
     end
 
     def test_cleanup
-      @translations.csv_files = {'dummy.yml' => @tmp_file}
-      File.open(@tmp_file, "w") {}
+      @translations.csv_files = { 'dummy.yml' => @tmp_file }
+      File.open(@tmp_file, 'w') {}
       assert File.exist?(@tmp_file)
       @translations.clean_up
-      assert !File.exist?(@tmp_file), "Expected to delete file"
+      assert !File.exist?(@tmp_file), 'Expected to delete file'
     end
 
     def test_store_translations
       assert !File.exist?(@output_file)
 
-      @translations.csv_files = {@output_file => @fixture_file}
+      @translations.csv_files = { @output_file => @fixture_file }
       @translations.store_translations
 
       assert File.exist?(@output_file)
