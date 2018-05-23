@@ -105,12 +105,26 @@ module UnitTests
       assert_equal 'Phonebook of Switzerland', translations['en']['homepage']['meta']['title']
     end
 
+    def test_row_for_missing_locale_key
+      row = { 'key' => 'homepage.meta.title', 'en' => 'Phonebook of Switzerland' }
+      assert_raise RuntimeError.new('Locale missing for key homepage.meta.title! (locales in app: ["de", "en"] / locales in file: ["en"])') do
+        @csv_to_yaml.process_row(row)
+      end
+    end
+
     def test_store_translations
       keys = %w[homepage meta title]
       @csv_to_yaml.store_translation(keys, 'de', 'Telefonbuch der Schweiz')
 
       translations = @csv_to_yaml.translations
       assert_equal 'Telefonbuch der Schweiz', translations['de']['homepage']['meta']['title']
+    end
+
+    def test_store_translations_with_faulty_locale
+      keys = %w[homepage meta title]
+      assert_raise RuntimeError.new("Error around key 'homepage.meta.title': Expected nil to be a Hash") do
+        @csv_to_yaml.store_translation(keys, 'zz', 'Telefonbuch der Schweiz')
+      end
     end
 
     def test_process
@@ -148,7 +162,7 @@ module UnitTests
       @input_file  = File.join(fixture_path, 'error.csv')
       @csv_to_yaml = I18nDocs::CsvToYaml.new(@input_file, @output_file, @locales)
 
-      assert_raise "Error around key 'top_level.key.another_key': Expected \"Value2\" to be a Hash" do
+      assert_raise RuntimeError.new("Error around key 'top_level.key.another_key': Expected \"Value2\" to be a Hash") do
         @csv_to_yaml.process
       end
     end
