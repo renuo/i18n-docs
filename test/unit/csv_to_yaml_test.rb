@@ -107,7 +107,7 @@ module UnitTests
 
     def test_row_for_missing_locale_key
       row = { 'key' => 'homepage.meta.title', 'en' => 'Phonebook of Switzerland' }
-      assert_raise 'Locale missing for key homepage.meta.title! (locales in app: ["de", "en"] / locales in file: ["en"])' do
+      assert_raise RuntimeError.new('Locale missing for key homepage.meta.title! (locales in app: ["de", "en"] / locales in file: ["en"])') do
         @csv_to_yaml.process_row(row)
       end
     end
@@ -118,6 +118,13 @@ module UnitTests
 
       translations = @csv_to_yaml.translations
       assert_equal 'Telefonbuch der Schweiz', translations['de']['homepage']['meta']['title']
+    end
+
+    def test_store_translations_with_faulty_locale
+      keys = %w[homepage meta title]
+      assert_raise RuntimeError.new("Error around key 'homepage.meta.title': Expected nil to be a Hash") do
+        @csv_to_yaml.store_translation(keys, 'zz', 'Telefonbuch der Schweiz')
+      end
     end
 
     def test_process
