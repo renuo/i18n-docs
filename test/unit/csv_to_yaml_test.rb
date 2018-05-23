@@ -105,6 +105,13 @@ module UnitTests
       assert_equal 'Phonebook of Switzerland', translations['en']['homepage']['meta']['title']
     end
 
+    def test_row_for_missing_locale_key
+      row = { 'key' => 'homepage.meta.title', 'en' => 'Phonebook of Switzerland' }
+      assert_raise 'Locale missing for key homepage.meta.title! (locales in app: ["de", "en"] / locales in file: ["en"])' do
+        @csv_to_yaml.process_row(row)
+      end
+    end
+
     def test_store_translations
       keys = %w[homepage meta title]
       @csv_to_yaml.store_translation(keys, 'de', 'Telefonbuch der Schweiz')
