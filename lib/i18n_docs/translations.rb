@@ -60,6 +60,11 @@ module I18nDocs
     def download(url, destination_file)
       puts "Download '#{url}' to '#{destination_file}'"
       doc_data = open(url).read.force_encoding('UTF-8')
+      if (subs = @settings['substitutions'])
+        subs.each do |sub|
+          doc_data.gsub! sub['from'], sub['to']
+        end
+      end
       File.open(destination_file, 'w') do |dst|
         dst.write(doc_data)
       end
