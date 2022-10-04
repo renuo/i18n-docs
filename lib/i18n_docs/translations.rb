@@ -59,7 +59,7 @@ module I18nDocs
 
     def download(url, destination_file)
       puts "Download '#{url}' to '#{destination_file}'"
-      doc_data = open(url).read.force_encoding('UTF-8')
+      doc_data = URI.open(url).read.force_encoding('UTF-8')
       if (subs = @settings['substitutions'])
         subs.each do |sub|
           doc_data.gsub! sub['from'], sub['to']
