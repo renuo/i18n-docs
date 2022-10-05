@@ -28,14 +28,14 @@ module UnitTests
       assert File.exist?(@output_file), 'Expected to have a CSV file written'
     end
 
-    def dtest_load_language
+    def test_load_language
       translations = @exporter.load_language('de')
 
       assert translations, 'Expected to return a hash with translations'
       assert_equal translations['header']['search'], 'Finden'
     end
 
-    def dtest_flatten_translations_hash
+    def test_flatten_translations_hash
       translation_hash = { 'a' => {
         'I' => '1',
         'II' => '2',
@@ -52,7 +52,7 @@ module UnitTests
       assert_equal '4', flat['b']
     end
 
-    def dtest_load_translations
+    def test_load_translations
       assert_empty @exporter.translations
       @exporter.load_translations
 
@@ -63,7 +63,7 @@ module UnitTests
       assert_equal '(c) local.ch', @exporter.translations['de']['copyright']
     end
 
-    def dtest_write_to_csv
+    def test_write_to_csv
       @exporter.translations = { 'de' => { 'numbers.one' => 'eins' },
                                  'en' => { 'numbers.one' => 'one' } }
 
