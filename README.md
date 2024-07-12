@@ -35,23 +35,27 @@ Add the GEM to your project:
 
 Create a configuration file in `config/translations.yml`:
 
-    files:
-      navigation.yml: "https://docs.google.com/spreadsheet/pub?key=ab43...34f3&single=true&gid=0&output=csv"
-      forms.yml: "https://docs.google.com/spreadsheet/pub?key=0Ap...XveWc&single=true&gid=0&output=csv"
-      ... etc ...
+```yaml
+files:
+  navigation.yml: "https://docs.google.com/spreadsheet/pub?key=ab43...34f3&single=true&gid=0&output=csv"
+  forms.yml: "https://docs.google.com/spreadsheet/pub?key=0Ap...XveWc&single=true&gid=0&output=csv"
+  ... etc ...
+```
 
 #### Rails
 
 Finally, let Rails know what locales you will be using. Add this to `config/application.rb`:
 
-    module Web
-      class Application < Rails::Application
-        # add yml path
-        config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '*', '*.yml').to_s]
-        # locals to support:
-        config.i18n.available_locales = [:en,:de,:it,:fr]
-      end
-    end
+```ruby
+module Web
+  class Application < Rails::Application
+    # add yml path
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '*', '*.yml').to_s]
+    # locals to support:
+    config.i18n.available_locales = [:en,:de,:it,:fr]
+  end
+end
+```
 
 This defines which languages and translation files to import from a Google Spreadsheet. The content of the Spreadsheet URL is stored to a file called e.g. `example1.yml` within folders `config/locales/en` and all other detected locales.
 
