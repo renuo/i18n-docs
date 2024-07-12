@@ -10,7 +10,7 @@
 
 Although we use it with Google Docs, it could be used with any CSV file.
 
-*this gem is currently in use and tested with Rails 3.1. It probably works with other 3.x versions, but probably not 2.x at the moment.*
+*this gem is currently in use and tested with Rails 6.1, 7.0. It may works with older versions as well.*
 
 ## Features
 
