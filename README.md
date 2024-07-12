@@ -1,6 +1,6 @@
 # i18n-docs
 
-[![Build Status](https://travis-ci.org/renuo/i18n-docs.svg?branch=master)](https://travis-ci.org/renuo/i18n-docs)
+[![CI](https://github.com/renuo/i18n-docs/actions/workflows/ci.yml/badge.svg)](https://github.com/renuo/i18n-docs/actions/workflows/ci.yml)
 [![Code Climate](https://codeclimate.com/github/renuo/i18n-docs/badges/gpa.svg)](https://codeclimate.com/github/renuo/i18n-docs)
 [![Test Coverage](https://codeclimate.com/github/renuo/i18n-docs/badges/coverage.svg)](https://codeclimate.com/github/renuo/i18n-docs/coverage)
 [![Issue Count](https://codeclimate.com/github/renuo/i18n-docs/badges/issue_count.svg)](https://codeclimate.com/github/renuo/i18n-docs)
@@ -10,7 +10,7 @@
 
 Although we use it with Google Docs, it could be used with any CSV file.
 
-*this gem is currently in use and tested with Rails 3.1. It probably works with other 3.x versions, but probably not 2.x at the moment.*
+*this gem is currently in use and tested with Rails 6.1, 7.0. It may works with older versions as well.*
 
 ## Features
 
@@ -35,23 +35,27 @@ Add the GEM to your project:
 
 Create a configuration file in `config/translations.yml`:
 
-    files:
-      navigation.yml: "https://docs.google.com/spreadsheet/pub?key=ab43...34f3&single=true&gid=0&output=csv"
-      forms.yml: "https://docs.google.com/spreadsheet/pub?key=0Ap...XveWc&single=true&gid=0&output=csv"
-      ... etc ...
+```yaml
+files:
+  navigation.yml: "https://docs.google.com/spreadsheet/pub?key=ab43...34f3&single=true&gid=0&output=csv"
+  forms.yml: "https://docs.google.com/spreadsheet/pub?key=0Ap...XveWc&single=true&gid=0&output=csv"
+  ... etc ...
+```
 
 #### Rails
 
 Finally, let Rails know what locales you will be using. Add this to `config/application.rb`:
 
-    module Web
-      class Application < Rails::Application
-        # add yml path
-        config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '*', '*.yml').to_s]
-        # locals to support:
-        config.i18n.available_locales = [:en,:de,:it,:fr]
-      end
-    end
+```ruby
+module Web
+  class Application < Rails::Application
+    # add yml path
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '*', '*.yml').to_s]
+    # locals to support:
+    config.i18n.available_locales = [:en,:de,:it,:fr]
+  end
+end
+```
 
 This defines which languages and translation files to import from a Google Spreadsheet. The content of the Spreadsheet URL is stored to a file called e.g. `example1.yml` within folders `config/locales/en` and all other detected locales.
 
@@ -113,9 +117,9 @@ Following Rake tasks are added by the GEM to your Rails project:
 * From now on you should only update translations in Google Docs and run `rake i18n:import_translations` in the application to get changes. You can also export your
 
 
-## Configuraiton
+## Configuration
 
-You can include a set of substitions for preprocessing the CSV after downloading it and before parsing it. Here is an example that replaces non-breaking spaces with normal ones.
+You can include a set of substitutions for preprocessing the CSV after downloading it and before parsing it. Here is an example that replaces non-breaking spaces with normal ones.
 
     files:
       navigation.yml: "https://docs.google.com/spreadsheet/pub?key=ab43...34f3&single=true&gid=0&output=csv"
