@@ -117,9 +117,9 @@ Following Rake tasks are added by the GEM to your Rails project:
 * From now on you should only update translations in Google Docs and run `rake i18n:import_translations` in the application to get changes. You can also export your
 
 
-## Configuraiton
+## Configuration
 
-You can include a set of substitions for preprocessing the CSV after downloading it and before parsing it. Here is an example that replaces non-breaking spaces with normal ones.
+You can include a set of substitutions for preprocessing the CSV after downloading it and before parsing it. Here is an example that replaces non-breaking spaces with normal ones.
 
     files:
       navigation.yml: "https://docs.google.com/spreadsheet/pub?key=ab43...34f3&single=true&gid=0&output=csv"
