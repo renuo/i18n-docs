@@ -141,10 +141,13 @@ Follow this: http://stackoverflow.com/questions/12562697/opensslsslsslerror-ssl-
 
 ## CHANGELOG
 
+### 0.2.0
+
+* fix for ruby 3.1
+
 ### 0.1.1
 
 * add `substitutions` config
-
 
 ### 0.1.0
 
