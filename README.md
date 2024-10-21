@@ -143,6 +143,11 @@ Follow this: http://stackoverflow.com/questions/12562697/opensslsslsslerror-ssl-
 * automate the detection of which languages are supported
 * validate use with rails 2.x, other 3.x versions
 
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/renuo/i18n-docs. 
+This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/renuo/renuocop/blob/master/CODE_OF_CONDUCT.md).
+
 ## CHANGELOG
 
 ### 0.2.0
