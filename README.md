@@ -149,6 +149,6 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/renuo/
 This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/renuo/renuocop/blob/master/CODE_OF_CONDUCT.md).
 
 
-### Credits/License
+## Credits/License
 
 This gem is sponsored by [local.ch](http://www.local.ch/). It is licensed under the [MIT license](http://en.wikipedia.org/wiki/MIT_License). If you're a ruby developer and want to work with us in Switzerland, please check out our [jobs page](http://local-ch.github.com/).
